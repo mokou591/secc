@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.FilmReviewDao">
+
+	<insert id="add" parameterType="cn.poi591.secc.entity.FilmReview">
+		INSERT INTO
+		`t_film_review`(`film_id`,`user_id`,`score`,`title`,`text`,`is_spoiler`,`is_private`,`create_time`)
+		VALUES(#{filmId},#{userId},#{score},#{title},#{text},#{isSpoiler},#{isPrivate},now());
+	</insert>
+
+	<select id="findById"  resultType="cn.poi591.secc.entity.FilmReview">
+		SELECT * FROM `t_film_review` WHERE `id`=#{id};
+	</select>
+
+</mapper>

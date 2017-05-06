@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.UserDao">
+
+	<insert id="add" parameterType="cn.poi591.secc.entity.User">
+	INSERT INTO `t_user`(`username`,`password`,`nickname`) VALUES(#{username},#{password},#{nickname});
+	</insert>
+
+
+	<select id="findByUsername" parameterType="String" resultType="cn.poi591.secc.entity.User">
+	SELECT * FROM `t_user` WHERE `username` = #{username};
+	</select>
+	
+	<select id="findById" parameterType="Integer" resultType="cn.poi591.secc.entity.User">
+	SELECT * FROM `t_user` WHERE `id` = #{id};
+	</select>
+	
+	<select id="updateProfile" parameterType="cn.poi591.secc.entity.User">
+	UPDATE `t_user` SET 
+		`nickname`=#{nickname},
+		`gender`=#{gender},
+		`sign`=#{sign},
+		`address`=#{address},
+		`school`=#{school},
+		`academy`=#{academy},
+		`intro`=#{intro}
+	WHERE `id`=#{id};
+	</select>
+	
+	<select id="updateAvatarUrl">
+	UPDATE `t_user` SET 
+		`avatar_url`=#{filename}
+	WHERE `id`=#{user.id};
+	</select>
+	
+	
+</mapper>
