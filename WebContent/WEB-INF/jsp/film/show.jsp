@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/setting/constant.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,7 +48,7 @@
 				float: right
 			}
 			
-			.user_avatar {
+			.review_avatar {
 				width: 50px;
 				height: 50px;
 			}
@@ -209,8 +210,42 @@
 							<div id="ooxx61"></div>
 						</div>
 					</div>
-
-
+					
+					
+					<c:forEach items="${reviewList}" var="review" >
+						<div class="review">
+							<h4 class="review_header">${review.title}
+								<a data-toggle="collapse" href="#content${review.id}" class="showorhide">
+									查看全部
+								</a> 
+							</h4>
+							<a href="${ctx}/people/${review.user.id}">
+								<img class="review_avatar" src="${ctx}/upload/avatar/${review.user.avatarUrl}" />
+							</a>
+							<span class="review_name"><a href="${ctx}/people/${review.user.id}">${review.user.nickname}</a> </span>
+							<span class="review_mark"> 评分：${review.score} </small></span>
+							<span class="review_date">
+							<fmt:formatDate value="${review.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+							</span>
+							<div class="review_text">
+								<c:if test="${review.isSpoiler}">
+									<blockquote>这篇影评可能有剧透</blockquote>
+								</c:if>
+								${review.text}
+								<div class="resttext panel-collapse collapse" id="content${review.id}">
+									干掉对手那一场，是金子总要发光，在“教父2”中，帕西诺彻底征服了我，尽管他没有凭借此片获得奥斯卡小金人。当然在“教父2”中还有位牛人，德尼罗，他演绎第一代教父的青年时代，也很棒，惟妙惟肖模仿白兰度的嗓音和神态令人叫绝，揽得奥斯卡最佳男配角，至于后来他主演的“美国往事”更是颠峰之作，不过今天不打算讨论他。
+								    	如果认为帕西诺的水平仅局限于用眼神来征服观众，那么就大错了，在“闻香识女人”中，帕西诺扮演一名瞎眼的退役军官，而正是这个角色反而令他问鼎小金人。此片几乎是帕西诺的一场个人秀，其他所有的配角均可忽略不计。
+								    <br><br>名字中有女人，可故事完全和女人没关系，纯粹是两个男人之间的故事。我平时看电影有些没心没肺，总是让导演失望，该哭的时候笑，该笑的时候叫，但看完“闻香识女人”后还是觉得挺感动。一方面，故事不错，另一方面，帕西诺的确没得说。
+								</div>
+								
+							</div>
+							<div class="review_ooxx">
+								<a href="javascript:void(0)">有用</a>:892  /  
+								<a href="javascript:void(0)">没用</a>:92
+								<div id="ooxx61"></div>
+							</div>
+						</div>
+					</c:forEach>
 
 					<div class="toallreview">
 						<a href="#"> &gt; 去这部影片的讨论区（全部153条）</a>
@@ -219,8 +254,17 @@
 
 				<div class="col-md-4 column">
 					<div class="page-header">
-						<h2>评分：8.9 </h2>
-						<h3><small>304552人评价</small></h3>
+						<c:choose>
+							<c:when test="${mainScore.count eq 0}">
+								<h2>该电影暂无评价 </h2>
+							</c:when>
+							<c:otherwise>
+								<h2>评分：
+								<fmt:formatNumber type="number" pattern="#.#" value="${mainScore.average}" />
+								 </h2>
+								<h3><small>${mainScore.count}人评价</small></h3>
+							</c:otherwise>
+						</c:choose>
 						<a href="${ctx}/film/${mainFilm.id}/new_review" class="btn btn-primary">我要评价</a>
 						<h4>您的评价：8</h4>
 					</div>

@@ -106,9 +106,8 @@ public class UserController {
 	 * 注销用户账号
 	 */
 	@RequestMapping("/user/logout")
-	public String logoutUser(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setAttribute("loginUser", null);
+	public String logoutUser(HttpSession session) {
+		session.invalidate();
 		return "redirect:/index";
 	}
 

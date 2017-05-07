@@ -10,8 +10,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{filmId},#{userId},#{score},#{title},#{text},#{isSpoiler},#{isPrivate},now());
 	</insert>
 
-	<select id="findById"  resultType="cn.poi591.secc.entity.FilmReview">
-		SELECT * FROM `t_film_review` WHERE `id`=#{id};
+	<select id="findById" resultType="cn.poi591.secc.entity.FilmReview">
+		SELECT * FROM `t_film_review`
+		WHERE `id`=#{id};
 	</select>
 
+
+	<select id="getFilmScore" parameterType="cn.poi591.secc.entity.Film"
+		resultType="cn.poi591.secc.dto.FilmScore">
+		SELECT
+		COUNT(*) AS `count`,
+		AVG(`score`) AS `average`
+		FROM
+		`t_film_review` WHERE `film_id`=#{id};
+	</select>
+
+	<!-- 查找当前电影所有影评 -->
+	<select id="findFilmReviewByFilm" parameterType="cn.poi591.secc.entity.Film"
+		resultType="cn.poi591.secc.entity.FilmReview">
+		SELECT * FROM `t_film_review`
+		WHERE LENGTH(`title`)>0 AND
+		`film_id`=#{id};
+	</select>
+
+	<!-- 根据影评找用户 -->
+	<select id="findUserByFilmReview" parameterType="cn.poi591.secc.entity.FilmReview"
+		resultType="cn.poi591.secc.entity.User">
+		SELECT * FROM t_user WHERE id=#{review.user_id};
+	</select>
+
+	<!-- 选择可以展示在当前电影页面的影评（公开且内容非空） -->
+	<!-- 即影评及其作者 -->
+	<select id="getFilmReviewAndUserList" parameterType="cn.poi591.secc.entity.Film"
+		resultMap="FilmReviewAndUserMap">
+		SELECT * FROM `t_film_review`
+		WHERE `film_id`=#{id} AND
+		LENGTH(`title`)>0 AND `is_private`=FALSE;
+	</select>
+	<resultMap id="FilmReviewAndUserMap" type="cn.poi591.secc.dto.FilmReviewAndUser">
+		<!-- 在FilmReview基础上多携带一个User作为作者 -->
+		<association property="user" column="user_id" select="cn.poi591.secc.dao.UserDao.findById" />
+	</resultMap>
 </mapper>
