@@ -10,7 +10,7 @@
 		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="${ctx}/js/jquery.md5.js"></script>
-		<title>中文问答社区</title>
+		<title>校园课外娱乐</title>
 		
 	</head>
 

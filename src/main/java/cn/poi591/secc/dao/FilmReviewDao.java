@@ -2,6 +2,8 @@ package cn.poi591.secc.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.poi591.secc.dto.FilmReviewAndUser;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.entity.Film;
@@ -41,4 +43,25 @@ public interface FilmReviewDao {
 	 * @return
 	 */
 	User findUserByFilmReview(FilmReview review);
+
+	/**
+	 * 根据影作者找到一篇影评
+	 * @param loginUser
+	 * @return
+	 */
+	FilmReview findFilmReviewByUser(User loginUser);
+
+	/**
+	 * 获取当前电影的影评总数
+	 * @param film
+	 * @return
+	 */
+	Integer getFilmReviewCount(Film film);
+
+	/**
+	 * 根据电影查询影评，根据时间从新到旧排序，需要设置起始位置和查询项数。
+	 * @return
+	 */
+	List<FilmReviewAndUser> getFilmReviewAndUserLatest(@Param("film") Film film, @Param("start")Integer start,
+			@Param("offset")Integer offset);
 }

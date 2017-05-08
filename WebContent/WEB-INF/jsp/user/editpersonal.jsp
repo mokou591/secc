@@ -13,7 +13,7 @@
 		<link href="https://cdn.bootcss.com/cropper/2.3.4/cropper.min.css" rel="stylesheet">
 		<link href="${ctx}/css/sitelogo.css" rel="stylesheet">
 		
-		<title>中文问答社区</title>
+		<title>个人资料编辑</title>
 		<style type="text/css">
 			#page_header {
 				margin: 0 0 20px 0;

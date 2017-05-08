@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<title>中文问答社区</title>
+		<title>个人空间</title>
 		<style type="text/css">
 			#page_header {
 				margin: 0 0 20px 0;

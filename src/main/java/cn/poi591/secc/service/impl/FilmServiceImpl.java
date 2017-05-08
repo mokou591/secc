@@ -11,17 +11,18 @@ import cn.poi591.secc.dto.FilmReviewAndUser;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
+import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.FilmService;
 
 @Service
-public class FilmServiceImpl implements FilmService{
+public class FilmServiceImpl implements FilmService {
 
 	@Autowired
 	private FilmDao filmDao;
-	
+
 	@Autowired
 	private FilmReviewDao filmReviewDao;
-	
+
 	public void addFilm(Film film) {
 		filmDao.add(film);
 	}
@@ -32,6 +33,7 @@ public class FilmServiceImpl implements FilmService{
 
 	/**
 	 * 添加一篇影评
+	 * 
 	 * @param filmReview
 	 */
 	public void addFilmReview(FilmReview filmReview) {
@@ -40,6 +42,7 @@ public class FilmServiceImpl implements FilmService{
 
 	/**
 	 * 获取电影的评分信息
+	 * 
 	 * @param mainFilm
 	 * @return
 	 */
@@ -49,11 +52,37 @@ public class FilmServiceImpl implements FilmService{
 
 	/**
 	 * 查询电影的所有影评，返回的集合包含的对象有影评信息和作者引用。
+	 * 
 	 * @param mainFilm
 	 * @return 一个 集合
 	 */
 	public List<FilmReviewAndUser> getFilmReviewAndUserList(Film film) {
 		return filmReviewDao.getFilmReviewAndUserList(film);
+	}
+
+	/**
+	 * 获取用户的一篇影评
+	 * 
+	 * @param loginUser
+	 * @return
+	 */
+	public FilmReview getUserReview(User loginUser) {
+		return filmReviewDao.findFilmReviewByUser(loginUser);
+	}
+
+	/**
+	 * 获取当前电影的影评总数
+	 * 
+	 * @param film
+	 * @return
+	 */
+	public Integer getFilmReviewCount(Film film) {
+		return filmReviewDao.getFilmReviewCount(film);
+	}
+
+	public List<FilmReviewAndUser> getFilmReviewAndUserLatest(Film film, Integer start,
+			Integer offset) {
+		return filmReviewDao.getFilmReviewAndUserLatest(film, start, offset);
 	}
 
 }

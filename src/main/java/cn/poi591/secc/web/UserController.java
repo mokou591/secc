@@ -96,8 +96,16 @@ public class UserController {
 		} else {// 登录成功
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", user);
-			// 跳转到主页
-			modelAndView.setViewName("redirect:/index");
+			// 判断是否有登录前页面
+			String prevPage = (String) session.getAttribute("prevPage");
+			if(prevPage==null){
+				// 没有登录前页面，跳转到主页
+				modelAndView.setViewName("redirect:/index");
+			}else{
+				//有登录前页面
+				modelAndView.setViewName("redirect:"+prevPage);
+			}
+			
 		}
 		return modelAndView;
 	}
