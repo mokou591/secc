@@ -104,6 +104,7 @@ public class UserController {
 			}else{
 				//有登录前页面
 				modelAndView.setViewName("redirect:"+prevPage);
+				session.setAttribute("prevPage",null);
 			}
 			
 		}

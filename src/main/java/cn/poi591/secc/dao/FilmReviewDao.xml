@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 选择可以展示在当前电影页面的影评（公开且内容非空） -->
 	
 	<!-- 获取当前电影的最新影评，需要设置起始位置和项数 -->
-	<select id="getFilmReviewAndUserLatest" resultMap="FilmReviewAndUserMap">
+	<select id="getFilmReviewDetailLatest" resultMap="FilmReviewDetailMap">
 		SELECT * FROM t_film_review
 		WHERE film_id=#{film.id} AND
 		LENGTH(`title`)>0 AND is_private=FALSE
@@ -65,19 +65,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
-	<!-- TODO 获取当前电影的最好影评，需要设置起始位置和项数 -->
-	<select id="getFilmReviewAndUserList" parameterType="cn.poi591.secc.entity.Film"
-		resultMap="FilmReviewAndUserMap">
-		SELECT * FROM `t_film_review`
-		WHERE `film_id`=#{id} AND
-		LENGTH(`title`)>0 AND `is_private`=FALSE;
+	<!-- 获取当前电影的最好影评，需要设置起始位置和项数 -->
+	<select id="getFilmReviewDetailBest" resultMap="FilmReviewDetailMap">
+		SELECT * FROM t_film_review
+		WHERE film_id=#{film.id} 
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE
+		ORDER BY 
+		(SELECT COUNT(*) FROM t_film_review_ooxx
+		WHERE film_review_id = t_film_review.id AND `type`='oo') DESC, 
+		(SELECT COUNT(*) FROM t_film_review_ooxx
+		WHERE film_review_id = t_film_review.id AND `type`='xx') ASC
+		LIMIT #{start},#{offset};
 	</select>
 	
-	<!-- 影评及其作者的对象 -->
-	<resultMap id="FilmReviewAndUserMap" type="cn.poi591.secc.dto.FilmReviewAndUser">
+	<!-- 根据电影id获取用户投票数 -->
+	<select id="getVoteByFilmReviewId" resultType="cn.poi591.secc.dto.Vote">
+		SELECT 
+		(SELECT COUNT(*) FROM t_film_review_ooxx
+		WHERE film_review_id=#{filmId} AND `type`='oo') AS `oo`,
+		(SELECT COUNT(*) FROM t_film_review_ooxx
+		WHERE film_review_id=#{filmId} AND `type`='xx') AS `xx`;
+	</select>
+	
+	<!-- 影评：影评数据外，还带有作者、投票 -->
+	<resultMap id="FilmReviewDetailMap" type="cn.poi591.secc.dto.FilmReviewDetail">
+		<id property="id" column="id"/>
 		<!-- 在FilmReview基础上多携带一个User作为作者 -->
-		<association property="user" column="user_id"
+		<association property="user" column="user_id" 
 			select="cn.poi591.secc.dao.UserDao.findById" />
+		<!-- 影评的赞踩投票 -->
+		<association property="vote" column="id"
+			select="cn.poi591.secc.dao.FilmReviewDao.getVoteByFilmReviewId" />
 	</resultMap>
+	
+	<!-- 确认影评是否被用户评价过 -->
+	<select id="checkFilmReviewOOXXExist" resultType="java.lang.Boolean">
+		SELECT EXISTS (
+		SELECT * FROM t_film_review_ooxx
+		WHERE film_review_id=#{filmReview.id}
+		AND operator_id=#{user.id}
+		);
+	</select>
+	
+	<!-- 添加一个影评被用户评价的关系 -->
+	<insert id="addFilmReviewOOXX" >
+		INSERT INTO t_film_review_ooxx(film_review_id,operator_id,`type`)
+		VALUES(#{filmReview.id},#{user.id},#{type});
+	</insert>
 	
 </mapper>

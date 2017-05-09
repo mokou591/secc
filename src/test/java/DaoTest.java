@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.poi591.secc.dao.FilmReviewDao;
 import cn.poi591.secc.dao.UserDao;
-import cn.poi591.secc.dto.FilmReviewAndUser;
+import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.User;
@@ -26,8 +26,8 @@ public class DaoTest extends BaseTest {
 	public void findReviewAndUser() {
 		Film film = new Film();
 		film.setId(5);
-		List<FilmReviewAndUser> list = filmReviewDao.getFilmReviewAndUserList(film);
-		for (FilmReviewAndUser filmReviewAndUser : list) {
+		List<FilmReviewDetail> list = filmReviewDao.getFilmReviewAndUserList(film);
+		for (FilmReviewDetail filmReviewAndUser : list) {
 			System.out.println(filmReviewAndUser.getUser().getNickname());
 		}
 	}

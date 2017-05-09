@@ -73,27 +73,32 @@
 				
 					<!-- 分页 -->
 					<ul class="pagination">
-						<li>
-							 <a href="#">Prev</a>
-						</li>
-						<li>
-							 <a href="#">1</a>
-						</li>
-						<li>
-							 <a href="#">2</a>
-						</li>
-						<li>
-							 <a href="#">3</a>
-						</li>
-						<li>
-							 <a href="#">4</a>
-						</li>
-						<li>
-							 <a href="#">5</a>
-						</li>
-						<li>
-							 <a href="#">Next</a>
-						</li>
+						<c:if test="${paging.hasPrev}">
+							<li>
+							<a href="${ctx}/film/${mainFilm.id}/review/latest/${paging.current-1}">上一页</a>
+							</li>
+						</c:if>
+						
+						<c:forEach items="${paging.pageList}" var="pageNumber">
+							<c:choose>
+								<c:when test="${pageNumber eq paging.current}">
+									<li class="active">
+										<a href="#">${pageNumber}</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="${ctx}/film/${mainFilm.id}/review/latest/${pageNumber}">${pageNumber}</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						
+						<c:if test="${paging.hasNext}">
+							<li>
+							<a href="${ctx}/film/${mainFilm.id}/review/latest/${paging.current+1}">下一页</a>
+							</li>
+						</c:if>
 					</ul>
 				</div>
 				

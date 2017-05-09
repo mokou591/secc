@@ -1,20 +1,23 @@
 package cn.poi591.secc.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.constant.Review;
-import cn.poi591.secc.dto.FilmReviewAndUser;
+import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.FilmScore;
+import cn.poi591.secc.dto.Paging;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.User;
@@ -25,6 +28,31 @@ import cn.poi591.secc.service.impl.FilmServiceImpl;
 public class FilmController {
 	@Autowired
 	private FilmServiceImpl filmService;
+	
+	/**
+	 * 处理ajax提交的对影评点赞或踩的评价
+	 * @param filmId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping("/review/{reviewId}/{type}")
+	public @ResponseBody String filmAllReview(@PathVariable Integer reviewId,@PathVariable String type,HttpSession session){
+		//检查是否有登录用户
+		User loginUser = (User) session.getAttribute("loginUser");
+		if(loginUser==null){
+			return "needToLogin";
+		}
+		//检查是否已经评价过
+		FilmReview filmReview = new FilmReview();
+		filmReview.setId(reviewId);
+		boolean hasDone = filmService.checkFilmReviewOOXXExist(filmReview,loginUser);
+		if(hasDone){
+			return "hasDone";
+		}
+		// 保存评价
+		filmService.addFilmReviewOOXX(filmReview,loginUser,type);
+		return "success";
+	}
 	
 	/**
 	 * 跳转到电影的所有影评页面
@@ -40,27 +68,31 @@ public class FilmController {
 		Integer filmReviewCount = filmService.getFilmReviewCount(mainFilm);
 		// 分页所需参数
 		final Integer PAGE_ITEM_COUNT = Review.PAGE_ITEM_COUNT;
-		int maxPage = filmReviewCount/PAGE_ITEM_COUNT+1;
+		int maxPage = (int) Math.ceil(filmReviewCount*1.0f/PAGE_ITEM_COUNT);
 		//判断页码是否正确
 		if(page<1 || page>maxPage){
 			return mv;
 		}
-		//查询当页、一页数量的影评。
+		//查询当页、一页数量的影评
 		Integer start = (page-1)*PAGE_ITEM_COUNT;
-		List<FilmReviewAndUser> filmReviewList = filmService.getFilmReviewAndUserLatest(mainFilm,start,PAGE_ITEM_COUNT);
+		List<FilmReviewDetail> filmReviewList = filmService.getFilmReviewDetailLatest(mainFilm,start,PAGE_ITEM_COUNT);
 		//分页模型
-		
+		Paging paging  = new Paging();
+		paging.setCurrent(page);
+		paging.setMax(maxPage);
+		paging.setMin(1);
+		paging.setHasPrev(page==1?false:true);
+		paging.setHasNext(page==maxPage?false:true);
+		paging.generatePageList();
 		//向页面添加参数
 		mv.addObject("mainFilm", mainFilm);
 		mv.addObject("reviewList", filmReviewList);
 		mv.addObject("reviewCount", filmReviewCount);
-//		mv.addObject("fff", ffff);
-//		mv.addObject("fff", ffff);
+		mv.addObject("paging", paging);
 		// 跳转到全部影评页面
 		mv.setViewName(Path.JSP_FILM+"/review_latest");
 		return mv;
 	}
-	
 	
 	
 	/**
@@ -124,7 +156,7 @@ public class FilmController {
 		// 评分
 		FilmScore mainScore = filmService.getFilmScore(mainFilm);
 		// 影评
-		List<FilmReviewAndUser> reviewList = filmService.getFilmReviewAndUserList(mainFilm);
+		List<FilmReviewDetail> reviewList = filmService.getFilmReviewDetailBest(mainFilm,0,5);
 		Integer reviewListLength = reviewList.size();
 		// 用户评分
 		Integer loginUserScore = null;
@@ -139,7 +171,7 @@ public class FilmController {
 		 * 
 		 */
 		// 存入页面
-		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/show");
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/film_show");
 		mv.addObject("mainFilm", mainFilm);
 		mv.addObject("mainScore", mainScore);
 		mv.addObject("reviewList", reviewList);
@@ -166,6 +198,6 @@ public class FilmController {
 	 */
 	@RequestMapping("/new")
 	public String newFilm() {
-		return Path.JSP_FILM + "/new";
+		return Path.JSP_FILM + "/film_new";
 	}
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import cn.poi591.secc.dao.FilmDao;
 import cn.poi591.secc.dao.FilmReviewDao;
-import cn.poi591.secc.dto.FilmReviewAndUser;
+import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
@@ -56,8 +56,8 @@ public class FilmServiceImpl implements FilmService {
 	 * @param mainFilm
 	 * @return 一个 集合
 	 */
-	public List<FilmReviewAndUser> getFilmReviewAndUserList(Film film) {
-		return filmReviewDao.getFilmReviewAndUserList(film);
+	public List<FilmReviewDetail> getFilmReviewDetailBest(Film film,Integer start,Integer offset) {
+		return filmReviewDao.getFilmReviewDetailBest(film,start,offset);
 	}
 
 	/**
@@ -80,9 +80,19 @@ public class FilmServiceImpl implements FilmService {
 		return filmReviewDao.getFilmReviewCount(film);
 	}
 
-	public List<FilmReviewAndUser> getFilmReviewAndUserLatest(Film film, Integer start,
-			Integer offset) {
-		return filmReviewDao.getFilmReviewAndUserLatest(film, start, offset);
+	public List<FilmReviewDetail> getFilmReviewDetailLatest(Film film,
+			Integer start, Integer offset) {
+		return filmReviewDao.getFilmReviewDetailLatest(film, start, offset);
+	}
+
+	public boolean checkFilmReviewOOXXExist(FilmReview filmReview,
+			User loginUser) {
+		return filmReviewDao.checkFilmReviewOOXXExist(filmReview, loginUser);
+	}
+
+	public boolean addFilmReviewOOXX(FilmReview filmReview, User loginUser,
+			String type) {
+		return filmReviewDao.addFilmReviewOOXX(filmReview, loginUser, type);
 	}
 
 }

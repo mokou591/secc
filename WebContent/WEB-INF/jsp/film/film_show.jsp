@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/setting/constant.jsp" %>
 <!-- 本页的引入和变量 -->
-<c:set var="review_short" value="${138}" />
+<c:set var="review_short" value="${135}" />
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -151,18 +151,51 @@
 										</c:otherwise>
 									</c:choose>
 									<div class="resttext panel-collapse collapse" id="content${review.id}">
-										<c:if test="${fn:length(review.text) gt 138}">
-											${fn:substring(review.text, 138,fn:length(review.text))}
+										<c:if test="${fn:length(review.text) gt review_short}">
+											${fn:substring(review.text, review_short,fn:length(review.text))}
 										</c:if>
 									</div>
 							</div>
 							<div class="review_ooxx">
-								<a href="javascript:void(0)">有用</a>:892  /  
-								<a href="javascript:void(0)">没用</a>:92
-								<div id="ooxx61"></div>
+								<button id="oobtn${review.id}" reviewId="${review.id}" type="oo" class="btn btn-default btn-sm ooxx">
+									有用<span id="oo${review.id}">${review.vote.oo}</span>
+								</button>
+								<button id="xxbtn${review.id}" reviewId="${review.id}" type="xx" class="btn btn-default btn-sm ooxx" >
+									没用<span id="xx${review.id}">${review.vote.xx}</span>
+								</button>
+								<span id="ooxx_result${review.id}"></span>								
 							</div>
 						</div>
 					</c:forEach>
+						
+					<!-- 用户评论影评是否有用的功能 -->
+					<script type="text/javascript">
+						var resultTip="";
+						$('.review_ooxx .ooxx').click(function(){
+							var reviewId = $(this).attr('reviewId');
+							var type = $(this).attr('type');
+							$.post("${ctx}/film/review/"+reviewId+"/"+type,
+									{},
+									function(result){
+										switch(result){
+											case "success":
+												var count = parseInt($('#'+type+reviewId).html());
+												$('#'+type+'btn'+reviewId).addClass("active");
+												$('#'+type+reviewId).html(count+1);
+												resultTip="感谢您的评价！";
+												break;
+											case "hasDone":
+												resultTip="您已经评价过了哦";
+												break;
+											case "needToLogin":
+												resultTip='登录后才能评价哦 <a class="btn btn-default btn-xs" href="${ctx}/user/login">登录</a>';
+												break;
+											default:
+										}
+										$("#ooxx_result"+reviewId).html(resultTip);
+									});
+						});
+					</script>
 
 					<div class="toallreview">
 						<a href="${ctx}/film/${mainFilm.id}/review/latest/1"> &gt; 查看影片所有影评（全部${reviewListLength}条）</a>
