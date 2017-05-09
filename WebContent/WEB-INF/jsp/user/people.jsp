@@ -88,6 +88,8 @@
 	</head>
 
 	<body>
+		<!-- 引入导航栏 -->
+		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
 		<div class="container">
 			<div class="row clearfix">
 				<div class="col-md-10 column col-md-offset-1">
@@ -120,18 +122,6 @@
 								<a href="#panel-1" data-toggle="tab">动态</a>
 							</li>
 							<li>
-								<a href="#panel-2" data-toggle="tab">回答</a>
-							</li>
-							<li>
-								<a href="#panel-3" data-toggle="tab">提问</a>
-							</li>
-							<li>
-								<a href="#panel-4" data-toggle="tab">收藏</a>
-							</li>
-							<li>
-								<a href="#panel-5" data-toggle="tab">关注</a>
-							</li>
-							<li>
 								<a href="#panel-6" data-toggle="tab">资料</a>
 							</li>
 
@@ -139,20 +129,8 @@
 						<div class="tab-content">
 							<div class="tab-pane fade in active" id="panel-1">
 								<p>
-									I'm in Section 1.
+									还没有动态哦。
 								</p>
-							</div>
-							<div class="tab-pane fade" id="panel-2">
-								Howdy, I'm in Section 2.
-							</div>
-							<div class="tab-pane fade" id="panel-3">
-								<p>还没有提问</p>
-							</div>
-							<div class="tab-pane fade" id="panel-4">
-								4
-							</div>
-							<div class="tab-pane fade" id="panel-5">
-								5
 							</div>
 							<div class="tab-pane fade" id="panel-6">
 								<div id="profile">

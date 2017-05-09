@@ -13,6 +13,8 @@
 	</head>
 
 	<body>
+		<!-- 引入导航栏 -->
+		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
 		<div class="page-header col-md-6 col-md-offset-3">
 			<h1>登录账户</h1>
 		</div>

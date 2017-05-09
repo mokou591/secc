@@ -60,6 +60,8 @@
 	</head>
 
 	<body>
+		<!-- 引入导航栏 -->
+		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
 		<div class="container">
 			<div class="row clearfix">
 				<div class="col-md-10 column col-md-offset-1">

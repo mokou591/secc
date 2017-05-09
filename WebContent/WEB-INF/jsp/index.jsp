@@ -5,23 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>电影</title>
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>校园课外娱乐</title>
 </head>
 <body>
-	<h3>电影评论</h3>
-
-	<c:choose>
-		<c:when test="${empty loginUser}">
-			<a href="${ctx }/user/login">登录</a>
-			<a href="${ctx }/user/signup">注册</a>
-		</c:when>
-		<c:otherwise>
-			<label>欢迎， ${loginUser.nickname}</label>
-			<a href="${ctx }/people/${loginUser.id }">个人中心</a>
-			<a href="${ctx }/user/logout">退出账号</a>
-		</c:otherwise>
-	</c:choose>
-
+	<!-- 引入导航栏 -->
+	<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
 
 </body>
 </html>

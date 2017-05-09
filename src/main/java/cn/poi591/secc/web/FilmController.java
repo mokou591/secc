@@ -61,7 +61,7 @@ public class FilmController {
 	@RequestMapping("/{filmId}/review/latest/{page}")
 	public ModelAndView filmAllReview(@PathVariable Integer filmId,@PathVariable Integer page){
 		//访问失败的跳转页面
-		ModelAndView mv = new ModelAndView("/");
+		ModelAndView mv = new ModelAndView("/index");
 		// 电影对象
 		Film mainFilm = filmService.findFilmById(filmId);
 		// 查询影评总数
@@ -70,7 +70,7 @@ public class FilmController {
 		final Integer PAGE_ITEM_COUNT = Review.PAGE_ITEM_COUNT;
 		int maxPage = (int) Math.ceil(filmReviewCount*1.0f/PAGE_ITEM_COUNT);
 		//判断页码是否正确
-		if(page<1 || page>maxPage){
+		if(maxPage!=0 &&( page<1 || page>maxPage)){
 			return mv;
 		}
 		//查询当页、一页数量的影评
@@ -188,6 +188,9 @@ public class FilmController {
 	@RequestMapping("/submit")
 	public String filmSubmit(Film film) {
 		// 检查参数
+		film.setIntro(film.getIntro().replaceAll("\r\n", "<br/>"));// 影评内容换行处理
+		film.setIntro(film.getIntro().replaceAll("\n", "<br/>"));// 影评内容换行处理
+		
 		// 存入数据库
 		filmService.addFilm(film);
 		return Path.JSP_FILM + "/success/new_film_submit";

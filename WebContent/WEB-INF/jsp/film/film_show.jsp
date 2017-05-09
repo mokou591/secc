@@ -15,6 +15,8 @@
 <title>${mainFilm.chsName}</title>
 </head>
 	<body>
+		<!-- 引入导航栏 -->
+		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
 		<div class="container">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
@@ -93,7 +95,7 @@
 									片长
 									</dt>
 									<dd>
-										${mainFilm.length }
+										${mainFilm.length }分钟
 									</dd>
 								</c:if>
 

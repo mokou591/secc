@@ -1,66 +1,68 @@
-*{
-				font-size: 16px;
-			}
-		
-			.part_header{
-				margin-top: 50px;
-			}
-		
-			#poster {
-				width: 160px;
-				margin-left: 10px;
-			}
-			
-			#profile dt {
-				font-size: 14px;
-			}
-			
-			#profile dd {
-				font-size: 14px;
-				margin-bottom: 4px;
-			}
-			
-			.review{
-				margin: 20px auto;
-			}
-			
-			.review_header {
-				background: rgb(243, 245, 247);
-				color: rgb(51, 119, 170);
-				font-size: 16px;
-				padding: 8px 20px;
-			}
-			
-			.showorhide {
-				width: 100px;
-				float: right
-			}
-			
-			.review_avatar {
-				margin-left:5px;
-				width: 50px;
-				height: 50px;
-			}
-			.review_name{
-				margin-left: 20px;
-			}
-			.review_mark {
-				margin: auto 10px;
-			}
-			
-			.review_date {
-				color: grey;
-			}
-			
-			.review_text{
-				margin: 10px;
-			}
-			.review_ooxx *{
-				font-size:14px;
-				color: grey;
-				margin-left: 10px;
-			}
-			.toallreview {
-				font-size: 20px;
-				margin: 100px 0 100px 0;
-			}
+.part_header {
+	margin-top: 50px;
+}
+
+#poster {
+	width: 160px;
+	margin-left: 10px;
+}
+
+#profile dt {
+	font-size: 14px;
+}
+
+#profile dd {
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+
+.review {
+	margin: 20px auto;
+}
+
+.review_header {
+	background: rgb(243, 245, 247);
+	color: rgb(51, 119, 170);
+	font-size: 16px;
+	padding: 8px 20px;
+}
+
+.showorhide {
+	width: 100px;
+	float: right;
+}
+
+.review_avatar {
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	margin-left: 5px;
+}
+
+.review_name {
+	margin-left: 20px;
+}
+
+.review_mark {
+	margin: auto 10px;
+}
+
+.review_date {
+	color: grey;
+}
+
+.review_text {
+	font-size:16px;
+	margin: 10px;
+}
+
+.review_ooxx * {
+	font-size: 14px;
+	color: grey;
+	margin-left: 10px;
+}
+
+.toallreview {
+	font-size: 20px;
+	margin: 100px 0 100px 0;
+}
