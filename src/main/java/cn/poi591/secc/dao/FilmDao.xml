@@ -14,4 +14,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM `t_film` WHERE `id`=#{id};
 	</select>
 
+	<!-- 根据影片原名查找电影 -->
+	<select id="findByOriginalName" parameterType="java.lang.String" resultType="cn.poi591.secc.entity.Film">
+		SELECT * FROM `t_film`
+		WHERE original_name=#{originalName};
+	</select>
+	
+	<!-- 根据类型查找电影 -->
+	<select id="findFilmListByGenre" resultType="cn.poi591.secc.entity.Film">
+		SELECT * FROM `t_film`
+		WHERE `genre` LIKE CONCAT('%',#{genre},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 随机查找电影 -->
+	<select id="findFilmRandom" resultType="cn.poi591.secc.entity.Film">
+		SELECT * FROM `t_film`
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
 </mapper>

@@ -18,7 +18,7 @@
 				<!-- 栏目  -->
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">电影</a>
+						<a href="${ctx}/film">电影</a>
 					</li>
 					<li>
 						<a href="#">音乐</a>

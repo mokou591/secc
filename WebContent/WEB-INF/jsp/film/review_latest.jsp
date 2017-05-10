@@ -31,7 +31,7 @@
 					</c:if>
 					
 					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/reviewlist.jsp" />
+					<jsp:include page="/WEB-INF/jsp/component/reviewlist.jsp" />
 				
 					<!-- 分页 -->
 					<c:if test="${reviewCount > 0}">

@@ -36,8 +36,8 @@ public class FilmServiceImpl implements FilmService {
 	 * 
 	 * @param filmReview
 	 */
-	public void addFilmReview(FilmReview filmReview) {
-		filmReviewDao.add(filmReview);
+	public Integer addFilmReview(FilmReview filmReview) {
+		return	filmReviewDao.add(filmReview);
 	}
 
 	/**
@@ -94,14 +94,25 @@ public class FilmServiceImpl implements FilmService {
 			String type) {
 		return filmReviewDao.addFilmReviewOOXX(filmReview, loginUser, type);
 	}
-
-	public Film findFilmByOriginalName(String originalName) {
-		return filmReviewDao.findFilmByOriginalName(originalName);
-	}
-
 	
 	public FilmReviewDetail findFilmReviewDetailById(Integer reviewId) {
 		return filmReviewDao.findFilmReviewDetailById(reviewId);
+	}
+	
+	public Film findFilmByOriginalName(String originalName) {
+		return filmDao.findByOriginalName(originalName);
+	}
+
+	public List<Film> findFilmListByGenre(String genre,Integer start,Integer offset) {
+		return filmDao.findFilmListByGenre(genre,start ,offset);
+	}
+
+	public List<Film> findFilmRandom(Integer count) {
+		return filmDao.findFilmRandom(count);
+	}
+
+	public List<FilmReviewDetail> findFilmReviewRandom(Integer count) {
+		return filmReviewDao.findFilmReviewRandom(count);
 	}
 
 }

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/setting/constant.jsp"%>
-<!-- 本页的引入和变量 -->
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +9,7 @@
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${ctx}/css/film_show.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>${review.user.nickname}的影评</title>
+	<title>${review.film.chsName} 影评</title>
 </head>
 		<!-- 引入导航栏 -->
 		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
@@ -85,6 +82,17 @@
 					
 				</div>
 				<div class="col-md-4 column">
+					<div class="page-header">
+						<a href="${ctx}/film/${review.film.id}/new_review" class="btn btn-primary">我要评价</a>
+					</div>
+					<div class="page-header">
+						<h4>
+							<a id="to_film" href="${ctx }/film/${review.film.id}"> &gt; 转到${review.film.chsName}电影页面</a>
+						</h4>
+					</div>
+					<a href="${ctx }/film/${review.film.id}">
+						<img id="poster" src="${review.film.posterUrl}" /> 
+					</a>
 				</div>
 			</div>
 		</div>

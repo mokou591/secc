@@ -34,7 +34,7 @@
 				margin: 0 0 0 0;
 			}
 			
-			form .form-group {
+			#profile_form .form-group {
 				margin: 0 0;
 				padding: 20px 0;
 			}
@@ -95,7 +95,7 @@
 				</div>
 				<div class="col-md-8 column">
 
-					<form class="form-horizontal" role="form" method="post" action="${ctx}/user/updateUserProfile" >
+					<form id="profile_form" class="form-horizontal" role="form" method="post" action="${ctx}/user/updateUserProfile" >
 						<input hidden="hidden" name="id" value="${loginUser.id}" />
 					
 						<div class="form-group">

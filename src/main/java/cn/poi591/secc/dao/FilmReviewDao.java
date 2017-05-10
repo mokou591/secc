@@ -18,7 +18,7 @@ public interface FilmReviewDao {
 	 * 
 	 * @param filmReview
 	 */
-	void add(FilmReview filmReview);
+	Integer add(FilmReview filmReview);
 
 	/**
 	 * 查出电影的评分信息
@@ -104,16 +104,16 @@ public interface FilmReviewDao {
 	Vote getVoteByFilmReviewId(@Param("filmReviewId") Integer filmReviewId);
 
 	/**
-	 * 根据影片原名查找电影
-	 * @param originalName
-	 * @return
-	 */
-	Film findFilmByOriginalName(String originalName);
-
-	/**
 	 * 根据影评id查询详细影评数据
 	 * @param reviewId
 	 * @return
 	 */
 	FilmReviewDetail findFilmReviewDetailById(Integer reviewId);
+	
+	/**
+	 * 随机查询出若干影评
+	 * @param count
+	 * @return
+	 */
+	List<FilmReviewDetail> findFilmReviewRandom(Integer count);
 }

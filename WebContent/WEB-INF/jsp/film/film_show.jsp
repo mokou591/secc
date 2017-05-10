@@ -120,7 +120,7 @@
 					</h3>
 					
 					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/reviewlist.jsp" />
+					<jsp:include page="/WEB-INF/jsp/component/reviewlist.jsp" />
 					
 					<!-- 查看全部影评按钮 -->
 					<div class="toallreview">

@@ -30,6 +30,40 @@ public class FilmController {
 	@Autowired
 	private FilmServiceImpl filmService;
 
+	@RequestMapping("/genre/{genre}")
+	@ResponseBody
+	public ModelAndView findByGenre(@PathVariable String genre) {
+		//参数检查
+		List<Film> filmList;
+		if(genre.equals("随机")){
+			filmList = filmService.findFilmRandom(8);
+		}else{
+			filmList = filmService.findFilmListByGenre(genre,0,8);
+		}
+		// 存入参数，页面跳转
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/ajax/find_by_genre");
+		mv.addObject("filmList", filmList);
+		return mv;
+	}
+
+	/**
+	 * 跳转至电影主页
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = { "", "/index" })
+	public ModelAndView filmIndex() {
+		// 正在热映
+		List<Film> hotFilmList = filmService.findFilmRandom(4);
+		// 最新影评
+		List<FilmReviewDetail> hotReviewDetailList = filmService.findFilmReviewRandom(5);
+		// 存入参数，页面跳转
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/index_film");
+		mv.addObject("hotFilmList", hotFilmList);
+		mv.addObject("hotReviewDetailList", hotReviewDetailList);
+		return mv;
+	}
+
 	/**
 	 * 跳转至展示单篇影评。
 	 * 
@@ -39,11 +73,12 @@ public class FilmController {
 	 */
 	@RequestMapping("/review/{reviewId}")
 	public ModelAndView showFilmReview(@PathVariable Integer reviewId) {
-		//查询出详细影评
-		FilmReviewDetail reviewDetail = filmService.findFilmReviewDetailById(reviewId);
-		//跳转页面
-		ModelAndView mv = new ModelAndView(Path.JSP_FILM+"/review_show");
-		mv.addObject("review",reviewDetail);
+		// 查询出详细影评
+		FilmReviewDetail reviewDetail = filmService
+				.findFilmReviewDetailById(reviewId);
+		// 跳转页面
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/review_show");
+		mv.addObject("review", reviewDetail);
 		return mv;
 	}
 
@@ -56,7 +91,7 @@ public class FilmController {
 	 */
 	@RequestMapping("/review/{reviewId}/{type}")
 	public @ResponseBody
-	String filmAllReview(@PathVariable Integer reviewId,
+	String reviewVote(@PathVariable Integer reviewId,
 			@PathVariable String type, HttpSession session) {
 		// 检查是否有登录用户
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -132,11 +167,11 @@ public class FilmController {
 			filmReview.setIsPrivate(false);
 		}
 		// 调用服务储存影评
-		filmService.addFilmReview(filmReview);
+		Integer id = filmService.addFilmReview(filmReview);
 		// 向页面储存参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM
 				+ "/success/new_review_submit");
-		
+		mv.addObject("reviewId", id);
 		return mv;
 	}
 

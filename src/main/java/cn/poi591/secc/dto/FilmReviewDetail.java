@@ -1,19 +1,29 @@
 package cn.poi591.secc.dto;
 
-import java.util.Date;
-
+import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.User;
 
-public class FilmReviewDetail extends FilmReview{
-	//FilmReview properties..
-	
-	//author
+public class FilmReviewDetail extends FilmReview {
+	// FilmReview properties..
+
+	// author
 	private User user;
 
-	//Upvote Downvote model
+	// film
+	private Film film;
+
+	// Upvote Downvote model
 	private Vote vote;
-	
+
+	public Film getFilm() {
+		return film;
+	}
+
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+
 	public Vote getVote() {
 		return vote;
 	}
@@ -29,5 +39,5 @@ public class FilmReviewDetail extends FilmReview{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 }
