@@ -95,4 +95,13 @@ public class FilmServiceImpl implements FilmService {
 		return filmReviewDao.addFilmReviewOOXX(filmReview, loginUser, type);
 	}
 
+	public Film findFilmByOriginalName(String originalName) {
+		return filmReviewDao.findFilmByOriginalName(originalName);
+	}
+
+	
+	public FilmReviewDetail findFilmReviewDetailById(Integer reviewId) {
+		return filmReviewDao.findFilmReviewDetailById(reviewId);
+	}
+
 }

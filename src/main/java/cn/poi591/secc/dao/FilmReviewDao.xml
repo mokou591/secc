@@ -54,7 +54,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_film_review WHERE user_id=#{id} LIMIT 1;
 	</select>
 	
-	<!-- 选择可以展示在当前电影页面的影评（公开且内容非空） -->
 	
 	<!-- 获取当前电影的最新影评，需要设置起始位置和项数 -->
 	<select id="getFilmReviewDetailLatest" resultMap="FilmReviewDetailMap">
@@ -113,4 +112,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{filmReview.id},#{user.id},#{type});
 	</insert>
 	
+	<!-- 根据影片原名查找电影 -->
+	<select id="findFilmByOriginalName" parameterType="java.lang.String" resultType="cn.poi591.secc.entity.Film">
+		SELECT * FROM `t_film`
+		WHERE original_name=#{originalName};
+	</select>
+	
+	<!-- 根据影评id查询详细影评数据 -->
+	<select id="findFilmReviewDetailById" parameterType="java.lang.Integer" resultMap="FilmReviewDetailMap">
+		SELECT * FROM t_film_review
+		WHERE id=#{reviewId}
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE;
+	</select>
 </mapper>

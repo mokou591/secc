@@ -12,6 +12,16 @@
 <body>
 		<!-- 引入导航栏 -->
 		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
-	<h3>您的评价已成功提交。</h3>
+		<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="page-header">
+					<h4>您的评价已成功提交。</h4>
+				</div>
+			</div>
+		</div>
+</div>
+		
+	
 </body>
 </html>

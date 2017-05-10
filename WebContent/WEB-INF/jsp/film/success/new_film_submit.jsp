@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/setting/constant.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,6 +13,15 @@
 <body>
 		<!-- 引入导航栏 -->
 		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
-	<h3>新的电影条目已成功提交。</h3>
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div class="page-header">
+						<h4>新的电影条目已成功提交。</h4>
+					</div>
+					<a class="btn btn-link" href="${ctx}/film/${mainFilm.id}">去看看</a>
+				</div>
+			</div>
+		</div>
 </body>
 </html>

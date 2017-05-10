@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/setting/constant.jsp"%>
-<div id="bar_contianer" style="margin: 0;padding: 0;width: 100%;" class="container"  class="clearfix">
+<div id="bar_contianer" style="margin: 0 0 45px 0;padding: 0;width: 100%;" class="container"  class="clearfix">
 	<div id="nav_bar_top">
-		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 			 	<span class="sr-only">屏幕切换</span>
@@ -39,7 +39,7 @@
 				</form>
 
 				<!-- 导航栏靠右项 -->
-				<ul style="margin-right:5px" class="nav navbar-nav navbar-right">
+				<ul style="margin-right:10px" class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty loginUser}">
 							<li><a href="${ctx}/user/login"><span class="glyphicon glyphicon-user"></span> 登录</a></li>
@@ -54,7 +54,7 @@
 									</li>
 									<li class="divider"></li>
 									<li>
-										<a href="${ctx}/user/logout">注销账号</a>
+										<a href="${ctx}/user/logout">退出账号</a>
 									</li>
 								</ul>
 							</li>
@@ -64,4 +64,5 @@
 			</div>
 		</nav>
 	</div>
+	
 </div>

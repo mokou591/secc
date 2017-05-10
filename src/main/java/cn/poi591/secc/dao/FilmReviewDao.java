@@ -102,4 +102,18 @@ public interface FilmReviewDao {
 	 * @return
 	 */
 	Vote getVoteByFilmReviewId(@Param("filmReviewId") Integer filmReviewId);
+
+	/**
+	 * 根据影片原名查找电影
+	 * @param originalName
+	 * @return
+	 */
+	Film findFilmByOriginalName(String originalName);
+
+	/**
+	 * 根据影评id查询详细影评数据
+	 * @param reviewId
+	 * @return
+	 */
+	FilmReviewDetail findFilmReviewDetailById(Integer reviewId);
 }
