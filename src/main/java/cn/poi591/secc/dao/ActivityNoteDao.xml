@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.ActivityNoteDao">
+
+	<insert id="add" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.ActivityNote"
+	 keyProperty="id" >
+		INSERT INTO
+		`t_activity_note`(`activity_id`,`user_id`,`title`,`text`,`is_private`,`create_time`)
+		VALUES(#{activityId},#{userId},#{title},#{text},#{isPrivate},NOW());
+	</insert>
+
+	<select id="findById" resultType="cn.poi591.secc.entity.ActivityNote">
+		SELECT * FROM `t_activity_note`
+		WHERE `id`=#{id};
+	</select>
+
+	<!-- 查找当前活动所有活动讨论 -->
+	<select id="findActivityNoteByActivity" parameterType="cn.poi591.secc.entity.Activity"
+		resultType="cn.poi591.secc.entity.ActivityNote">
+		SELECT * FROM `t_activity_note`
+		WHERE `activity_id`=#{id};
+	</select>
+
+
+	<!-- 获取当前活动的活动讨论总数 -->
+	<select id="getActivityNoteCount" parameterType="cn.poi591.secc.entity.Activity"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_activity_note WHERE activity_id=#{id} AND is_private=FALSE;
+	</select>
+
+	<!-- 根据活动讨论找用户 -->
+	<select id="findUserByActivityNote" parameterType="cn.poi591.secc.entity.ActivityNote"
+		resultType="cn.poi591.secc.entity.User">
+		SELECT * FROM t_user WHERE id=#{note.user_id};
+	</select>
+
+	
+	<!-- 随机查询出若干活动讨论 -->
+	<select id="findActivityNoteDetailRandom" parameterType="java.lang.Integer" resultMap="ActivityNoteDetailMap">
+		SELECT * FROM t_activity_note
+		WHERE is_private=FALSE
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
+	
+	<!-- 获取当前活动的最新活动讨论，需要设置起始位置和项数 -->
+	<select id="getActivityNoteDetailLatest" resultMap="ActivityNoteDetailMap">
+		SELECT * FROM t_activity_note
+		WHERE activity_id=#{activity.id} AND is_private=FALSE
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 活动讨论详细-->
+	<resultMap id="ActivityNoteDetailMap" type="cn.poi591.secc.dto.ActivityNoteDetail">
+		<id property="id" column="id"/>
+		<!-- 在ActivityNote基础上多携带一个User作为作者 -->
+		<association property="user" column="user_id" 
+			select="cn.poi591.secc.dao.UserDao.findById" />
+		<!-- 带着Activity -->
+		<association property="activity" column="activity_id" 
+			select="cn.poi591.secc.dao.ActivityDao.findById" />
+	</resultMap>
+	
+	<!-- 根据活动讨论id查询详细活动讨论数据 -->
+	<select id="findActivityNoteDetailById" parameterType="java.lang.Integer" resultMap="ActivityNoteDetailMap">
+		SELECT * FROM t_activity_note
+		WHERE id=#{noteId}
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE;
+	</select>
+</mapper>

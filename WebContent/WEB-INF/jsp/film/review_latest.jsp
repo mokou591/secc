@@ -68,7 +68,7 @@
 				
 				<div class="col-md-4 column">
 					<div class="page-header">
-						<a href="${ctx}/film/${mainFilm.id}/new_review" class="btn btn-primary">我要评价</a>
+						<a href="${ctx}/film/${mainFilm.id}/review_new" class="btn btn-primary">我要评价</a>
 					</div>
 					<div class="page-header">
 						<h4>

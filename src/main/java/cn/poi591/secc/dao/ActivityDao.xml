@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.ActivityDao">
+
+	<insert id="add" parameterType="cn.poi591.secc.entity.Activity" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		`t_activity`(`title`,`poster_url`,`time`,`place`,`cost`,`genre`,`contact`,`info`,`create_time`)
+		VALUES(#{title},#{posterUrl},#{time},#{place},#{cost},#{genre},#{contact},#{info},NOW());
+	</insert>
+
+	<select id="findById"  resultType="cn.poi591.secc.entity.Activity">
+		SELECT * FROM `t_activity` WHERE `id`=#{id};
+	</select>
+	
+	<!-- 根据类型查找活动 -->
+	<select id="findActivityListByGenre" resultType="cn.poi591.secc.entity.Activity">
+		SELECT * FROM `t_activity`
+		WHERE `genre` LIKE CONCAT('%',#{genre},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 随机查找活动 -->
+	<select id="findActivityRandom" resultType="cn.poi591.secc.entity.Activity">
+		SELECT * FROM `t_activity`
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
+</mapper>

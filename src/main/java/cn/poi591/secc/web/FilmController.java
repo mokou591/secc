@@ -22,6 +22,7 @@ import cn.poi591.secc.dto.Paging;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.User;
+import cn.poi591.secc.service.FilmService;
 import cn.poi591.secc.service.impl.FilmServiceImpl;
 
 @Controller
@@ -56,7 +57,7 @@ public class FilmController {
 		// 正在热映
 		List<Film> hotFilmList = filmService.findFilmRandom(4);
 		// 最新影评
-		List<FilmReviewDetail> hotReviewDetailList = filmService.findFilmReviewRandom(5);
+		List<FilmReviewDetail> hotReviewDetailList = filmService.findFilmReviewDetailRandom(5);
 		// 存入参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/index_film");
 		mv.addObject("hotFilmList", hotFilmList);
@@ -166,19 +167,19 @@ public class FilmController {
 		if (filmReview.getIsPrivate() == null) {
 			filmReview.setIsPrivate(false);
 		}
-		// 调用服务储存影评
-		Integer id = filmService.addFilmReview(filmReview);
+		// 储存影评
+		filmService.addFilmReview(filmReview);
 		// 向页面储存参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM
-				+ "/success/new_review_submit");
-		mv.addObject("reviewId", id);
+				+ "/success/film_review_submit");
+		mv.addObject("reviewId", filmReview.getId());
 		return mv;
 	}
 
 	/**
 	 * 跳转到创建新影评的页面
 	 */
-	@RequestMapping("/{id}/new_review")
+	@RequestMapping("/{id}/review_new")
 	public ModelAndView newReview(@PathVariable Integer id, HttpSession session) {
 		Film mainFilm = filmService.findFilmById(id);
 		// 判断是否有登录用户
@@ -192,7 +193,7 @@ public class FilmController {
 			session.setAttribute("prevPage", "/film/" + id);
 		} else {
 			// 有登录用户，跳转到创建新影评页面
-			mv.setViewName(Path.JSP_FILM + "/new_review");
+			mv.setViewName(Path.JSP_FILM + "/review_new");
 		}
 		// 向页面储存参数，页面跳转
 		mv.addObject("mainFilm", mainFilm);
@@ -219,7 +220,7 @@ public class FilmController {
 		Integer loginUserScore = null;
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {// 有登录用户
-			FilmReview filmReview = filmService.getUserReview(loginUser);
+			FilmReview filmReview = filmService.getFilmReview(mainFilm,loginUser);
 			if (filmReview != null) {// 用户有评分
 				loginUserScore = filmReview.getScore();
 			}
@@ -248,12 +249,10 @@ public class FilmController {
 
 		// 存入数据库
 		filmService.addFilm(film);
-		// 重新查出，存入页面
-		Film mainFilm = filmService.findFilmByOriginalName(film
-				.getOriginalName());
+		
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM
-				+ "/success/new_film_submit");
-		mv.addObject("mainFilm", mainFilm);
+				+ "/success/film_submit");
+		mv.addObject("mainFilm", film);
 		return mv;
 	}
 

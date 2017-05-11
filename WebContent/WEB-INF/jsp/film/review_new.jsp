@@ -14,6 +14,7 @@
 			}
 			textarea{
 				resize: none;
+				text-indent:2em;
 			}
 			label{
 				font-weight:normal;

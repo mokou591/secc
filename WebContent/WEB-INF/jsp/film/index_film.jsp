@@ -127,13 +127,21 @@
 								<c:forEach var="review" items="${hotReviewDetailList}" >
 								<div class="col-md-12 column">
 									<div class="col-md-2 column">
-										<img class="small_poster" src="${review.film.posterUrl}" />
+										<a href="${ctx}/film/${review.film.id}">
+											<img class="small_poster" src="${review.film.posterUrl}" />
+										</a>
 									</div>
 									<div class="col-md-10 column">
 										<div class="page-header">
 											<h4 class="review_header">
-												${review.title} 
-												<small> ${review.user.nickname}</small>
+												<a href="${ctx}/film/review/${review.id}">
+													${review.title} 
+												</a>
+												<small> 
+													<a href="${ctx}/people/${review.user.id}">
+														${review.user.nickname}
+													</a>
+												</small>
 												<small class="pull-right">
 													<fmt:formatDate value="${review.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />
 												</small>
@@ -149,10 +157,14 @@
 						</div>
 						<div class="col-md-4 column">
 							<div class="page-header">
-								<h3>
-							关注我们
-						</h3>
+								<a href="${ctx}/film/new" class="btn btn-default">创建新的电影条目</a>
 							</div>
+							<div class="page-header">
+								<h3>
+									关注我们
+								</h3>
+							</div>
+							
 						</div>
 					</div>
 				</div>

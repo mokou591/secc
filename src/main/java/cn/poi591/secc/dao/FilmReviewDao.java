@@ -42,12 +42,12 @@ public interface FilmReviewDao {
 	User findUserByFilmReview(FilmReview review);
 
 	/**
-	 * 根据影作者找到一篇影评
+	 * 根据电影和作者找到一篇影评
 	 * 
 	 * @param loginUser
 	 * @return
 	 */
-	FilmReview findFilmReviewByUser(User loginUser);
+	FilmReview getFilmReview(@Param("film") Film film,@Param("user") User user);
 
 	/**
 	 * 获取当前电影的影评总数
@@ -115,5 +115,5 @@ public interface FilmReviewDao {
 	 * @param count
 	 * @return
 	 */
-	List<FilmReviewDetail> findFilmReviewRandom(Integer count);
+	List<FilmReviewDetail> findFilmReviewDetailRandom(Integer count);
 }

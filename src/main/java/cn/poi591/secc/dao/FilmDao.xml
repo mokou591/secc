@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.poi591.secc.dao.FilmDao">
 
-	<insert id="add" parameterType="cn.poi591.secc.entity.Film">
+	<insert id="add" parameterType="cn.poi591.secc.entity.Film" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO
 		`t_film`(`original_name`,`chs_name`,`director`,`writer`,`actor`,`region`,`language`,`year`,`length`,`imdbnum`,`poster_url`,`intro`,`genre`)
 		VALUES(#{originalName},#{chsName},#{director},#{writer},#{actor},#{region},#{language},#{year},#{length},#{imdbnum},#{posterUrl},#{intro},#{genre});

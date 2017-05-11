@@ -15,7 +15,7 @@ import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.FilmService;
 
 @Service
-public class FilmServiceImpl implements FilmService {
+public class FilmServiceImpl implements  FilmService {
 
 	@Autowired
 	private FilmDao filmDao;
@@ -62,12 +62,13 @@ public class FilmServiceImpl implements FilmService {
 
 	/**
 	 * 获取用户的一篇影评
+	 * @param mainFilm 
 	 * 
 	 * @param loginUser
 	 * @return
 	 */
-	public FilmReview getUserReview(User loginUser) {
-		return filmReviewDao.findFilmReviewByUser(loginUser);
+	public FilmReview getFilmReview(Film film, User user) {
+		return filmReviewDao.getFilmReview(film ,user);
 	}
 
 	/**
@@ -111,8 +112,8 @@ public class FilmServiceImpl implements FilmService {
 		return filmDao.findFilmRandom(count);
 	}
 
-	public List<FilmReviewDetail> findFilmReviewRandom(Integer count) {
-		return filmReviewDao.findFilmReviewRandom(count);
+	public List<FilmReviewDetail> findFilmReviewDetailRandom(Integer count) {
+		return filmReviewDao.findFilmReviewDetailRandom(count);
 	}
 
 }

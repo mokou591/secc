@@ -23,7 +23,7 @@
 			#name_and_intro {
 				display: inline-block;
 				margin-left: 25px;
-				font-size: 24px;
+				font-size: 26px;
 			}
 			
 			#nickname {
@@ -107,6 +107,9 @@
 										<c:when test="${loginUser.id eq zoneUser.id}">
 											<a class="btn btn-default"  role="button" href="${ctx}/people/${loginUser.id}/edit"><span class="glyphicon glyphicon-edit"></span> 编辑我的资料</a>
 										</c:when>
+										<c:otherwise>
+											<small>个人空间</small>									
+										</c:otherwise>
 									</c:choose>
 								</c:if>
 							</div>

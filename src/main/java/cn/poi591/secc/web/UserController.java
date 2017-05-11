@@ -16,13 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.impl.UserServiceImpl;
+import cn.poi591.secc.service.UserService;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 
 	
 	/**

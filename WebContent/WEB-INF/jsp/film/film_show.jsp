@@ -18,7 +18,11 @@
 				<div class="col-md-12 column">
 					<div class="page-header">
 						<h1>
-							${mainFilm.chsName} ${mainFilm.originalName} <small> (${mainFilm.year })</small>
+							${mainFilm.chsName} 
+							<c:if test="${mainFilm.chsName != mainFilm.originalName} ">
+								${mainFilm.originalName}
+							</c:if>
+							 <small> (${mainFilm.year })</small>
 						</h1>
 					</div>
 				</div>
@@ -141,7 +145,7 @@
 								<h3><small>${mainScore.count}人评价</small></h3>
 							</c:otherwise>
 						</c:choose>
-						<a href="${ctx}/film/${mainFilm.id}/new_review" class="btn btn-primary">我要评价</a>
+						<a href="${ctx}/film/${mainFilm.id}/review_new" class="btn btn-primary">我要评价</a>
 						
 						<c:if test="${not empty loginUserScore }">
 							<h4>您的评价：${loginUserScore }</h4>

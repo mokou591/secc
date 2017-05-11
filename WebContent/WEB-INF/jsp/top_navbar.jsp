@@ -27,7 +27,7 @@
 						<a href="#">读书</a>
 					</li>
 					<li>
-						<a href="#">线上活动</a>
+						<a href="${ctx}/activity">户外活动</a>
 					</li>
 				</ul>
 				

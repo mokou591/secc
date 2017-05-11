@@ -4,14 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.poi591.secc.dao.FilmReviewDao">
 
-	<insert id="add" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.FilmReview">
+	<insert id="add" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.FilmReview"
+	  keyProperty="id">
 		INSERT INTO
 		`t_film_review`(`film_id`,`user_id`,`score`,`title`,`text`,`is_spoiler`,`is_private`,`create_time`)
 		VALUES(#{filmId},#{userId},#{score},#{title},#{text},#{isSpoiler},#{isPrivate},now());
-		
-		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
-		</selectKey>
 	</insert>
 
 	<select id="findById" resultType="cn.poi591.secc.entity.FilmReview">
@@ -52,14 +49,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_user WHERE id=#{review.user_id};
 	</select>
 
-	<!-- 根据用户找到一篇影评 -->
-	<select id="findFilmReviewByUser" parameterType="cn.poi591.secc.entity.User"
+	<!-- 根据电影和用户找到一篇影评 -->
+	<select id="getFilmReview" 
 		resultType="cn.poi591.secc.entity.FilmReview">
-		SELECT * FROM t_film_review WHERE user_id=#{id} LIMIT 1;
+		SELECT * FROM t_film_review
+		WHERE film_id=#{film.id}
+		AND user_id=#{user.id} LIMIT 1;
 	</select>
 	
 	<!-- 随机查询出若干影评 -->
-	<select id="findFilmReviewRandom" parameterType="java.lang.Integer" resultMap="FilmReviewDetailMap">
+	<select id="findFilmReviewDetailRandom" parameterType="java.lang.Integer" resultMap="FilmReviewDetailMap">
 		SELECT * FROM t_film_review
 		WHERE LENGTH(`title`)>0 AND is_private=FALSE
 		ORDER BY RAND()
