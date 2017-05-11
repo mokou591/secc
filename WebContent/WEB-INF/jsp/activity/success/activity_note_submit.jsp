@@ -17,9 +17,9 @@
 		<div class="row clearfix">
 			<div class="col-md-12 column">
 				<div class="page-header">
-					<h4>已成功提交。</h4>
+					<h4>讨论 · 随笔 已成功提交。</h4>
 				</div>
-				<a class="btn btn-link" href="${ctx}/activity/note/${noteId}">去看看</a>
+				<a class="btn btn-link" href="${ctx}/activity/note/${activityNote.id}">去看看</a>
 			</div>
 		</div>
 </div>

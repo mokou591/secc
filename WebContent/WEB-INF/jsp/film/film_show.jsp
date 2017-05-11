@@ -116,15 +116,15 @@
 					<h3>
 						${mainFilm.chsName }的剧情简介 · · · · · ·
 					</h3>
-					<p>
+					<pre>
 						${mainFilm.intro }
-					</p>
+					</pre>
 					<h3 class="part_header">
 					${mainFilm.chsName }的影评 · · · · · ·
 					</h3>
 					
 					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/component/reviewlist.jsp" />
+					<jsp:include page="/WEB-INF/jsp/component/film_review_list.jsp" />
 					
 					<!-- 查看全部影评按钮 -->
 					<div class="toallreview">

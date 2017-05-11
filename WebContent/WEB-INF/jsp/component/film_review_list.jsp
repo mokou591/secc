@@ -3,8 +3,6 @@
 <%@ include file="/WEB-INF/jsp/setting/constant.jsp"%>
 <!-- 本页的引入和变量 -->
 <c:set var="review_short" value="${135}" />
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 展示评论列表 -->
 <c:forEach items="${reviewList}" var="review" >

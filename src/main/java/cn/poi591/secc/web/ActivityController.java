@@ -61,24 +61,6 @@ public class ActivityController {
 	}
 
 	/**
-	 * 跳转至展示单篇活动讨论。
-	 * 
-	 * @param activityId
-	 * @param noteId
-	 * @return
-	 */
-	@RequestMapping("/note/{noteId}")
-	public ModelAndView showActivityNote(@PathVariable Integer noteId) {
-		// 查询出详细活动讨论
-		ActivityNoteDetail noteDetail = activityService
-				.findActivityNoteDetailById(noteId);
-		// 跳转页面
-		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY + "/note_show");
-		mv.addObject("note", noteDetail);
-		return mv;
-	}
-
-	/**
 	 * 跳转到活动的所有活动讨论页面
 	 * 
 	 * @return
@@ -120,6 +102,25 @@ public class ActivityController {
 		mv.setViewName(Path.JSP_ACTIVITY + "/note_latest");
 		return mv;
 	}
+	
+	/**
+	 * 跳转至展示单篇活动讨论。
+	 * 
+	 * @param activityId
+	 * @param noteId
+	 * @return
+	 */
+	@RequestMapping("/note/{noteId}")
+	public ModelAndView showActivityNote(@PathVariable Integer noteId) {
+		// 查询出详细活动讨论
+		ActivityNoteDetail noteDetail = activityService
+				.findActivityNoteDetailById(noteId);
+		// 跳转页面
+		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY + "/note_show");
+		mv.addObject("note", noteDetail);
+		return mv;
+	}
+
 
 	/**
 	 * 提交新的活动讨论
@@ -131,11 +132,11 @@ public class ActivityController {
 			activityNote.setIsPrivate(false);
 		}
 		// 调用服务储存活动讨论
-		Integer id = activityService.addActivityNote(activityNote);
+		activityService.addActivityNote(activityNote);
 		// 向页面储存参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY
-				+ "/success/note_new_submit");
-		mv.addObject("noteId", id);
+				+ "/success/activity_note_submit");
+		mv.addObject("activityNote", activityNote);
 		return mv;
 	}
 
@@ -201,7 +202,7 @@ public class ActivityController {
 		activityService.add(activity);
 		// 重新查出，存入页面
 		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY
-				+ "/success/activity_note_submit");
+				+ "/success/activity_submit");
 		mv.addObject("mainActivity", activity);
 		return mv;
 	}

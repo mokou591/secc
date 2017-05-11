@@ -64,7 +64,48 @@ public class FilmController {
 		mv.addObject("hotReviewDetailList", hotReviewDetailList);
 		return mv;
 	}
-
+	/**
+	 * 跳转到电影的所有影评页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/{filmId}/review/latest/{page}")
+	public ModelAndView filmAllReview(@PathVariable Integer filmId,
+			@PathVariable Integer page) {
+		// 访问失败的跳转页面
+		ModelAndView mv = new ModelAndView("/index");
+		// 电影对象
+		Film mainFilm = filmService.findFilmById(filmId);
+		// 查询影评总数
+		Integer filmReviewCount = filmService.getFilmReviewCount(mainFilm);
+		// 分页所需参数
+		final Integer PAGE_ITEM_COUNT = Review.PAGE_ITEM_COUNT;
+		int maxPage = (int) Math.ceil(filmReviewCount * 1.0f / PAGE_ITEM_COUNT);
+		// 判断页码是否正确
+		if (maxPage != 0 && (page < 1 || page > maxPage)) {
+			return mv;
+		}
+		// 查询当页、一页数量的影评
+		Integer start = (page - 1) * PAGE_ITEM_COUNT;
+		List<FilmReviewDetail> filmReviewList = filmService
+				.getFilmReviewDetailLatest(mainFilm, start, PAGE_ITEM_COUNT);
+		// 分页模型
+		Paging paging = new Paging();
+		paging.setCurrent(page);
+		paging.setMax(maxPage);
+		paging.setMin(1);
+		paging.setHasPrev(page == 1 ? false : true);
+		paging.setHasNext(page == maxPage ? false : true);
+		paging.generatePageList();
+		// 向页面添加参数
+		mv.addObject("mainFilm", mainFilm);
+		mv.addObject("reviewList", filmReviewList);
+		mv.addObject("reviewCount", filmReviewCount);
+		mv.addObject("paging", paging);
+		// 跳转到全部影评页面
+		mv.setViewName(Path.JSP_FILM + "/review_latest");
+		return mv;
+	}
 	/**
 	 * 跳转至展示单篇影评。
 	 * 
@@ -112,48 +153,7 @@ public class FilmController {
 		return "success";
 	}
 
-	/**
-	 * 跳转到电影的所有影评页面
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/{filmId}/review/latest/{page}")
-	public ModelAndView filmAllReview(@PathVariable Integer filmId,
-			@PathVariable Integer page) {
-		// 访问失败的跳转页面
-		ModelAndView mv = new ModelAndView("/index");
-		// 电影对象
-		Film mainFilm = filmService.findFilmById(filmId);
-		// 查询影评总数
-		Integer filmReviewCount = filmService.getFilmReviewCount(mainFilm);
-		// 分页所需参数
-		final Integer PAGE_ITEM_COUNT = Review.PAGE_ITEM_COUNT;
-		int maxPage = (int) Math.ceil(filmReviewCount * 1.0f / PAGE_ITEM_COUNT);
-		// 判断页码是否正确
-		if (maxPage != 0 && (page < 1 || page > maxPage)) {
-			return mv;
-		}
-		// 查询当页、一页数量的影评
-		Integer start = (page - 1) * PAGE_ITEM_COUNT;
-		List<FilmReviewDetail> filmReviewList = filmService
-				.getFilmReviewDetailLatest(mainFilm, start, PAGE_ITEM_COUNT);
-		// 分页模型
-		Paging paging = new Paging();
-		paging.setCurrent(page);
-		paging.setMax(maxPage);
-		paging.setMin(1);
-		paging.setHasPrev(page == 1 ? false : true);
-		paging.setHasNext(page == maxPage ? false : true);
-		paging.generatePageList();
-		// 向页面添加参数
-		mv.addObject("mainFilm", mainFilm);
-		mv.addObject("reviewList", filmReviewList);
-		mv.addObject("reviewCount", filmReviewCount);
-		mv.addObject("paging", paging);
-		// 跳转到全部影评页面
-		mv.setViewName(Path.JSP_FILM + "/review_latest");
-		return mv;
-	}
+	
 
 	/**
 	 * 提交新的影评
@@ -172,7 +172,7 @@ public class FilmController {
 		// 向页面储存参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM
 				+ "/success/film_review_submit");
-		mv.addObject("reviewId", filmReview.getId());
+		mv.addObject("filmReview", filmReview);
 		return mv;
 	}
 

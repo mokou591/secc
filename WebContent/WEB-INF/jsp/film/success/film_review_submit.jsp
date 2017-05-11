@@ -19,7 +19,7 @@
 				<div class="page-header">
 					<h4>您的评价已成功提交。</h4>
 				</div>
-				<a class="btn btn-link" href="${ctx}/film/review/${reviewId}">去看看</a>
+				<a class="btn btn-link" href="${ctx}/film/review/${filmReview.id}">去看看</a>
 			</div>
 		</div>
 </div>

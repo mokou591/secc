@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="${ctx}/css/film_show.css"/>
-<title>${mainFilm.chsName}的最新影评</title>
+<link rel="stylesheet" href="${ctx}/css/activity_show.css"/>
+<title>最新讨论 · 随笔</title>
 </head>
 <body>
 		<!-- 引入导航栏 -->
@@ -18,27 +18,27 @@
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1>
-					${mainFilm.chsName}
-					<small>共${reviewCount}条最新影评</small>
+					${mainActivity.title}
+					<small>共${noteCount}条最新影评</small>
 				</h1>
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
 					
 					<!-- 没有影评的提示 -->
-					<c:if test="${reviewCount eq 0}">
+					<c:if test="${noteCount eq 0}">
 						<h3>现在还没有影评哦</h3>
 					</c:if>
 					
-					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/component/film_review_list.jsp" />
+					<!-- 展示讨论列表 -->
+					<jsp:include page="/WEB-INF/jsp/component/activity_note_list.jsp" />
 				
 					<!-- 分页 -->
-					<c:if test="${reviewCount > 0}">
+					<c:if test="${noteCount > 0}">
 						<ul class="pagination">
 							<c:if test="${paging.hasPrev}">
 								<li>
-								<a href="${ctx}/film/${mainFilm.id}/review/latest/${paging.current-1}">上一页</a>
+								<a href="${ctx}/activity/${mainActivity.id}/note/latest/${paging.current-1}">上一页</a>
 								</li>
 							</c:if>
 							
@@ -51,7 +51,7 @@
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="${ctx}/film/${mainFilm.id}/review/latest/${pageNumber}">${pageNumber}</a>
+											<a href="${ctx}/activity/${mainActivity.id}/note/latest/${pageNumber}">${pageNumber}</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
@@ -59,7 +59,7 @@
 							
 							<c:if test="${paging.hasNext}">
 								<li>
-								<a href="${ctx}/film/${mainFilm.id}/review/latest/${paging.current+1}">下一页</a>
+								<a href="${ctx}/activity/${mainActivity.id}/note/latest/${paging.current+1}">下一页</a>
 								</li>
 							</c:if>
 						</ul>
@@ -68,15 +68,15 @@
 				
 				<div class="col-md-4 column">
 					<div class="page-header">
-						<a href="${ctx}/film/${mainFilm.id}/review_new" class="btn btn-primary">我要评价</a>
+						<a href="${ctx}/activity/${mainActivity.id}/note_new" class="btn btn-primary">写讨论/随笔</a>
 					</div>
 					<div class="page-header">
 						<h4>
-							<a id="to_film" href="${ctx }/film/${mainFilm.id}"> &gt; 回到${mainFilm.chsName}电影页面</a>
+							<a id="to_activity" href="${ctx }/activity/${mainActivity.id}"> &gt; 回到 ${mainActivity.title}</a>
 						</h4>
 					</div>
-					<a href="${ctx }/film/${mainFilm.id}">
-						<img id="poster" src="${mainFilm.posterUrl}" /> 
+					<a href="${ctx}/activity/${mainActivity.id}">
+						<img id="poster" src="${mainActivity.posterUrl}" /> 
 					</a>
 				</div>
 			</div>
