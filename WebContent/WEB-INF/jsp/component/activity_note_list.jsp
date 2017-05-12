@@ -11,6 +11,10 @@
 		${note.title}
 		</a>
 		<small class="pull-right">
+			<c:if test="${note.replyCount != 0}">
+				${note.replyCount}回应
+				<span style="width:50px; display:inline-block" ></span>
+			</c:if>
 			<fmt:formatDate value="${note.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />
 		</small>
 		</h4>

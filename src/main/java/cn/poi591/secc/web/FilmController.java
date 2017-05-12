@@ -1,19 +1,17 @@
 package cn.poi591.secc.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.constant.Review;
 import cn.poi591.secc.dto.FilmReviewDetail;
@@ -22,7 +20,6 @@ import cn.poi591.secc.dto.Paging;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.FilmService;
 import cn.poi591.secc.service.impl.FilmServiceImpl;
 
 @Controller
@@ -190,7 +187,7 @@ public class FilmController {
 			// 没有登录，跳转到登录
 			mv.setViewName(Path.JSP_USER + "/login");
 			// 存入登录前页面，登录后可以跳转回来
-			session.setAttribute("prevPage", "/film/" + id);
+			session.setAttribute(Page.LOGIN_PREV, "/film/" + id);
 		} else {
 			// 有登录用户，跳转到创建新影评页面
 			mv.setViewName(Path.JSP_FILM + "/review_new");

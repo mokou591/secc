@@ -46,10 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 获取当前活动的最新活动讨论，需要设置起始位置和项数 -->
-	<select id="getActivityNoteDetailLatest" resultMap="ActivityNoteDetailMap">
-		SELECT * FROM t_activity_note
+	<select id="getActivityNoteDetailNatural" resultMap="ActivityNoteDetailMap">
+		SELECT t_activity_note.*,
+		(SELECT COUNT(*) FROM t_activity_note_reply WHERE activity_note_id=t_activity_note.id) AS `replyCount`
+		FROM t_activity_note
 		WHERE activity_id=#{activity.id} AND is_private=FALSE
-		ORDER BY create_time DESC
+		ORDER BY create_time ASC
 		LIMIT #{start},#{offset};
 	</select>
 	
@@ -69,4 +71,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_activity_note
 		WHERE id=#{noteId} AND `is_private`=FALSE;
 	</select>
+	
+	<!-- 添加一条讨论的回复 -->
+	<insert id="addReply" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.ActivityNoteReply"
+	 keyProperty="id" >
+		INSERT INTO
+		`t_activity_note_reply`(`activity_note_id`,`user_id`,`text`,`create_time`)
+		VALUES(#{activityNoteId},#{userId},#{text},NOW());
+	</insert>
+	
+	<!-- 查询活动讨论的回复，排序从新到旧 -->
+	<select id="findNoteReplyDetailNatural" resultMap="ActivityNoteDetailReplyMap">
+		SELECT * FROM t_activity_note_reply
+		WHERE activity_note_id=#{note.id}
+		ORDER BY create_time ASC
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="ActivityNoteDetailReplyMap" type="cn.poi591.secc.dto.ActivityNoteReplyDetail" >
+		<!-- 携带一个用户 -->
+		<association property="user" column="user_id" select="cn.poi591.secc.dao.UserDao.findById" />
+	</resultMap>
+	
 </mapper>

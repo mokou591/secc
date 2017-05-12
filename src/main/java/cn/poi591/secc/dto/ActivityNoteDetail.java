@@ -12,6 +12,17 @@ public class ActivityNoteDetail extends ActivityNote {
 	
 	// user
 	private User user;
+	
+	//reply count
+	private Integer replyCount;
+	
+	public Integer getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(Integer replyCount) {
+		this.replyCount = replyCount;
+	}
 
 	public Activity getActivity() {
 		return activity;

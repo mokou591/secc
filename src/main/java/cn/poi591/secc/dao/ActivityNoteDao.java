@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.poi591.secc.dto.ActivityNoteDetail;
+import cn.poi591.secc.dto.ActivityNoteReplyDetail;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
+import cn.poi591.secc.entity.ActivityNoteReply;
 import cn.poi591.secc.entity.User;
 
 public interface ActivityNoteDao {
@@ -44,7 +46,7 @@ public interface ActivityNoteDao {
 	 * 
 	 * @return
 	 */
-	List<ActivityNoteDetail> getActivityNoteDetailLatest(
+	List<ActivityNoteDetail> getActivityNoteDetailNatural(
 			@Param("activity") Activity activity, @Param("start") Integer start,
 			@Param("offset") Integer offset);
 
@@ -62,4 +64,23 @@ public interface ActivityNoteDao {
 	 * @return
 	 */
 	List<ActivityNoteDetail> findActivityNoteDetailRandom(Integer count);
+
+
+	ActivityNote findById(Integer noteId);
+
+	/**
+	 * 添加一条讨论的回复
+	 * @param reply
+	 */
+	void addReply(ActivityNoteReply reply);
+
+	/**
+	 * 查询活动讨论的回复，排序从新到旧
+	 * @param note
+	 * @param start
+	 * @param offset
+	 * @return
+	 */
+	List<ActivityNoteReplyDetail> findNoteReplyDetailNatural(@Param("note") ActivityNote note,
+			@Param("start") Integer start,@Param("offset")  Integer offset);
 }

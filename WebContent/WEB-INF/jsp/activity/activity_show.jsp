@@ -77,6 +77,19 @@
 										${mainActivity.contact }
 									</dd>
 								</c:if>
+								
+								<hr/>
+								
+								<!-- 报名参与 -->
+								<c:choose>
+									<c:when test="${hasPartake}">
+										<label>已报名参与此活动。</label>
+										<a href="${ctx}/activity/${mainActivity.id}/partake_cancel" class="btn btn-warning">取消报名</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${ctx}/activity/${mainActivity.id}/partake" class="btn btn-primary">报名参与</a>
+									</c:otherwise>
+								</c:choose>
 							</dl>
 						</div>
 					</div>
@@ -95,13 +108,26 @@
 					
 					<!-- 查看全部活动讨论按钮 -->
 					<div class="toallnote">
-						<a href="${ctx}/activity/${mainActivity.id}/note/latest/1"> &gt; 查看所有（全部${noteListLength}条）</a>
+						<a href="${ctx}/activity/${mainActivity.id}/note/all/1"> &gt; 查看所有（全部${noteListLength}条）</a>
 					</div>
 				</div>
 
 				<div class="col-md-4 column">
 					<div class="page-header">
 						<a href="${ctx}/activity/${mainActivity.id}/note_new" class="btn btn-primary">发起讨论 / 写随笔</a>
+					</div>
+					
+					<div class="page-header">
+						<h4>
+							<c:choose>
+								<c:when test="${partakeCount eq 0}">
+									目前还没有人报名参与。
+								</c:when>
+								<c:otherwise>
+									已有${partakeCount}人报名参与。
+								</c:otherwise>
+							</c:choose>
+						</h4>
 					</div>
 				</div>
 			</div>

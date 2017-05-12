@@ -27,4 +27,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY RAND()
 		LIMIT #{count};
 	</select>
+	
+	<!-- 检查用户是否参与活动 -->
+	<select id="checkHasPartake" resultType="java.lang.Boolean">
+		SELECT EXISTS(
+		SELECT * FROM rel_activity_user
+		WHERE activity_id=#{activity.id}
+		AND user_id=#{user.id}
+		);
+	</select>
+	
+	<!-- 添加一个用户参与活动的关系 -->
+	<insert id="addPartake">
+		INSERT INTO rel_activity_user(`type`,`activity_id`,`user_id`,`create_time`)
+		VALUES('参与',#{activity.id},#{user.id},NOW());
+	</insert>
+	
+	<!-- 删除一个用户参与活动的关系-->
+	<delete id="deletePartake">
+		DELETE  FROM rel_activity_user
+		WHERE activity_id=#{activity.id}
+		AND user_id=#{user.id};
+	</delete>
+	
+	<!-- 查询活动报名人数 -->
+	<select id="getActivityPartakeCount" parameterType="cn.poi591.secc.entity.Activity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM rel_activity_user
+		WHERE activity_id=#{id};
+	</select>
 </mapper>

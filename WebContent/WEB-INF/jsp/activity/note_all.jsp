@@ -8,7 +8,7 @@
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${ctx}/css/activity_show.css"/>
-<title>最新讨论 · 随笔</title>
+<title>全部讨论 · 随笔</title>
 </head>
 <body>
 		<!-- 引入导航栏 -->
@@ -19,15 +19,15 @@
 			<div class="page-header">
 				<h1>
 					${mainActivity.title}
-					<small>共${noteCount}条最新影评</small>
+					<small>共${noteCount}条活动讨论</small>
 				</h1>
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
 					
-					<!-- 没有影评的提示 -->
+					<!-- 没有活动讨论的提示 -->
 					<c:if test="${noteCount eq 0}">
-						<h3>现在还没有影评哦</h3>
+						<h3>现在还没有活动讨论哦</h3>
 					</c:if>
 					
 					<!-- 展示讨论列表 -->

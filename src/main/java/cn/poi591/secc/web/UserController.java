@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.UserService;
@@ -34,10 +35,16 @@ public class UserController {
 	}
 
 	/**
-	 * 跳转到登录页面
+	 * 跳转到登录页面，可以附上登录成功后跳转的页面
 	 */
 	@RequestMapping("/user/login")
-	public String login() {
+	public String login(HttpServletRequest request) {
+		// 尝试获取登录前页面
+		String loginPrevPage = request.getParameter("loginPrevPage");
+		if(loginPrevPage!=null){
+			//如果有登录后希望跳转到的页面，则放入回话
+			request.getSession().setAttribute(Page.LOGIN_PREV, loginPrevPage);
+		}
 		return Path.JSP_USER+"/login";
 	}
 
@@ -97,14 +104,14 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", user);
 			// 判断是否有登录前页面
-			String prevPage = (String) session.getAttribute("prevPage");
+			String prevPage = (String) session.getAttribute(Page.LOGIN_PREV);
 			if(prevPage==null){
 				// 没有登录前页面，跳转到主页
 				modelAndView.setViewName("redirect:/index");
 			}else{
 				//有登录前页面
 				modelAndView.setViewName("redirect:"+prevPage);
-				session.setAttribute("prevPage",null);
+				session.setAttribute(Page.LOGIN_PREV,null);
 			}
 			
 		}

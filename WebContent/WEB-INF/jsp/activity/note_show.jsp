@@ -24,6 +24,8 @@
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
+				
+					<!-- 讨论标题和正文 -->
 					<a href="${ctx}/people/${note.user.id}" style='text-decoration:none;' >
 						<img class="note_avatar" src="${ctx}/upload/avatar/${note.user.avatarUrl}" />
 					</a>
@@ -31,11 +33,55 @@
 					<span class="note_date pull-right">
 						<fmt:formatDate value="${note.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
 					</span>
-					
 					<div class="note_text">
 						<pre>${note.text}</pre>
 					</div>
 					
+					
+					<!-- 展示回复列表 -->
+					<div class="col-md-10 col-md-offset-2">
+						<c:if test="${not empty replyDetailList}">
+							<div class="page-header">
+								<h2><small>回复</small></h2>
+							</div>
+						</c:if>
+						<c:forEach items="${replyDetailList}" var="reply" >
+							<a href="${ctx}/people/${reply.user.id}" style='text-decoration:none;' >
+								<img class="note_avatar" src="${ctx}/upload/avatar/${reply.user.avatarUrl}" />
+							</a>
+							<span class="note_name"><a href="${ctx}/people/${reply.user.id}">${reply.user.nickname}</a> </span>
+							<span class="note_date pull-right">
+								<fmt:formatDate value="${reply.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
+							</span>
+							<div class="note_text">
+								<pre>${reply.text}</pre>
+							</div>
+							<hr/>
+						</c:forEach>
+						
+						
+					<!-- 回复的按钮 -->
+						<c:choose>
+							<c:when test="${empty loginUser}">
+								<a href="${ctx}/user/login?loginPrevPage=/activity/note/${note.id}" style="margin:50px 0;" class="btn btn-link"> &gt; 我来回应 </a>
+							</c:when>
+							
+							<c:otherwise>
+								<div class="page-header">
+									<h4>你的回应 · · ·</h4>
+								</div>
+								<form action="${ctx}/activity/note/${note.id}/reply_submit" method="post" role="form">
+									<input type="hidden" name="activityNoteId" value="${note.id}" />
+									<input type="hidden" name="userId" value="${loginUser.id}" />
+									<div class="form-group">
+										<textarea class="form-control" style="resize:none;" rows="4" name="text" ></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary">回复</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
+							
+					</div>
 				</div>
 				<div class="col-md-4 column">
 					<div class="page-header">

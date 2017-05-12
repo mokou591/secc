@@ -33,4 +33,28 @@ public interface ActivityDao {
 
 
 	List<Activity> findActivityRandom(@Param("count")Integer count);
+
+
+	Boolean checkHasPartake(@Param("activity")Activity activity,@Param("user") User user);
+
+	/**
+	 * 用户报名活动：添加一个用户参与活动的关系
+	 * @param activity
+	 * @param user
+	 */
+	void addPartake(@Param("activity")Activity activity, @Param("user")User user);
+
+	/**
+	 * 取消活动报名：删除一个用户参与活动的关系
+	 * @param activity
+	 * @param user
+	 */
+	void deletePartake(@Param("activity")Activity activity,  @Param("user")User user);
+
+	/**
+	 * 查询活动报名人数
+	 * @param activity
+	 * @return
+	 */
+	Integer getActivityPartakeCount(Activity activity);
 }
