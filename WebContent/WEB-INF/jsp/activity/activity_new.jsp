@@ -29,7 +29,7 @@
 					</div>
 					<div class="row clearfix">
 						<div class="col-md-8 column">
-							<form action="${ctx}/activity/submit" class="form-horizontal" role="form">
+							<form action="${ctx}/activity/submit" method="post"  class="form-horizontal" role="form">
 								<div class="form-group">
 									<label for="title" class="col-sm-2 control-label" >标题<span class="redpoint">*</span></label>
 									<div class="col-sm-8">
@@ -61,9 +61,9 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="genre" class="col-sm-2 control-label" >类型</label>
+									<label for="genre" class="col-sm-2 control-label" >类型<span class="redpoint">*</span></label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="genre" name="genre"/>
+										<input type="text" class="form-control" id="genre" name="genre" required="required"/>
 									</div>
 								</div>
 								<div class="form-group">

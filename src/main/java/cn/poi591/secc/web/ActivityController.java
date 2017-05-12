@@ -26,21 +26,6 @@ public class ActivityController {
 	@Autowired
 	private ActivityServiceImpl activityService;
 
-	@RequestMapping("/genre/{genre}")
-	@ResponseBody
-	public ModelAndView findByGenre(@PathVariable String genre) {
-		//参数检查
-		List<Activity> activityList;
-		if(genre.equals("随机")){
-			activityList = activityService.findActivityRandom(8);
-		}else{
-			activityList = activityService.findActivityListByGenre(genre,0,8);
-		}
-		// 存入参数，页面跳转
-		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY + "/ajax/find_by_genre");
-		mv.addObject("activityList", activityList);
-		return mv;
-	}
 
 	/**
 	 * 跳转至活动主页
@@ -51,11 +36,20 @@ public class ActivityController {
 	public ModelAndView activityIndex() {
 		// 热门活动
 		List<Activity> hotActivityList = activityService.findActivityRandom(4);
-		// 最新活动讨论
+		//各种活动
+		List<Activity> musicList = activityService.findActivityListByGenre("音乐",0,8);
+		List<Activity> partyList = activityService.findActivityListByGenre("聚会",0,8);
+		List<Activity> lectureList = activityService.findActivityListByGenre("讲座",0,8);
+		List<Activity> exhiList = activityService.findActivityListByGenre("展览",0,8);
+		//  热门活动讨论
 		List<ActivityNoteDetail> hotNoteDetailList = activityService.findActivityNoteDetailRandom(5);
 		// 存入参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY + "/index_activity");
 		mv.addObject("hotActivityList", hotActivityList);
+		mv.addObject("musicList", musicList);
+		mv.addObject("partyList", partyList);
+		mv.addObject("lectureList", lectureList);
+		mv.addObject("exhiList", exhiList);
 		mv.addObject("hotNoteDetailList", hotNoteDetailList);
 		return mv;
 	}

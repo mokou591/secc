@@ -2,6 +2,7 @@ package cn.poi591.secc.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class ActivityServiceImpl implements  ActivityService{
 		return activityNoteDao.findActivityNoteDetailRandom(count);
 	}
 
-	public List<Activity> findActivityListByGenre(String genre, Integer start,Integer offset) {
+	public List<Activity> findActivityListByGenre(@Param("genre") String genre,@Param("start") Integer start,@Param("offset")Integer offset) {
 		return activityDao.findActivityListByGenre(genre,start,offset);
 	}
 	

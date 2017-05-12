@@ -83,25 +83,77 @@
 									<small class="pull-right"><a href="#">更多 》</a></small>
 								</h4>
 							</div>
+							<div class="row clearfix">
+								<c:forEach items="${musicList}" var="activity">
+										<div class="col-md-3 column">
+											<a href="${ctx}/activity/${activity.id}">
+											<div class="poster_block center-block">
+												<img class="poster" src="${activity.posterUrl}" />
+											</div>
+												<label class="activity_title center-block">${activity.title}</label>
+											</a>
+										</div>
+								</c:forEach>
+							</div>
+							
 							<div class="page-header">
 								<h4>
 									聚会
 									<small class="pull-right"><a href="#">更多 》</a></small>
 								</h4>
 							</div>
+							<div class="row clearfix">
+								<c:forEach items="${partyList}" var="activity">
+										<div class="col-md-3 column">
+											<a href="${ctx}/activity/${activity.id}">
+											<div class="poster_block center-block">
+												<img class="poster" src="${activity.posterUrl}" />
+											</div>
+												<label class="activity_title center-block">${activity.title}</label>
+											</a>
+										</div>
+								</c:forEach>
+							</div>
+							
+							
 							<div class="page-header">
 								<h4>
 									讲座
 									<small class="pull-right"><a href="#">更多 》</a></small>
 								</h4>
 							</div>
+							<div class="row clearfix">
+								<c:forEach items="${lectureList}" var="activity">
+										<div class="col-md-3 column">
+											<a href="${ctx}/activity/${activity.id}">
+											<div class="poster_block center-block">
+												<img class="poster" src="${activity.posterUrl}" />
+											</div>
+												<label class="activity_title center-block">${activity.title}</label>
+											</a>
+										</div>
+								</c:forEach>
+							</div>
+							
+							
 							<div class="page-header">
 								<h4>
 									展览
 									<small class="pull-right"><a href="#">更多 》</a></small>
 								</h4>
 							</div>
-							
+							<div class="row clearfix">
+								<c:forEach items="${exhiList}" var="activity">
+										<div class="col-md-3 column">
+											<a href="${ctx}/activity/${activity.id}">
+											<div class="poster_block center-block">
+												<img class="poster" src="${activity.posterUrl}" />
+											</div>
+												<label class="activity_title center-block">${activity.title}</label>
+											</a>
+										</div>
+								</c:forEach>
+							</div>
 							
 							
 						</div>
