@@ -5,10 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.poi591.secc.dto.ActivityNoteDetail;
-import cn.poi591.secc.dto.ActivityNoteReplyDetail;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
-import cn.poi591.secc.entity.ActivityNoteReply;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 
 public interface ActivityNoteDao {
@@ -72,7 +72,7 @@ public interface ActivityNoteDao {
 	 * 添加一条讨论的回复
 	 * @param reply
 	 */
-	void addReply(ActivityNoteReply reply);
+	void addReply(Reply reply);
 
 	/**
 	 * 查询活动讨论的回复，排序从新到旧
@@ -81,6 +81,6 @@ public interface ActivityNoteDao {
 	 * @param offset
 	 * @return
 	 */
-	List<ActivityNoteReplyDetail> findNoteReplyDetailNatural(@Param("note") ActivityNote note,
+	List<ReplyDetail> findNoteReplyDetailNatural(@Param("note") ActivityNote note,
 			@Param("start") Integer start,@Param("offset")  Integer offset);
 }

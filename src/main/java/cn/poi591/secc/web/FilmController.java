@@ -17,8 +17,11 @@ import cn.poi591.secc.constant.Review;
 import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.dto.Paging;
+import cn.poi591.secc.dto.ReplyDetail;
+import cn.poi591.secc.entity.ActivityNote;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.impl.FilmServiceImpl;
 
@@ -103,6 +106,22 @@ public class FilmController {
 		mv.setViewName(Path.JSP_FILM + "/review_latest");
 		return mv;
 	}
+	
+	/**
+	 * 处理影评的回复。
+	 * @param noteId
+	 * @return
+	 */
+	@RequestMapping("/review/{reviewId}/reply_submit")
+	public String filmReviewReply(@PathVariable Integer reviewId,Reply reply) {
+		//参数检查
+		FilmReview reivew = filmService.findFilmReviewById(reviewId);
+		// 保存回复
+		filmService.addFilmReviewReply(reply);
+		// 转发到单篇讨论的页面
+		return "forward:"+Path.JSP_FILM_REVIEW +"/"+reivew.getId();
+	}
+	
 	/**
 	 * 跳转至展示单篇影评。
 	 * 
@@ -115,12 +134,15 @@ public class FilmController {
 		// 查询出详细影评
 		FilmReviewDetail reviewDetail = filmService
 				.findFilmReviewDetailById(reviewId);
+		// 查询回复列表
+		List<ReplyDetail> replyDetailList =  filmService.findReviewReplyDetailNatural(reviewDetail,0,30);
 		// 跳转页面
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/review_show");
 		mv.addObject("review", reviewDetail);
+		mv.addObject("replyDetailList", replyDetailList);
 		return mv;
 	}
-
+	
 	/**
 	 * 处理ajax提交的对影评点赞或踩的评价
 	 * 

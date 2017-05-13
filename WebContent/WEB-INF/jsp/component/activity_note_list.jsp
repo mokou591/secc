@@ -8,7 +8,7 @@
 	<div class="page-header">
 		<h4>
 		<a href="${ctx}/activity/note/${note.id}">
-		${note.title}
+			${note.title}
 		</a>
 		<small class="pull-right">
 			<c:if test="${note.replyCount != 0}">

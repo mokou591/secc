@@ -2,9 +2,9 @@ package cn.poi591.secc.entity;
 
 import java.util.Date;
 
-public class ActivityNoteReply {
+public class Reply {
 	private Integer id;
-	private Integer activityNoteId;
+	private Integer toId;
 	private Integer userId;
 	private String text;
 	private Date createTime;
@@ -15,11 +15,11 @@ public class ActivityNoteReply {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getActivityNoteId() {
-		return activityNoteId;
+	public Integer getToId() {
+		return toId;
 	}
-	public void setActivityNoteId(Integer activityNoteId) {
-		this.activityNoteId = activityNoteId;
+	public void setToId(Integer toId) {
+		this.toId = toId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -45,6 +45,7 @@ public class ActivityNoteReply {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 	
 	
 }

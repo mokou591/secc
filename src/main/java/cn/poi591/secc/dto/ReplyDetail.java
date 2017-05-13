@@ -1,9 +1,9 @@
 package cn.poi591.secc.dto;
 
-import cn.poi591.secc.entity.ActivityNoteReply;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 
-public class ActivityNoteReplyDetail extends ActivityNoteReply{
+public class ReplyDetail extends Reply{
 	//reply props...
 	
 	//user

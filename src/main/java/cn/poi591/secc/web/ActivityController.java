@@ -15,11 +15,11 @@ import cn.poi591.secc.constant.Note;
 import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.dto.ActivityNoteDetail;
-import cn.poi591.secc.dto.ActivityNoteReplyDetail;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.dto.Paging;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
-import cn.poi591.secc.entity.ActivityNoteReply;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.impl.ActivityServiceImpl;
 
@@ -114,13 +114,13 @@ public class ActivityController {
 	 * @return
 	 */
 	@RequestMapping("/note/{noteId}/reply_submit")
-	public String activityNoteReply(@PathVariable Integer noteId,ActivityNoteReply reply) {
+	public String activityNoteReply(@PathVariable Integer noteId,Reply reply) {
 		//参数检查
 		ActivityNote note = activityService.findActivityNoteById(noteId);
 		// 保存回复
 		activityService.addActivityNoteReply(reply);
 		// 转发到单篇讨论的页面
-		return "forward:"+Path.JSP_ACTIVITY_NOTE+"/"+noteId;
+		return "forward:"+Path.JSP_ACTIVITY_NOTE+"/"+note.getId();
 	}
 	
 	/**
@@ -132,13 +132,11 @@ public class ActivityController {
 	 */
 	@RequestMapping("/note/{noteId}")
 	public ModelAndView showActivityNote(@PathVariable Integer noteId) {
-		//参数检查
-		ActivityNote note = activityService.findActivityNoteById(noteId);
 		// 查询出详细活动讨论
 		ActivityNoteDetail noteDetail = activityService
 				.findActivityNoteDetailById(noteId);
 		// 查询活动回复列表
-		List<ActivityNoteReplyDetail> replyDetailList =  activityService.findNoteReplyDetailNatural(note,0,10);
+		List<ReplyDetail> replyDetailList =  activityService.findNoteReplyDetailNatural(noteDetail,0,30);
 		// 跳转页面
 		ModelAndView mv = new ModelAndView(Path.JSP_ACTIVITY + "/note_show");
 		mv.addObject("note", noteDetail);

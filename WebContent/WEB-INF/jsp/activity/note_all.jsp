@@ -38,7 +38,7 @@
 						<ul class="pagination">
 							<c:if test="${paging.hasPrev}">
 								<li>
-								<a href="${ctx}/activity/${mainActivity.id}/note/latest/${paging.current-1}">上一页</a>
+								<a href="${ctx}/activity/${mainActivity.id}/note/all/${paging.current-1}">上一页</a>
 								</li>
 							</c:if>
 							
@@ -51,7 +51,7 @@
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="${ctx}/activity/${mainActivity.id}/note/latest/${pageNumber}">${pageNumber}</a>
+											<a href="${ctx}/activity/${mainActivity.id}/note/all/${pageNumber}">${pageNumber}</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
@@ -59,7 +59,7 @@
 							
 							<c:if test="${paging.hasNext}">
 								<li>
-								<a href="${ctx}/activity/${mainActivity.id}/note/latest/${paging.current+1}">下一页</a>
+								<a href="${ctx}/activity/${mainActivity.id}/note/all/${paging.current+1}">下一页</a>
 								</li>
 							</c:if>
 						</ul>

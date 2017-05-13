@@ -1,0 +1,37 @@
+.reply_avatar {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	margin-left: 5px;
+}
+.reply_name {
+	margin-left: 20px;
+}
+
+.reply_mark {
+	margin: auto 10px;
+}
+
+.reply_date {
+	color: grey;
+}
+
+.reply_text {
+	font-size: 16px;
+	margin: 10px;
+}
+
+.reply_text pre {
+	font-size: 16px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	width: 100%;
+	padding: 0;
+	white-space: pre-wrap; 
+	word-wrap : break-word;
+	border: none;
+	background-color: white;
+	word-wrap: break-word;
+}
+.reply_submit{
+	margin-bottom:30px;
+}

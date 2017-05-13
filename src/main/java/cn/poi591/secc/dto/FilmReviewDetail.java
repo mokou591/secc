@@ -13,6 +13,18 @@ public class FilmReviewDetail extends FilmReview {
 	// film
 	private Film film;
 
+	//replyCount
+	private Integer replyCount;
+	
+	
+	public Integer getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(Integer replyCount) {
+		this.replyCount = replyCount;
+	}
+
 	// Upvote Downvote model
 	private Vote vote;
 

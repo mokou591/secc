@@ -8,6 +8,7 @@
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${ctx}/css/film_show.css" />
+	<link rel="stylesheet" href="${ctx}/css/reply_list.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>${review.film.chsName} 影评</title>
 </head>
@@ -71,7 +72,7 @@
 												resultTip="您已经评价过了哦";
 												break;
 											case "needToLogin":
-												resultTip='登录后才能评价哦 <a class="btn btn-default btn-xs" href="${ctx}/user/login">登录</a>';
+												resultTip='登录后才能评价哦 <a class="btn btn-default btn-xs" href="${ctx}/user/login?loginPrevPage=/film/review/${review.id}">登录</a>';
 												break;
 											default:
 										}
@@ -79,6 +80,37 @@
 									});
 						});
 					</script>
+					
+					
+					<!-- 回复区域 -->
+					<div class="col-md-10 col-md-offset-2">
+						
+						<!-- 展示回复，遍历集合replyDetailList -->
+						<jsp:include page="/WEB-INF/jsp/component/reply_list.jsp"></jsp:include>
+						
+						<!-- 回复的按钮 -->
+						<c:choose>
+							<c:when test="${empty loginUser}">
+								<a href="${ctx}/user/login?loginPrevPage=/film/review/${review.id}" style="margin:50px 0;" class="btn btn-link"> &gt; 我来回应 </a>
+							</c:when>
+							
+							<c:otherwise>
+								<div class="page-header">
+									<h4>你的回应 · · ·</h4>
+								</div>
+								<form action="${ctx}/film/review/${review.id}/reply_submit" method="post" role="form">
+									<input type="hidden" name="toId" value="${review.id}" />
+									<input type="hidden" name="userId" value="${loginUser.id}" />
+									<div class="form-group">
+										<textarea class="form-control" style="resize:none;" rows="4" name="text" ></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary reply_submit">回复</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					
+					
 					
 				</div>
 				<div class="col-md-4 column">

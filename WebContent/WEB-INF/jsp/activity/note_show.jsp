@@ -8,6 +8,7 @@
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${ctx}/css/activity_show.css" />
+	<link rel="stylesheet" href="${ctx}/css/reply_list.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>讨论 · 随笔</title>
 </head>
@@ -38,29 +39,13 @@
 					</div>
 					
 					
-					<!-- 展示回复列表 -->
+					<!-- 回复区域 -->
 					<div class="col-md-10 col-md-offset-2">
-						<c:if test="${not empty replyDetailList}">
-							<div class="page-header">
-								<h2><small>回复</small></h2>
-							</div>
-						</c:if>
-						<c:forEach items="${replyDetailList}" var="reply" >
-							<a href="${ctx}/people/${reply.user.id}" style='text-decoration:none;' >
-								<img class="note_avatar" src="${ctx}/upload/avatar/${reply.user.avatarUrl}" />
-							</a>
-							<span class="note_name"><a href="${ctx}/people/${reply.user.id}">${reply.user.nickname}</a> </span>
-							<span class="note_date pull-right">
-								<fmt:formatDate value="${reply.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 
-							</span>
-							<div class="note_text">
-								<pre>${reply.text}</pre>
-							</div>
-							<hr/>
-						</c:forEach>
+					
+						<!-- 展示回复，遍历集合replyDetailList -->
+						<jsp:include page="/WEB-INF/jsp/component/reply_list.jsp"></jsp:include>
 						
-						
-					<!-- 回复的按钮 -->
+						<!-- 回复的按钮 -->
 						<c:choose>
 							<c:when test="${empty loginUser}">
 								<a href="${ctx}/user/login?loginPrevPage=/activity/note/${note.id}" style="margin:50px 0;" class="btn btn-link"> &gt; 我来回应 </a>
@@ -71,17 +56,17 @@
 									<h4>你的回应 · · ·</h4>
 								</div>
 								<form action="${ctx}/activity/note/${note.id}/reply_submit" method="post" role="form">
-									<input type="hidden" name="activityNoteId" value="${note.id}" />
+									<input type="hidden" name="toId" value="${note.id}" />
 									<input type="hidden" name="userId" value="${loginUser.id}" />
 									<div class="form-group">
 										<textarea class="form-control" style="resize:none;" rows="4" name="text" ></textarea>
 									</div>
-									<button type="submit" class="btn btn-primary">回复</button>
+									<button type="submit" class="btn btn-primary reply_submit">回复</button>
 								</form>
 							</c:otherwise>
 						</c:choose>
-							
 					</div>
+					
 				</div>
 				<div class="col-md-4 column">
 					<div class="page-header">

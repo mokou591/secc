@@ -122,9 +122,10 @@ public class UserController {
 	 * 注销用户账号
 	 */
 	@RequestMapping("/user/logout")
+	@ResponseBody
 	public String logoutUser(HttpSession session) {
 		session.invalidate();
-		return "redirect:/index";
+		return "success";
 	}
 
 

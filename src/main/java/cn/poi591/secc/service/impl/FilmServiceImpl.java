@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import cn.poi591.secc.dao.FilmDao;
 import cn.poi591.secc.dao.FilmReviewDao;
 import cn.poi591.secc.dto.FilmReviewDetail;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.dto.FilmScore;
+import cn.poi591.secc.entity.ActivityNote;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.FilmService;
 
@@ -114,6 +117,19 @@ public class FilmServiceImpl implements  FilmService {
 
 	public List<FilmReviewDetail> findFilmReviewDetailRandom(Integer count) {
 		return filmReviewDao.findFilmReviewDetailRandom(count);
+	}
+	
+	public List<ReplyDetail> findReviewReplyDetailNatural(
+			FilmReview review,Integer start, Integer offset) {
+		return filmReviewDao.findFilmReviewReplyDetailNatural(review,start,offset);
+	}
+
+	public void addFilmReviewReply(Reply reply) {
+		filmReviewDao.addFilmReviewReply(reply);
+	}
+
+	public FilmReview findFilmReviewById(Integer id) {
+		return filmReviewDao.findFilmReviewById(id);
 	}
 
 }

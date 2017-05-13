@@ -54,9 +54,20 @@
 									</li>
 									<li class="divider"></li>
 									<li>
-										<a href="${ctx}/user/logout">退出账号</a>
+										<a href="#" id="logout_btn">退出账号</a>
 									</li>
 								</ul>
+								
+								<!-- 退出账号按钮，ajax -->
+								<script type="text/javascript">
+									$('#logout_btn').click(function(){
+										$.post("${ctx}/user/logout",
+												{},
+												function(result){
+													location.reload();
+												});
+									});
+								</script>
 							</li>
 						</c:otherwise>
 					</c:choose>

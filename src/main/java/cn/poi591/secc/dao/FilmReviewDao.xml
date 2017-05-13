@@ -11,11 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{filmId},#{userId},#{score},#{title},#{text},#{isSpoiler},#{isPrivate},now());
 	</insert>
 
-	<select id="findById" resultType="cn.poi591.secc.entity.FilmReview">
+	<select id="findFilmReviewById" resultType="cn.poi591.secc.entity.FilmReview">
 		SELECT * FROM `t_film_review`
 		WHERE `id`=#{id};
 	</select>
-
 
 	<select id="getFilmScore" parameterType="cn.poi591.secc.entity.Film"
 		resultType="cn.poi591.secc.dto.FilmScore">
@@ -76,7 +75,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 获取当前电影的最好影评，需要设置起始位置和项数 -->
 	<select id="getFilmReviewDetailBest" resultMap="FilmReviewDetailMap">
-		SELECT * FROM t_film_review
+		SELECT t_film_review.*,
+		(SELECT COUNT(*) FROM t_film_review_reply WHERE to_id=t_film_review.id) AS `replyCount`
+		FROM t_film_review
 		WHERE film_id=#{film.id} 
 		AND LENGTH(`title`)>0 AND `is_private`=FALSE
 		ORDER BY 
@@ -131,4 +132,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id=#{reviewId}
 		AND LENGTH(`title`)>0 AND `is_private`=FALSE;
 	</select>
+	
+	<!-- 添加一条讨论的回复 -->
+	<insert id="addFilmReviewReply" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.Reply"
+	 keyProperty="id" >
+		INSERT INTO
+		`t_film_review_reply`(`to_id`,`user_id`,`text`,`create_time`)
+		VALUES(#{toId},#{userId},#{text},NOW());
+	</insert>
+	
+	<!-- 查询影评的回复，排序从新到旧 -->
+	<select id="findFilmReviewReplyDetailNatural" resultMap="ReplyDetailMap">
+		SELECT * FROM t_film_review_reply
+		WHERE to_id=#{review.id}
+		ORDER BY create_time ASC
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="ReplyDetailMap" type="cn.poi591.secc.dto.ReplyDetail" >
+		<!-- 携带一个用户 -->
+		<association property="user" column="user_id" select="cn.poi591.secc.dao.UserDao.findById" />
+	</resultMap>
+	
 </mapper>

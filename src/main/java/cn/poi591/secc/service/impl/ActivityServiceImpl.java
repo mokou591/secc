@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import cn.poi591.secc.dao.ActivityDao;
 import cn.poi591.secc.dao.ActivityNoteDao;
 import cn.poi591.secc.dto.ActivityNoteDetail;
-import cn.poi591.secc.dto.ActivityNoteReplyDetail;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
-import cn.poi591.secc.entity.ActivityNoteReply;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.ActivityService;
 
@@ -82,11 +82,11 @@ public class ActivityServiceImpl implements  ActivityService{
 		return activityNoteDao.findById(noteId);
 	}
 
-	public void addActivityNoteReply(ActivityNoteReply reply) {
+	public void addActivityNoteReply(Reply reply) {
 		activityNoteDao.addReply(reply);
 	}
 
-	public List<ActivityNoteReplyDetail> findNoteReplyDetailNatural(
+	public List<ReplyDetail> findNoteReplyDetailNatural(
 			ActivityNote note, Integer start,Integer offset) {
 		return activityNoteDao.findNoteReplyDetailNatural(note,start,offset);
 	}

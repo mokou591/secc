@@ -114,7 +114,14 @@
 
 				<div class="col-md-4 column">
 					<div class="page-header">
-						<a href="${ctx}/activity/${mainActivity.id}/note_new" class="btn btn-primary">发起讨论 / 写随笔</a>
+						<c:choose>
+							<c:when test="${empty loginUser}">
+								<a href="${ctx}/user/login?loginPrevPage=/activity/${mainActivity.id}/note_new" class="btn btn-primary">发起讨论 / 写随笔</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${ctx}/activity/${mainActivity.id}/note_new" class="btn btn-primary">发起讨论 / 写随笔</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					
 					<div class="page-header">

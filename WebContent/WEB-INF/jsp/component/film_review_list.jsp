@@ -50,7 +50,10 @@
 			<button id="xxbtn${review.id}" reviewId="${review.id}" type="xx" class="btn btn-default btn-sm ooxx" >
 				没用<span id="xx${review.id}">${review.vote.xx}</span>
 			</button>
-			<span id="ooxx_result${review.id}"></span>								
+			<c:if test="${review.replyCount > 0}">
+				<a href="${ctx}/film/review/${review.id}" class="btn btn-link">${review.replyCount}回应</a>
+			</c:if>
+			<span id="ooxx_result${review.id}"></span>
 		</div>
 	</div>
 </c:forEach>
@@ -75,7 +78,7 @@
 							resultTip="您已经评价过了哦";
 							break;
 						case "needToLogin":
-							resultTip='登录后才能评价哦 <a class="btn btn-default btn-xs" href="${ctx}/user/login">登录</a>';
+							resultTip='登录后才能评价哦 <a class="btn btn-default btn-xs" href="${ctx}/user/login?loginPrevPage=/film/${mainFilm.id}">登录</a>';
 							break;
 						default:
 					}

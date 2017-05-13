@@ -5,14 +5,23 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.poi591.secc.dto.FilmReviewDetail;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.dto.Vote;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 
 public interface FilmReviewDao {
 
+	/**
+	 * 根据id查找影评
+	 * @param reviewId
+	 * @return
+	 */
+	FilmReview findFilmReviewById(Integer id);	
+	
 	/**
 	 * 向数据库添加一篇影评
 	 * 
@@ -116,4 +125,19 @@ public interface FilmReviewDao {
 	 * @return
 	 */
 	List<FilmReviewDetail> findFilmReviewDetailRandom(Integer count);
+
+	/**
+	 * 查询影评回复
+	 * @param review
+	 * @param start
+	 * @param offset
+	 * @return
+	 */
+	List<ReplyDetail> findFilmReviewReplyDetailNatural(@Param("review")FilmReview review,
+			@Param("start")Integer start,@Param("offset") Integer offset);
+
+	void addFilmReviewReply(Reply reply);
+
+	
+
 }
