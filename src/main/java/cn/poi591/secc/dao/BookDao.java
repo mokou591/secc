@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.poi591.secc.entity.Book;
-import cn.poi591.secc.entity.User;
 
 public interface BookDao {
 

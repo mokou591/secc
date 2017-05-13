@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="${ctx}/css/book_show.css"/>
-<title>${mainBook.chsName}的最新书评</title>
+<link rel="stylesheet" href="${ctx}/css/music_show.css"/>
+<title>${mainMusic.chsName}的最新音乐评论</title>
 </head>
 <body>
 		<!-- 引入导航栏 -->
@@ -18,8 +18,8 @@
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1>
-					${mainBook.chsName}
-					<small>共${reviewCount}条最新书评</small>
+					${mainMusic.chsName}
+					<small>共${reviewCount}条最新音乐评论</small>
 				</h1>
 			</div>
 			<div class="row clearfix">
@@ -27,18 +27,18 @@
 					
 					<!-- 没有影评的提示 -->
 					<c:if test="${reviewCount eq 0}">
-						<h3>现在还没有书评哦</h3>
+						<h3>现在还没有音乐评论哦</h3>
 					</c:if>
 					
 					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/component/book_review_list.jsp" />
+					<jsp:include page="/WEB-INF/jsp/component/music_review_list.jsp" />
 				
 					<!-- 分页 -->
 					<c:if test="${reviewCount > 0}">
 						<ul class="pagination">
 							<c:if test="${paging.hasPrev}">
 								<li>
-								<a href="${ctx}/book/${mainBook.id}/review/latest/${paging.current-1}">上一页</a>
+								<a href="${ctx}/music/${mainMusic.id}/review/latest/${paging.current-1}">上一页</a>
 								</li>
 							</c:if>
 							
@@ -51,7 +51,7 @@
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="${ctx}/book/${mainBook.id}/review/latest/${pageNumber}">${pageNumber}</a>
+											<a href="${ctx}/music/${mainMusic.id}/review/latest/${pageNumber}">${pageNumber}</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
@@ -59,7 +59,7 @@
 							
 							<c:if test="${paging.hasNext}">
 								<li>
-								<a href="${ctx}/book/${mainBook.id}/review/latest/${paging.current+1}">下一页</a>
+								<a href="${ctx}/music/${mainMusic.id}/review/latest/${paging.current+1}">下一页</a>
 								</li>
 							</c:if>
 						</ul>
@@ -68,15 +68,15 @@
 				
 				<div class="col-md-4 column">
 					<div class="page-header">
-						<a href="${ctx}/book/${mainBook.id}/review_new" class="btn btn-primary">我要评价</a>
+						<a href="${ctx}/music/${mainMusic.id}/review_new" class="btn btn-primary">我要评价</a>
 					</div>
 					<div class="page-header">
 						<h4>
-							<a id="to_book" href="${ctx }/book/${mainBook.id}"> &gt; 回到 ${mainBook.chsName} 页面</a>
+							<a id="to_music" href="${ctx }/music/${mainMusic.id}"> &gt; 回到 ${mainMusic.chsName} 页面</a>
 						</h4>
 					</div>
-					<a href="${ctx }/book/${mainBook.id}">
-						<img id="poster" src="${mainBook.coverUrl}" /> 
+					<a href="${ctx }/music/${mainMusic.id}">
+						<img id="poster" src="${mainMusic.coverUrl}" /> 
 					</a>
 				</div>
 			</div>

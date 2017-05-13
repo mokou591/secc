@@ -2,14 +2,13 @@ package cn.poi591.secc.entity;
 
 import java.util.Date;
 
-public class BookReview {
+public class MusicReview {
 	private Integer id;
-	private Integer bookId;
+	private Integer musicId;
 	private Integer userId;
 	private Integer score;
 	private String title;
 	private String text;
-	private Boolean isSpoiler;
 	private Boolean  isPrivate;
 	private Date createTime;
 	private String status;
@@ -19,11 +18,11 @@ public class BookReview {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getBookId() {
-		return bookId;
+	public Integer getMusicId() {
+		return musicId;
 	}
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
+	public void setMusicId(Integer musicId) {
+		this.musicId = musicId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -48,12 +47,6 @@ public class BookReview {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public Boolean getIsSpoiler() {
-		return isSpoiler;
-	}
-	public void setIsSpoiler(Boolean isSpoiler) {
-		this.isSpoiler = isSpoiler;
 	}
 	public Boolean getIsPrivate() {
 		return isPrivate;

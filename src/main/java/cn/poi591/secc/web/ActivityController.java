@@ -8,15 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.poi591.secc.constant.Note;
 import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.constant.Path;
 import cn.poi591.secc.dto.ActivityNoteDetail;
-import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.dto.Paging;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
 import cn.poi591.secc.entity.Reply;

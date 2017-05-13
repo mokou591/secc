@@ -21,7 +21,7 @@
 						<a href="${ctx}/film">电影</a>
 					</li>
 					<li>
-						<a href="#">音乐</a>
+						<a href="${ctx}/music">音乐</a>
 					</li>
 					<li>
 						<a href="${ctx}/book">读书</a>

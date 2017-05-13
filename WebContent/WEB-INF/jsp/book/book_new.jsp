@@ -108,7 +108,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="intro" class="col-sm-2 control-label">目录</label>
+									<label for="catalog" class="col-sm-2 control-label">目录</label>
 									<div class="col-sm-8">
 										<textarea class="form-control" rows="20" id="catalog" name="catalog"></textarea>
 									</div>

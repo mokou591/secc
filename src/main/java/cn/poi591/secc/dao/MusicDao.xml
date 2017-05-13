@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.MusicDao">
+
+	<insert id="add" parameterType="cn.poi591.secc.entity.Music" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		`t_music`(`original_name`,`chs_name`,`cover_url`,`artist`,`press`,`year`,`barcode`,`intro`,`catalog`,`genre`)
+		VALUES(#{originalName},#{chsName},#{coverUrl},#{artist},#{press},#{year},#{barcode},#{intro},#{catalog},#{genre});
+	</insert>
+
+	<select id="findById"  resultType="cn.poi591.secc.entity.Music">
+		SELECT * FROM `t_music` WHERE `id`=#{id};
+	</select>
+
+	<!-- 根据音乐原名查找音乐 -->
+	<select id="findByOriginalName" parameterType="java.lang.String" resultType="cn.poi591.secc.entity.Music">
+		SELECT * FROM `t_music`
+		WHERE original_name=#{originalName};
+	</select>
+	
+	<!-- 根据类型查找音乐 -->
+	<select id="findMusicListByGenre" resultType="cn.poi591.secc.entity.Music">
+		SELECT * FROM `t_music`
+		WHERE `genre` LIKE CONCAT('%',#{genre},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 随机查找音乐 -->
+	<select id="findMusicRandom" resultType="cn.poi591.secc.entity.Music">
+		SELECT * FROM `t_music`
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
+</mapper>

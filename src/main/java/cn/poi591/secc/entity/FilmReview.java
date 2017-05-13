@@ -2,8 +2,6 @@ package cn.poi591.secc.entity;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class FilmReview {
 	private Integer id;
 	private Integer filmId;

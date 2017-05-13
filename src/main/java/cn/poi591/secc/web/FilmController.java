@@ -18,7 +18,6 @@ import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.FilmScore;
 import cn.poi591.secc.dto.Paging;
 import cn.poi591.secc.dto.ReplyDetail;
-import cn.poi591.secc.entity.ActivityNote;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.Reply;

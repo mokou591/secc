@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.MusicReviewDao">
+
+	<insert id="add" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.MusicReview"
+	  keyProperty="id">
+		INSERT INTO
+		`t_music_review`(`music_id`,`user_id`,`score`,`title`,`text`,`is_private`,`create_time`)
+		VALUES(#{musicId},#{userId},#{score},#{title},#{text},#{isPrivate},now());
+	</insert>
+
+	<select id="findMusicReviewById" resultType="cn.poi591.secc.entity.MusicReview">
+		SELECT * FROM `t_music_review`
+		WHERE `id`=#{id};
+	</select>
+
+	<select id="getMusicScore" parameterType="cn.poi591.secc.entity.Music"
+		resultType="cn.poi591.secc.dto.MusicScore">
+		SELECT
+		COUNT(*) AS `count`,
+		AVG(`score`) AS `average`
+		FROM
+		`t_music_review` WHERE `music_id`=#{id};
+	</select>
+
+	<!-- 查找当前音乐所有音乐评 -->
+	<select id="findMusicReviewByMusic" parameterType="cn.poi591.secc.entity.Music"
+		resultType="cn.poi591.secc.entity.MusicReview">
+		SELECT * FROM `t_music_review`
+		WHERE LENGTH(`title`)>0 AND
+		`music_id`=#{id};
+	</select>
+
+
+
+	<!-- 获取当前音乐的音乐评总数 -->
+	<select id="getMusicReviewCount" parameterType="cn.poi591.secc.entity.Music"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_music_review WHERE music_id=#{id} AND 
+		LENGTH(`title`)>0 AND is_private=FALSE;
+	</select>
+
+	<!-- 根据音乐评找用户 -->
+	<select id="findUserByMusicReview" parameterType="cn.poi591.secc.entity.MusicReview"
+		resultType="cn.poi591.secc.entity.User">
+		SELECT * FROM t_user WHERE id=#{review.user_id};
+	</select>
+
+	<!-- 根据音乐和用户找到一篇音乐评 -->
+	<select id="getMusicReview" 
+		resultType="cn.poi591.secc.entity.MusicReview">
+		SELECT * FROM t_music_review
+		WHERE music_id=#{music.id}
+		AND user_id=#{user.id} LIMIT 1;
+	</select>
+	
+	<!-- 随机查询出若干音乐评 -->
+	<select id="findMusicReviewDetailRandom" parameterType="java.lang.Integer" resultMap="MusicReviewDetailMap">
+		SELECT * FROM t_music_review
+		WHERE LENGTH(`title`)>0 AND is_private=FALSE
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
+	
+	<!-- 获取当前音乐的最新音乐评，需要设置起始位置和项数 -->
+	<select id="getMusicReviewDetailLatest" resultMap="MusicReviewDetailMap">
+		SELECT t_music_review.*,
+		(SELECT COUNT(*) FROM t_music_review_reply WHERE to_id=t_music_review.id) AS `replyCount`
+		FROM t_music_review
+		WHERE music_id=#{music.id} AND
+		LENGTH(`title`)>0 AND is_private=FALSE
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 获取当前音乐的最好音乐评，需要设置起始位置和项数 -->
+	<select id="getMusicReviewDetailBest" resultMap="MusicReviewDetailMap">
+		SELECT t_music_review.*,
+		(SELECT COUNT(*) FROM t_music_review_reply WHERE to_id=t_music_review.id) AS `replyCount`
+		FROM t_music_review
+		WHERE music_id=#{music.id} 
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE
+		ORDER BY 
+		(SELECT COUNT(*) FROM t_music_review_ooxx
+		WHERE music_review_id = t_music_review.id AND `type`='oo') DESC, 
+		(SELECT COUNT(*) FROM t_music_review_ooxx
+		WHERE music_review_id = t_music_review.id AND `type`='xx') ASC
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 根据音乐id获取用户投票数 -->
+	<select id="getVoteByMusicReviewId" resultType="cn.poi591.secc.dto.Vote">
+		SELECT 
+		(SELECT COUNT(*) FROM t_music_review_ooxx
+		WHERE music_review_id=#{musicId} AND `type`='oo') AS `oo`,
+		(SELECT COUNT(*) FROM t_music_review_ooxx
+		WHERE music_review_id=#{musicId} AND `type`='xx') AS `xx`;
+	</select>
+	
+	<!-- 音乐评：音乐评数据外，还带有作者、投票 -->
+	<resultMap id="MusicReviewDetailMap" type="cn.poi591.secc.dto.MusicReviewDetail">
+		<id property="id" column="id"/>
+		<!-- 在MusicReview基础上多携带一个User作为作者 -->
+		<association property="user" column="user_id" 
+			select="cn.poi591.secc.dao.UserDao.findById" />
+		<!-- 带着Music -->
+		<association property="music" column="music_id" 
+			select="cn.poi591.secc.dao.MusicDao.findById" />
+		<!-- 音乐评的赞踩投票 -->
+		<association property="vote" column="id"
+			select="cn.poi591.secc.dao.MusicReviewDao.getVoteByMusicReviewId" />
+	</resultMap>
+	
+	<!-- 确认音乐评是否被用户评价过 -->
+	<select id="checkMusicReviewOOXXExist" resultType="java.lang.Boolean">
+		SELECT EXISTS (
+		SELECT * FROM t_music_review_ooxx
+		WHERE music_review_id=#{musicReview.id}
+		AND operator_id=#{user.id}
+		);
+	</select>
+	
+	<!-- 添加一个音乐评被用户评价的关系 -->
+	<insert id="addMusicReviewOOXX" >
+		INSERT INTO t_music_review_ooxx(music_review_id,operator_id,`type`)
+		VALUES(#{musicReview.id},#{user.id},#{type});
+	</insert>
+	
+	<!-- 根据音乐评id查询详细音乐评数据 -->
+	<select id="findMusicReviewDetailById" parameterType="java.lang.Integer" resultMap="MusicReviewDetailMap">
+		SELECT * FROM t_music_review
+		WHERE id=#{reviewId}
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE;
+	</select>
+	
+	<!-- 添加一条讨论的回复 -->
+	<insert id="addMusicReviewReply" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.Reply"
+	 keyProperty="id" >
+		INSERT INTO
+		`t_music_review_reply`(`to_id`,`user_id`,`text`,`create_time`)
+		VALUES(#{toId},#{userId},#{text},NOW());
+	</insert>
+	
+	<!-- 查询音乐评的回复，排序从新到旧 -->
+	<select id="findMusicReviewReplyDetailNatural" resultMap="ReplyDetailMap">
+		SELECT * FROM t_music_review_reply
+		WHERE to_id=#{review.id}
+		ORDER BY create_time ASC
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="ReplyDetailMap" type="cn.poi591.secc.dto.ReplyDetail" >
+		<!-- 携带一个用户 -->
+		<association property="user" column="user_id" select="cn.poi591.secc.dao.UserDao.findById" />
+	</resultMap>
+	
+</mapper>
