@@ -3,7 +3,7 @@
 }
 
 #poster {
-	width: 160px;
+	width: 200px;
 	margin-left: 10px;
 }
 
@@ -62,19 +62,20 @@ pre {
 	width: 100%;
 	padding: 0;
 	white-space: pre-wrap; 
+	word-wrap : break-word;
+	text-indent:2em;
 	border: none;
 	background-color: white;
-	word-wrap: break-word;
 }
-blockquote{
-	font-size:16px;
-}
+
 .review_ooxx * {
 	font-size: 14px;
 	color: grey;
 	margin-left: 10px;
 }
-
+blockquote{
+	font-size:16px;
+}
 .toallreview {
 	font-size: 20px;
 	margin: 100px 0 100px 0;

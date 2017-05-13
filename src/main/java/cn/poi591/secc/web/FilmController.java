@@ -103,7 +103,7 @@ public class FilmController {
 		mv.addObject("reviewCount", filmReviewCount);
 		mv.addObject("paging", paging);
 		// 跳转到全部影评页面
-		mv.setViewName(Path.JSP_FILM + "/review_latest");
+		mv.setViewName(Path.JSP_FILM + "/film_review_latest");
 		return mv;
 	}
 	
@@ -137,7 +137,7 @@ public class FilmController {
 		// 查询回复列表
 		List<ReplyDetail> replyDetailList =  filmService.findReviewReplyDetailNatural(reviewDetail,0,30);
 		// 跳转页面
-		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/review_show");
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/film_review_show");
 		mv.addObject("review", reviewDetail);
 		mv.addObject("replyDetailList", replyDetailList);
 		return mv;
@@ -212,7 +212,7 @@ public class FilmController {
 			session.setAttribute(Page.LOGIN_PREV, "/film/" + id);
 		} else {
 			// 有登录用户，跳转到创建新影评页面
-			mv.setViewName(Path.JSP_FILM + "/review_new");
+			mv.setViewName(Path.JSP_FILM + "/film_review_new");
 		}
 		// 向页面储存参数，页面跳转
 		mv.addObject("mainFilm", mainFilm);

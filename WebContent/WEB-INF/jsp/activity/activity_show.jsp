@@ -96,9 +96,7 @@
 					<h3>
 						活动介绍 · · · · · ·
 					</h3>
-					<pre>
-						${mainActivity.info }
-					</pre>
+					<pre>${mainActivity.info }</pre>
 					<h3 class="part_header">
 					活动 · 讨论 · 随笔
 					</h3>

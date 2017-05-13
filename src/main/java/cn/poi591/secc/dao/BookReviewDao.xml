@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.BookReviewDao">
+
+	<insert id="add" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.BookReview"
+	  keyProperty="id">
+		INSERT INTO
+		`t_book_review`(`book_id`,`user_id`,`score`,`title`,`text`,`is_spoiler`,`is_private`,`create_time`)
+		VALUES(#{bookId},#{userId},#{score},#{title},#{text},#{isSpoiler},#{isPrivate},now());
+	</insert>
+
+	<select id="findBookReviewById" resultType="cn.poi591.secc.entity.BookReview">
+		SELECT * FROM `t_book_review`
+		WHERE `id`=#{id};
+	</select>
+
+	<select id="getBookScore" parameterType="cn.poi591.secc.entity.Book"
+		resultType="cn.poi591.secc.dto.BookScore">
+		SELECT
+		COUNT(*) AS `count`,
+		AVG(`score`) AS `average`
+		FROM
+		`t_book_review` WHERE `book_id`=#{id};
+	</select>
+
+	<!-- 查找当前书所有书评 -->
+	<select id="findBookReviewByBook" parameterType="cn.poi591.secc.entity.Book"
+		resultType="cn.poi591.secc.entity.BookReview">
+		SELECT * FROM `t_book_review`
+		WHERE LENGTH(`title`)>0 AND
+		`book_id`=#{id};
+	</select>
+
+
+
+	<!-- 获取当前书的书评总数 -->
+	<select id="getBookReviewCount" parameterType="cn.poi591.secc.entity.Book"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_book_review WHERE book_id=#{id} AND 
+		LENGTH(`title`)>0 AND is_private=FALSE;
+	</select>
+
+	<!-- 根据书评找用户 -->
+	<select id="findUserByBookReview" parameterType="cn.poi591.secc.entity.BookReview"
+		resultType="cn.poi591.secc.entity.User">
+		SELECT * FROM t_user WHERE id=#{review.user_id};
+	</select>
+
+	<!-- 根据书和用户找到一篇书评 -->
+	<select id="getBookReview" 
+		resultType="cn.poi591.secc.entity.BookReview">
+		SELECT * FROM t_book_review
+		WHERE book_id=#{book.id}
+		AND user_id=#{user.id} LIMIT 1;
+	</select>
+	
+	<!-- 随机查询出若干书评 -->
+	<select id="findBookReviewDetailRandom" parameterType="java.lang.Integer" resultMap="BookReviewDetailMap">
+		SELECT * FROM t_book_review
+		WHERE LENGTH(`title`)>0 AND is_private=FALSE
+		ORDER BY RAND()
+		LIMIT #{count};
+	</select>
+	
+	<!-- 获取当前书的最新书评，需要设置起始位置和项数 -->
+	<select id="getBookReviewDetailLatest" resultMap="BookReviewDetailMap">
+		SELECT t_book_review.*,
+		(SELECT COUNT(*) FROM t_book_review_reply WHERE to_id=t_book_review.id) AS `replyCount`
+		FROM t_book_review
+		WHERE book_id=#{book.id} AND
+		LENGTH(`title`)>0 AND is_private=FALSE
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 获取当前书的最好书评，需要设置起始位置和项数 -->
+	<select id="getBookReviewDetailBest" resultMap="BookReviewDetailMap">
+		SELECT t_book_review.*,
+		(SELECT COUNT(*) FROM t_book_review_reply WHERE to_id=t_book_review.id) AS `replyCount`
+		FROM t_book_review
+		WHERE book_id=#{book.id} 
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE
+		ORDER BY 
+		(SELECT COUNT(*) FROM t_book_review_ooxx
+		WHERE book_review_id = t_book_review.id AND `type`='oo') DESC, 
+		(SELECT COUNT(*) FROM t_book_review_ooxx
+		WHERE book_review_id = t_book_review.id AND `type`='xx') ASC
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 根据书id获取用户投票数 -->
+	<select id="getVoteByBookReviewId" resultType="cn.poi591.secc.dto.Vote">
+		SELECT 
+		(SELECT COUNT(*) FROM t_book_review_ooxx
+		WHERE book_review_id=#{bookId} AND `type`='oo') AS `oo`,
+		(SELECT COUNT(*) FROM t_book_review_ooxx
+		WHERE book_review_id=#{bookId} AND `type`='xx') AS `xx`;
+	</select>
+	
+	<!-- 书评：书评数据外，还带有作者、投票 -->
+	<resultMap id="BookReviewDetailMap" type="cn.poi591.secc.dto.BookReviewDetail">
+		<id property="id" column="id"/>
+		<!-- 在BookReview基础上多携带一个User作为作者 -->
+		<association property="user" column="user_id" 
+			select="cn.poi591.secc.dao.UserDao.findById" />
+		<!-- 带着Book -->
+		<association property="book" column="book_id" 
+			select="cn.poi591.secc.dao.BookDao.findById" />
+		<!-- 书评的赞踩投票 -->
+		<association property="vote" column="id"
+			select="cn.poi591.secc.dao.BookReviewDao.getVoteByBookReviewId" />
+	</resultMap>
+	
+	<!-- 确认书评是否被用户评价过 -->
+	<select id="checkBookReviewOOXXExist" resultType="java.lang.Boolean">
+		SELECT EXISTS (
+		SELECT * FROM t_book_review_ooxx
+		WHERE book_review_id=#{bookReview.id}
+		AND operator_id=#{user.id}
+		);
+	</select>
+	
+	<!-- 添加一个书评被用户评价的关系 -->
+	<insert id="addBookReviewOOXX" >
+		INSERT INTO t_book_review_ooxx(book_review_id,operator_id,`type`)
+		VALUES(#{bookReview.id},#{user.id},#{type});
+	</insert>
+	
+	<!-- 根据书评id查询详细书评数据 -->
+	<select id="findBookReviewDetailById" parameterType="java.lang.Integer" resultMap="BookReviewDetailMap">
+		SELECT * FROM t_book_review
+		WHERE id=#{reviewId}
+		AND LENGTH(`title`)>0 AND `is_private`=FALSE;
+	</select>
+	
+	<!-- 添加一条讨论的回复 -->
+	<insert id="addBookReviewReply" useGeneratedKeys="true" parameterType="cn.poi591.secc.entity.Reply"
+	 keyProperty="id" >
+		INSERT INTO
+		`t_book_review_reply`(`to_id`,`user_id`,`text`,`create_time`)
+		VALUES(#{toId},#{userId},#{text},NOW());
+	</insert>
+	
+	<!-- 查询书评的回复，排序从新到旧 -->
+	<select id="findBookReviewReplyDetailNatural" resultMap="ReplyDetailMap">
+		SELECT * FROM t_book_review_reply
+		WHERE to_id=#{review.id}
+		ORDER BY create_time ASC
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="ReplyDetailMap" type="cn.poi591.secc.dto.ReplyDetail" >
+		<!-- 携带一个用户 -->
+		<association property="user" column="user_id" select="cn.poi591.secc.dao.UserDao.findById" />
+	</resultMap>
+	
+</mapper>

@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="${ctx}/css/film_show.css" />
-<title>${mainFilm.chsName}</title>
+<link rel="stylesheet" href="${ctx}/css/book_show.css" />
+<title>${mainBook.chsName}</title>
 </head>
 	<body>
 		<!-- 引入导航栏 -->
@@ -18,11 +18,7 @@
 				<div class="col-md-12 column">
 					<div class="page-header">
 						<h1>
-							${mainFilm.chsName} 
-							<c:if test="${mainFilm.chsName != mainFilm.originalName}">
-								${mainFilm.originalName}
-							</c:if>
-							 <small> (${mainFilm.year })</small>
+							${mainBook.chsName}
 						</h1>
 					</div>
 				</div>
@@ -30,83 +26,90 @@
 			<div class="row clearfix">
 				<div class="col-md-8 column">
 					<div class="row clearfix">
-						<div class="col-md-3 column">
-							<img id="poster" src="${mainFilm.posterUrl }" />
+						<div class="col-md-4 column">
+							<img id="poster" src="${mainBook.coverUrl }" />
 						</div>
-						<div class="col-md-9 column">
+						<div class="col-md-8 column">
 							<dl id="profile">
 								
-								<c:if test="${not empty mainFilm.director }">
+								<c:if test="${not empty mainBook.author }">
 									<dt>
-									导演
+									作者
 									</dt>
 									<dd>
-										${mainFilm.director }
+										${mainBook.author }
 									</dd>
 								</c:if>
 								
-								<c:if test="${not empty mainFilm.writer }">
+								<c:if test="${not empty mainBook.press }">
 									<dt>
-									编剧
+									出版社
 									</dt>
 									<dd>
-										${mainFilm.writer }
+										${mainBook.press }
 									</dd>
 								</c:if>
 
-								<c:if test="${not empty mainFilm.actor }">
+								<c:if test="${not empty mainBook.originalName and mainBook.originalName != mainBook.chsName }">
 									<dt>
-									主演
+									原作名
 									</dt>
 									<dd>
-										${mainFilm.actor }
+										${mainBook.originalName }
 									</dd>
 								</c:if>
 
-								<c:if test="${not empty mainFilm.genre }">
+								<c:if test="${not empty mainBook.translator }">
+									<dt>
+									译者
+									</dt>
+									<dd>
+										${mainBook.translator }
+									</dd>
+								</c:if>
+
+								<c:if test="${not empty mainBook.year }">
+									<dt>
+									出版年
+									</dt>
+									<dd>
+										${mainBook.year }
+									</dd>
+								</c:if>
+
+								<c:if test="${not empty mainBook.page }">
+									<dt>
+									页数
+									</dt>
+									<dd>
+										${mainBook.page }
+									</dd>
+								</c:if>
+
+								<c:if test="${not empty mainBook.price }">
+									<dt>
+									定价
+									</dt>
+									<dd>
+										${mainBook.price }
+									</dd>
+								</c:if>
+								
+								<c:if test="${not empty mainBook.genre }">
 									<dt>
 									类型
 									</dt>
 									<dd>
-										${mainFilm.genre }
+										${mainBook.genre }
 									</dd>
 								</c:if>
 
-								<c:if test="${not empty mainFilm.region }">
+								<c:if test="${not empty mainBook.isbn }">
 									<dt>
-									制片国家/地区
+									ISBN
 									</dt>
 									<dd>
-										${mainFilm.region }
-									</dd>
-								</c:if>
-
-								<c:if test="${not empty mainFilm.language }">
-									<dt>
-									语言
-									</dt>
-									<dd>
-										${mainFilm.language }
-									</dd>
-								</c:if>
-
-								<c:if test="${not empty mainFilm.length }">
-									<dt>
-									片长
-									</dt>
-									<dd>
-										${mainFilm.length }分钟
-									</dd>
-								</c:if>
-
-								<c:if test="${not empty mainFilm.imdbnum }">
-									<dt>
-									IMDb链接
-									</dt>
-									<dd>
-										<a href="http://www.imdb.com/title/${mainFilm.imdbnum}">
-											${mainFilm.imdbnum }
-										</a>
+										${mainBook.isbn }
 									</dd>
 								</c:if>
 								
@@ -114,19 +117,27 @@
 						</div>
 					</div>
 					<h3>
-						${mainFilm.chsName }的剧情简介 · · · · · ·
+						内容简介 · · · · · ·
 					</h3>
-					<pre>${mainFilm.intro }</pre>
+					<pre>${mainBook.intro }</pre>
+					
+					<c:if test="${not empty mainBook.catalog }">
+						<h3 class="part_header">
+							目录 · · · · · ·
+						</h3>
+						<pre>${mainBook.catalog}</pre>
+					</c:if>
+					
 					<h3 class="part_header">
-					${mainFilm.chsName }的影评 · · · · · ·
+					${mainBook.chsName }的书评 · · · · · ·
 					</h3>
 					
 					<!-- 展示评论列表 -->
-					<jsp:include page="/WEB-INF/jsp/component/film_review_list.jsp" />
+					<jsp:include page="/WEB-INF/jsp/component/book_review_list.jsp" />
 					
-					<!-- 查看全部影评按钮 -->
+					<!-- 查看全部书评按钮 -->
 					<div class="toallreview">
-						<a href="${ctx}/film/${mainFilm.id}/review/latest/1"> &gt; 查看影片所有影评（全部${reviewListLength}条）</a>
+						<a href="${ctx}/book/${mainBook.id}/review/latest/1"> &gt; 查看所有书评（全部${reviewListLength}条）</a>
 					</div>
 				</div>
 
@@ -134,7 +145,7 @@
 					<div class="page-header">
 						<c:choose>
 							<c:when test="${mainScore.count eq 0}">
-								<h2>该电影暂无评价 </h2>
+								<h2>该书暂无评价 </h2>
 							</c:when>
 							<c:otherwise>
 								<h2>评分：
@@ -146,10 +157,10 @@
 						
 						<c:choose>
 							<c:when test="${empty loginUser}">
-								<a href="${ctx}/user/login?loginPrevPage=/film/${mainFilm.id}/review_new" class="btn btn-primary">我要评价</a>
+								<a href="${ctx}/user/login?loginPrevPage=/book/${mainBook.id}/review_new" class="btn btn-primary">我要评价</a>
 							</c:when>
 							<c:otherwise>
-								<a href="${ctx}/film/${mainFilm.id}/review_new" class="btn btn-primary">我要评价</a>
+								<a href="${ctx}/book/${mainBook.id}/review_new" class="btn btn-primary">我要评价</a>
 							</c:otherwise>
 						</c:choose>
 						

@@ -24,7 +24,7 @@
 						<a href="#">音乐</a>
 					</li>
 					<li>
-						<a href="#">读书</a>
+						<a href="${ctx}/book">读书</a>
 					</li>
 					<li>
 						<a href="${ctx}/activity">户外活动</a>
