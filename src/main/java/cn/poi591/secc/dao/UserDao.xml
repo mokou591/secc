@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT * FROM `t_user` WHERE `id` = #{id};
 	</select>
 	
-	<select id="updateProfile" parameterType="cn.poi591.secc.entity.User">
+	<update id="updateProfile" parameterType="cn.poi591.secc.entity.User">
 	UPDATE `t_user` SET 
 		`nickname`=#{nickname},
 		`gender`=#{gender},
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		`academy`=#{academy},
 		`intro`=#{intro}
 	WHERE `id`=#{id};
-	</select>
+	</update>
 	
 	<select id="updateAvatarUrl">
 	UPDATE `t_user` SET 

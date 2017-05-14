@@ -17,7 +17,7 @@ import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.BookService;
 
 @Service
-public class BookServiceImpl implements  BookService {
+public class BookServiceImpl implements   BookService {
 
 	@Autowired
 	private BookDao bookDao;
@@ -25,10 +25,12 @@ public class BookServiceImpl implements  BookService {
 	@Autowired
 	private BookReviewDao bookReviewDao;
 
+	@Override
 	public void addBook(Book book) {
 		bookDao.add(book);
 	}
 
+	@Override
 	public Book findBookById(Integer id) {
 		return bookDao.findById(id);
 	}
@@ -38,6 +40,7 @@ public class BookServiceImpl implements  BookService {
 	 * 
 	 * @param bookReview
 	 */
+	@Override
 	public Integer addBookReview(BookReview bookReview) {
 		return	bookReviewDao.add(bookReview);
 	}
@@ -48,6 +51,7 @@ public class BookServiceImpl implements  BookService {
 	 * @param mainBook
 	 * @return
 	 */
+	@Override
 	public BookScore getBookScore(Book book) {
 		return bookReviewDao.getBookScore(book);
 	}
@@ -58,6 +62,7 @@ public class BookServiceImpl implements  BookService {
 	 * @param mainBook
 	 * @return 一个 集合
 	 */
+	@Override
 	public List<BookReviewDetail> getBookReviewDetailBest(Book book,Integer start,Integer offset) {
 		return bookReviewDao.getBookReviewDetailBest(book,start,offset);
 	}
@@ -69,6 +74,7 @@ public class BookServiceImpl implements  BookService {
 	 * @param loginUser
 	 * @return
 	 */
+	@Override
 	public BookReview getBookReview(Book book, User user) {
 		return bookReviewDao.getBookReview(book ,user);
 	}
@@ -79,54 +85,66 @@ public class BookServiceImpl implements  BookService {
 	 * @param book
 	 * @return
 	 */
+	@Override
 	public Integer getBookReviewCount(Book book) {
 		return bookReviewDao.getBookReviewCount(book);
 	}
 
+	@Override
 	public List<BookReviewDetail> getBookReviewDetailLatest(Book book,
 			Integer start, Integer offset) {
 		return bookReviewDao.getBookReviewDetailLatest(book, start, offset);
 	}
 
+	@Override
 	public boolean checkBookReviewOOXXExist(BookReview bookReview,
 			User loginUser) {
 		return bookReviewDao.checkBookReviewOOXXExist(bookReview, loginUser);
 	}
 
+	@Override
 	public boolean addBookReviewOOXX(BookReview bookReview, User loginUser,
 			String type) {
 		return bookReviewDao.addBookReviewOOXX(bookReview, loginUser, type);
 	}
 	
+	@Override
 	public BookReviewDetail findBookReviewDetailById(Integer reviewId) {
 		return bookReviewDao.findBookReviewDetailById(reviewId);
 	}
 	
+	@Override
 	public Book findBookByOriginalName(String originalName) {
 		return bookDao.findByOriginalName(originalName);
 	}
 
+	@Override
 	public List<Book> findBookListByGenre(String genre,Integer start,Integer offset) {
 		return bookDao.findBookListByGenre(genre,start ,offset);
 	}
 
+	@Override
 	public List<Book> findBookRandom(Integer count) {
 		return bookDao.findBookRandom(count);
 	}
 
+	@Override
 	public List<BookReviewDetail> findBookReviewDetailRandom(Integer count) {
 		return bookReviewDao.findBookReviewDetailRandom(count);
 	}
 	
+	@Override
 	public List<ReplyDetail> findReviewReplyDetailNatural(
 			BookReview review,Integer start, Integer offset) {
 		return bookReviewDao.findBookReviewReplyDetailNatural(review,start,offset);
 	}
 
+	@Override
 	public void addBookReviewReply(Reply reply) {
 		bookReviewDao.addBookReviewReply(reply);
 	}
 
+	@Override
 	public BookReview findBookReviewById(Integer id) {
 		return bookReviewDao.findBookReviewById(id);
 	}

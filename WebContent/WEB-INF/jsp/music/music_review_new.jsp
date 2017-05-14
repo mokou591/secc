@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>创建${mainMusic.chsName}的评论</title>
+<title>创建${mainMusic.originalName}的评论</title>
 		<style type="text/css">
 			*{
 				font-size: 16px;
@@ -41,7 +41,7 @@
 		<div class="col-md-8 column">
 			<div class="page-header">
 				<h2>
-					评价 <small>为音乐 ${mainMusic.chsName} 作出评价</small>
+					评价 <small>为音乐 ${mainMusic.originalName} 作出评价</small>
 				</h2>
 			</div>
 			<form role="form" action="${ctx}/music/review_submit" method="post">
@@ -80,7 +80,7 @@
 		<div class="col-md-4 column">
 			<div class="page-header">
 				<h2>
-					<a id="to_music" href="${ctx }/music/${mainMusic.id}"> &gt; ${mainMusic.chsName}</a>
+					<a id="to_music" href="${ctx }/music/${mainMusic.id}"> &gt; ${mainMusic.originalName}</a>
 				</h2>
 			</div>
 			<a href="${ctx }/music/${mainMusic.id}">

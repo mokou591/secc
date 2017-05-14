@@ -8,7 +8,7 @@
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${ctx}/css/music_show.css"/>
-<title>${mainMusic.chsName}的最新音乐评论</title>
+<title>${mainMusic.originalName}的最新音乐评论</title>
 </head>
 <body>
 		<!-- 引入导航栏 -->
@@ -18,7 +18,7 @@
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1>
-					${mainMusic.chsName}
+					${mainMusic.originalName}
 					<small>共${reviewCount}条最新音乐评论</small>
 				</h1>
 			</div>
@@ -72,7 +72,7 @@
 					</div>
 					<div class="page-header">
 						<h4>
-							<a id="to_music" href="${ctx }/music/${mainMusic.id}"> &gt; 回到 ${mainMusic.chsName} 页面</a>
+							<a id="to_music" href="${ctx }/music/${mainMusic.id}"> &gt; 回到 ${mainMusic.originalName} 页面</a>
 						</h4>
 					</div>
 					<a href="${ctx }/music/${mainMusic.id}">

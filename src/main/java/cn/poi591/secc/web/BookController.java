@@ -22,13 +22,13 @@ import cn.poi591.secc.entity.Book;
 import cn.poi591.secc.entity.BookReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.impl.BookServiceImpl;
+import cn.poi591.secc.service.BookService;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 	@Autowired
-	private BookServiceImpl bookService;
+	private BookService bookService;
 
 	/**
 	 * 根据类型查询

@@ -8,7 +8,7 @@
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${ctx}/css/music_show.css" />
-<title>${mainMusic.chsName}</title>
+<title>${mainMusic.originalName}</title>
 </head>
 	<body>
 		<!-- 引入导航栏 -->
@@ -18,7 +18,14 @@
 				<div class="col-md-12 column">
 					<div class="page-header">
 						<h1>
-							${mainMusic.chsName}
+						<c:choose>
+							<c:when test="${empty mainMusic.chsName}">
+								${mainMusic.originalName}
+							</c:when>
+							<c:otherwise>
+								${mainMusic.chsName}
+							</c:otherwise>
+						</c:choose>
 						</h1>
 					</div>
 				</div>

@@ -57,4 +57,11 @@ public interface ActivityDao {
 	 * @return
 	 */
 	Integer getActivityPartakeCount(Activity activity);
+	
+	/**
+	 * 查询活动讨论人数
+	 * @param activity
+	 * @return
+	 */
+	Integer getNoteCount(Activity activity);
 }

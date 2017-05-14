@@ -55,4 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM rel_activity_user
 		WHERE activity_id=#{id};
 	</select>
+	
+	<!-- 查询活动报名人数 -->
+	<select id="getNoteCount" parameterType="cn.poi591.secc.entity.Activity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_activity_note
+		WHERE activity_id=#{id};
+	</select>
 </mapper>

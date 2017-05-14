@@ -13,7 +13,7 @@
 		<style type="text/css">
 			.poster_block{
 				width: 140px;
-				height: 160px;
+				height: 145px;
 			}
 		
 			.poster {
@@ -24,7 +24,7 @@
 			.music_title {
 				width: 140px;
 				height:60px;
-				margin: 10px auto;
+				margin: 10px auto 20px auto;
 				font-size: 16px;
 				text-align: center;
 			}
@@ -32,7 +32,7 @@
 				margin:10px 0;
 			}
 			.small_poster{
-				width: 100px;
+				width: 140px;
 				margin:10px;
 				float:none;
 			}
@@ -46,6 +46,9 @@
 	</head>
 	<!-- 引入导航栏 -->
 	<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
+	<script type="text/javascript">
+		$('#music_link').addClass("active");
+	</script>
 	<body>
 		<div class="container">
 			<div class="row clearfix">
@@ -71,7 +74,7 @@
 											<div class="poster_block center-block">
 												<img class="poster" src="${music.coverUrl}" />
 											</div>
-											<label class="music_title center-block">${music.chsName}<br/><small>${music.artist}</small></label>
+											<label class="music_title center-block">${music.originalName}</label>
 											</a>
 										</div>
 								</c:forEach>
@@ -126,12 +129,12 @@
 							<div class="row clearfix">
 								<c:forEach var="review" items="${hotReviewDetailList}" >
 								<div class="col-md-12 column">
-									<div class="col-md-2 column">
+									<div class="col-md-3 column">
 										<a href="${ctx}/music/${review.music.id}">
 											<img class="small_poster" src="${review.music.coverUrl}" />
 										</a>
 									</div>
-									<div class="col-md-10 column">
+									<div class="col-md-9 column">
 										<div class="page-header">
 											<h4 class="review_header">
 												<a href="${ctx}/music/review/${review.id}">
@@ -147,7 +150,7 @@
 												</small>
 											</h4>
 										</div>
-											${fn:substring(review.text, 0, 120)}...
+											${fn:substring(review.text, 0, 80)}...
 											<a href="${ctx}/music/review/${review.id}">(全文)</a>
 									</div>
 								</div>

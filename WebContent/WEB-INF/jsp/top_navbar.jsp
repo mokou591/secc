@@ -17,24 +17,24 @@
 			
 				<!-- 栏目  -->
 				<ul class="nav navbar-nav">
-					<li>
-						<a href="${ctx}/film">电影</a>
+					<li id="film_link">
+						<a  href="${ctx}/film">电影</a>
 					</li>
-					<li>
+					<li id="music_link">
 						<a href="${ctx}/music">音乐</a>
 					</li>
-					<li>
+					<li id="book_link">
 						<a href="${ctx}/book">读书</a>
 					</li>
-					<li>
+					<li id="activity_link">
 						<a href="${ctx}/activity">户外活动</a>
 					</li>
 				</ul>
 				
 				<!-- 搜索框 -->
-				<form class="navbar-form navbar-left" role="search">
+				<form action="${ctx}/search/all/" method="get" class="navbar-form navbar-left" role="search">
 					<div class="form-group">
-						<input type="text" class="form-control" name="keyword" placeholder="搜索" />
+						<input id="keywords" type="text" class="form-control" name="keywords" placeholder="搜索" value="${keywords}" />
 					</div> <button type="submit" class="glyphicon glyphicon-search btn btn-default"></button>
 				</form>
 

@@ -25,10 +25,12 @@ public class MusicServiceImpl implements  MusicService {
 	@Autowired
 	private MusicReviewDao musicReviewDao;
 
+	@Override
 	public void addMusic(Music music) {
 		musicDao.add(music);
 	}
 
+	@Override
 	public Music findMusicById(Integer id) {
 		return musicDao.findById(id);
 	}
@@ -38,6 +40,7 @@ public class MusicServiceImpl implements  MusicService {
 	 * 
 	 * @param musicReview
 	 */
+	@Override
 	public Integer addMusicReview(MusicReview musicReview) {
 		return	musicReviewDao.add(musicReview);
 	}
@@ -48,6 +51,7 @@ public class MusicServiceImpl implements  MusicService {
 	 * @param mainMusic
 	 * @return
 	 */
+	@Override
 	public MusicScore getMusicScore(Music music) {
 		return musicReviewDao.getMusicScore(music);
 	}
@@ -58,6 +62,7 @@ public class MusicServiceImpl implements  MusicService {
 	 * @param mainMusic
 	 * @return 一个 集合
 	 */
+	@Override
 	public List<MusicReviewDetail> getMusicReviewDetailBest(Music music,Integer start,Integer offset) {
 		return musicReviewDao.getMusicReviewDetailBest(music,start,offset);
 	}
@@ -69,6 +74,7 @@ public class MusicServiceImpl implements  MusicService {
 	 * @param loginUser
 	 * @return
 	 */
+	@Override
 	public MusicReview getMusicReview(Music music, User user) {
 		return musicReviewDao.getMusicReview(music ,user);
 	}
@@ -79,54 +85,66 @@ public class MusicServiceImpl implements  MusicService {
 	 * @param music
 	 * @return
 	 */
+	@Override
 	public Integer getMusicReviewCount(Music music) {
 		return musicReviewDao.getMusicReviewCount(music);
 	}
 
+	@Override
 	public List<MusicReviewDetail> getMusicReviewDetailLatest(Music music,
 			Integer start, Integer offset) {
 		return musicReviewDao.getMusicReviewDetailLatest(music, start, offset);
 	}
 
+	@Override
 	public boolean checkMusicReviewOOXXExist(MusicReview musicReview,
 			User loginUser) {
 		return musicReviewDao.checkMusicReviewOOXXExist(musicReview, loginUser);
 	}
 
+	@Override
 	public boolean addMusicReviewOOXX(MusicReview musicReview, User loginUser,
 			String type) {
 		return musicReviewDao.addMusicReviewOOXX(musicReview, loginUser, type);
 	}
 	
+	@Override
 	public MusicReviewDetail findMusicReviewDetailById(Integer reviewId) {
 		return musicReviewDao.findMusicReviewDetailById(reviewId);
 	}
 	
+	@Override
 	public Music findMusicByOriginalName(String originalName) {
 		return musicDao.findByOriginalName(originalName);
 	}
 
+	@Override
 	public List<Music> findMusicListByGenre(String genre,Integer start,Integer offset) {
 		return musicDao.findMusicListByGenre(genre,start ,offset);
 	}
 
+	@Override
 	public List<Music> findMusicRandom(Integer count) {
 		return musicDao.findMusicRandom(count);
 	}
 
+	@Override
 	public List<MusicReviewDetail> findMusicReviewDetailRandom(Integer count) {
 		return musicReviewDao.findMusicReviewDetailRandom(count);
 	}
 	
+	@Override
 	public List<ReplyDetail> findReviewReplyDetailNatural(
 			MusicReview review,Integer start, Integer offset) {
 		return musicReviewDao.findMusicReviewReplyDetailNatural(review,start,offset);
 	}
 
+	@Override
 	public void addMusicReviewReply(Reply reply) {
 		musicReviewDao.addMusicReviewReply(reply);
 	}
 
+	@Override
 	public MusicReview findMusicReviewById(Integer id) {
 		return musicReviewDao.findMusicReviewById(id);
 	}

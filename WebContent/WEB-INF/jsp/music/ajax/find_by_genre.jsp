@@ -13,7 +13,7 @@
 		<div class="poster_block center-block">
 			<img class="poster" src="${music.coverUrl}" />
 		</div>
-			<label class="music_title center-block">${music.chsName}<br/><small>${music.artist}</small></label>
+			<label class="music_title center-block">${music.originalName}</label>
 		</a>
 	</div>
 </c:forEach>

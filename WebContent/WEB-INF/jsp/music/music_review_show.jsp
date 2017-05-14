@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="${ctx}/css/music_show.css" />
 	<link rel="stylesheet" href="${ctx}/css/reply_list.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>${review.music.chsName} 音乐评论</title>
+	<title>${review.music.originalName} 音乐评论</title>
 </head>
 		<!-- 引入导航栏 -->
 		<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
@@ -116,7 +116,7 @@
 					</div>
 					<div class="page-header">
 						<h4>
-							<a id="to_music" href="${ctx }/music/${review.music.id}"> &gt; 转到 ${review.music.chsName} 页面</a>
+							<a id="to_music" href="${ctx }/music/${review.music.id}"> &gt; 转到 ${review.music.originalName} 页面</a>
 						</h4>
 					</div>
 					<a href="${ctx }/music/${review.music.id}">

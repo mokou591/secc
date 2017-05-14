@@ -20,13 +20,13 @@ import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.ActivityNote;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.impl.ActivityServiceImpl;
+import cn.poi591.secc.service.ActivityService;
 
 @Controller
 @RequestMapping("/activity")
 public class ActivityController {
 	@Autowired
-	private ActivityServiceImpl activityService;
+	private ActivityService activityService;
 
 	/**
 	 * 跳转至户外活动栏目主页

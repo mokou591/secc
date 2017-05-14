@@ -68,7 +68,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="year" class="col-sm-3 control-label">出版时间<span class="redpoint">*</span></label>
+									<label for="year" class="col-sm-3 control-label">发行时间<span class="redpoint">*</span></label>
 									<div class="col-sm-6">
 										<input type="text" class="form-control" id="year" name="year"  required="required" />
 									</div>

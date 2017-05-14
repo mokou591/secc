@@ -46,6 +46,9 @@
 	</head>
 	<!-- 引入导航栏 -->
 	<jsp:include page="/WEB-INF/jsp/top_navbar.jsp" />
+	<script type="text/javascript">
+		$('#book_link').addClass("active");
+	</script>
 	<body>
 		<div class="container">
 			<div class="row clearfix">

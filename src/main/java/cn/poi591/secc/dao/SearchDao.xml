@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.SearchDao">
+
+	<!-- 搜索电影 -->
+	<select id="searchFilm" resultMap="FilmDetailMap">
+		SELECT * FROM t_film
+		<where>
+			<foreach collection="keywordList" item="keyword">
+				OR CONCAT(chs_name,original_name) LIKE CONCAT('%',#{keyword},'%')
+			</foreach>
+		</where>
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="FilmDetailMap" type="cn.poi591.secc.dto.FilmDetail">
+		<id property="id" column="id"/>
+		<association property="filmScore" column="id" select="cn.poi591.secc.dao.FilmReviewDao.getFilmScore" />
+	</resultMap>
+	
+	<!-- 搜索书本 -->
+	<select id="searchBook" resultMap="BookDetailMap">
+		SELECT * FROM t_book
+		<where>
+			<foreach collection="keywordList" item="keyword">
+				OR CONCAT(chs_name,original_name) LIKE CONCAT('%',#{keyword},'%')
+			</foreach>
+		</where>
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="BookDetailMap" type="cn.poi591.secc.dto.BookDetail">
+		<id property="id" column="id"/>
+		<association property="bookScore" column="id" select="cn.poi591.secc.dao.BookReviewDao.getBookScore" />
+	</resultMap>
+	
+	<!-- 搜索音乐 -->
+	<select id="searchMusic" resultMap="MusicDetailMap">
+		SELECT * FROM t_music
+		<where>
+			<foreach collection="keywordList" item="keyword">
+				OR CONCAT(chs_name,original_name) LIKE CONCAT('%',#{keyword},'%')
+			</foreach>
+		</where>
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="MusicDetailMap" type="cn.poi591.secc.dto.MusicDetail">
+		<id property="id" column="id"/>
+		<association property="musicScore" column="id" select="cn.poi591.secc.dao.MusicReviewDao.getMusicScore" />
+	</resultMap>
+
+	<!-- 搜索户外活动 -->
+	<select id="searchActivity" resultMap="ActivityDetailMap">
+		SELECT * FROM t_activity
+		<where>
+			<foreach collection="keywordList" item="keyword">
+				OR CONCAT(title) LIKE CONCAT('%',#{keyword},'%')
+			</foreach>
+		</where>
+		LIMIT #{start},#{offset};
+	</select>
+	<resultMap id="ActivityDetailMap" type="cn.poi591.secc.dto.ActivityDetail">
+		<id property="id" column="id"/>
+		<association property="noteCount" column="id" select="cn.poi591.secc.dao.ActivityDao.getNoteCount" />
+	</resultMap>
+</mapper>
