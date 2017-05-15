@@ -22,13 +22,13 @@ import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.impl.FilmServiceImpl;
+import cn.poi591.secc.service.FilmService;
 
 @Controller
 @RequestMapping("/film")
 public class FilmController {
 	@Autowired
-	private FilmServiceImpl filmService;
+	private FilmService filmService;
 
 	@RequestMapping("/genre/{genre}")
 	@ResponseBody

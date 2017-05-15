@@ -119,7 +119,7 @@ public class FilmServiceImpl implements  FilmService {
 	}
 	
 	public List<ReplyDetail> findReviewReplyDetailNatural(
-			FilmReview review,Integer start, Integer offset) {
+			FilmReviewDetail review,Integer start, Integer offset) {
 		return filmReviewDao.findFilmReviewReplyDetailNatural(review,start,offset);
 	}
 

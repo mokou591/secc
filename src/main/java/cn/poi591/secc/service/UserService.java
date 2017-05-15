@@ -27,4 +27,6 @@ public interface UserService {
 	public User updateAvatar(User user, String imgStr, String path)
 			throws IOException;
 
+	public String findUserAuthorityByUsername(String username);
+
 }

@@ -25,13 +25,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	
 	/**
 	 * 跳转到注册页面
 	 */
 	@RequestMapping("/user/signup")
 	public String signUp() {
-		return Path.JSP_USER+"/signup";
+		return Path.JSP_USER + "/signup";
 	}
 
 	/**
@@ -41,11 +40,11 @@ public class UserController {
 	public String login(HttpServletRequest request) {
 		// 尝试获取登录前页面
 		String loginPrevPage = request.getParameter("loginPrevPage");
-		if(loginPrevPage!=null){
-			//如果有登录后希望跳转到的页面，则放入回话
+		if (loginPrevPage != null) {
+			// 如果有登录后希望跳转到的页面，则放入回话
 			request.getSession().setAttribute(Page.LOGIN_PREV, loginPrevPage);
 		}
-		return Path.JSP_USER+"/login";
+		return Path.JSP_USER + "/login";
 	}
 
 	/**
@@ -74,13 +73,43 @@ public class UserController {
 			modelAndView.setViewName("forward:/user/login_submit");
 		} else {// 注册失败
 			// 返回错误信息
-			modelAndView.setViewName(Path.JSP_USER+"/signup");
+			modelAndView.setViewName(Path.JSP_USER + "/signup");
 			modelAndView.addObject("nickname", nickname);
 			modelAndView.addObject("username", username);
 			modelAndView.addObject("isExist", true);
 		}
 		// 页面跳转
 		return modelAndView;
+	}
+	
+	/**
+	 * 跳转到进阶的登陆页面，供工作、管理人员用
+	 */
+	@RequestMapping("/user/advanced/login/")
+	public String loginAdvanced() {
+		return Path.JSP_USER + "/login_advanced";
+	}
+	
+	/**
+	 * 登陆页面，会在session中加入用户权限，供管理人员登录
+	 */
+	@RequestMapping("/user/advanced/login_submit")
+	public String advancedLoginUser(HttpServletRequest request) {
+		// 获取参数
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		// 检查用户是否可登录
+		User user = userService.login(username, password);
+		// 判断是否加入权限
+		if (user == null) {
+			//回到进阶登录页
+			return Path.JSP_USER + "/login_advanced";
+		}else{
+			//能成功登录，先加入权限
+			String authority = userService.findUserAuthorityByUsername(username);
+			request.getSession().setAttribute("authority", authority);
+		}
+		return "forward:/user/login_submit";
 	}
 
 	/**
@@ -94,26 +123,27 @@ public class UserController {
 		// 登录用户
 		User user = userService.login(username, password);
 		ModelAndView modelAndView = new ModelAndView();
+		HttpSession session = request.getSession();
 		// 登录是否成功
 		if (user == null) {// 登录失败
 			// 返回错误信息
-			modelAndView.setViewName(Path.JSP_USER+"/login");
+			modelAndView.setViewName(Path.JSP_USER + "/login");
 			modelAndView.addObject("username", username);
 			modelAndView.addObject("isloginFailed", true);
+			session.invalidate();
 		} else {// 登录成功
-			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", user);
 			// 判断是否有登录前页面
 			String prevPage = (String) session.getAttribute(Page.LOGIN_PREV);
-			if(prevPage==null){
+			if (prevPage == null) {
 				// 没有登录前页面，跳转到主页
 				modelAndView.setViewName("redirect:/index");
-			}else{
-				//有登录前页面
-				modelAndView.setViewName("redirect:"+prevPage);
-				session.setAttribute(Page.LOGIN_PREV,null);
+			} else {
+				// 有登录前页面
+				modelAndView.setViewName("redirect:" + prevPage);
+				session.setAttribute(Page.LOGIN_PREV, null);
 			}
-			
+
 		}
 		return modelAndView;
 	}
@@ -127,7 +157,6 @@ public class UserController {
 		session.invalidate();
 		return "success";
 	}
-
 
 	/**
 	 * 进入编辑个人资料的页面
@@ -147,7 +176,7 @@ public class UserController {
 			// 该用户不存在，或未登录，或登录的和编辑的用户不同，不会进入编辑页面
 			modelAndView.setViewName("redirect:/index");
 		} else {// 可以进入该用户编辑页面
-			modelAndView.setViewName(Path.JSP_USER+"/editpersonal");
+			modelAndView.setViewName(Path.JSP_USER + "/editpersonal");
 		}
 		return modelAndView;
 	}
@@ -174,11 +203,11 @@ public class UserController {
 			// TODO 添加用户个人信息
 			modelAndView.addObject("zoneUser", zoneUser);
 			// 跳转到的jsp页面
-			modelAndView.setViewName(Path.JSP_USER+"/people");
+			modelAndView.setViewName(Path.JSP_USER + "/people");
 		}
 		return modelAndView;
 	}
-	
+
 	/**
 	 * 保存和更新用户资料
 	 * 
@@ -199,7 +228,7 @@ public class UserController {
 			// 刷新页面
 			modelAndView.setViewName("forward:/people/" + user.getId()
 					+ "/edit");
-			//重新查询登录用户信息
+			// 重新查询登录用户信息
 			User loginUser = userService.findById(user.getId());
 			request.getSession().setAttribute("loginUser", loginUser);
 			modelAndView.addObject("isUpdateSuccess", true);
@@ -209,28 +238,31 @@ public class UserController {
 		// 页面跳转
 		return modelAndView;
 	}
-	
+
 	/**
 	 * 用户上传头像
+	 * 
 	 * @throws IOException
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	@RequestMapping("/user/uploadAvatar")
 	@ResponseBody
-	public String uploadAvator(HttpServletRequest request) throws IOException, InterruptedException{
-		//获取上传的图片数据
-		String imgStr=request.getParameter("imgStr");
-		//保存路径
-		String path = request.getServletContext().getRealPath("upload"+File.separator+"avatar");
-		//判断是否登录
+	public String uploadAvator(HttpServletRequest request) throws IOException,
+			InterruptedException {
+		// 获取上传的图片数据
+		String imgStr = request.getParameter("imgStr");
+		// 保存路径
+		String path = request.getServletContext().getRealPath(
+				"upload" + File.separator + "avatar");
+		// 判断是否登录
 		User loginUser = (User) request.getSession().getAttribute("loginUser");
-		if(loginUser==null){
-			//没有登录用户
+		if (loginUser == null) {
+			// 没有登录用户
 			return "fail";
 		}
-		//有登录用户，修改其头像信息
-		User updatedUser = userService.updateAvatar(loginUser,imgStr,path);
-		//更新登录用户数据
+		// 有登录用户，修改其头像信息
+		User updatedUser = userService.updateAvatar(loginUser, imgStr, path);
+		// 更新登录用户数据
 		request.getSession().setAttribute("loginUser", updatedUser);
 		return "success";
 	}

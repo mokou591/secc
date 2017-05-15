@@ -22,13 +22,13 @@ import cn.poi591.secc.entity.Music;
 import cn.poi591.secc.entity.MusicReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
-import cn.poi591.secc.service.impl.MusicServiceImpl;
+import cn.poi591.secc.service.MusicService;
 
 @Controller
 @RequestMapping("/music")
 public class MusicController {
 	@Autowired
-	private MusicServiceImpl musicService;
+	private MusicService musicService;
 
 	/**
 	 * 根据类型查询

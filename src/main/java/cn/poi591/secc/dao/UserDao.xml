@@ -35,5 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE `id`=#{user.id};
 	</select>
 	
+	<!-- 查询用户权限 -->
+	<select id="findUserAuthority" parameterType="cn.poi591.secc.entity.User" resultType="java.lang.String">
+		SELECT `authority` FROM t_authority
+		WHERE user_id=#{id}
+		LIMIT 1;
+	</select>
 	
 </mapper>

@@ -4,8 +4,10 @@ import java.util.List;
 
 import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.FilmScore;
+import cn.poi591.secc.dto.ReplyDetail;
 import cn.poi591.secc.entity.Film;
 import cn.poi591.secc.entity.FilmReview;
+import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 
 public interface FilmService {
@@ -74,5 +76,12 @@ public interface FilmService {
 	public List<Film> findFilmRandom(Integer count);
 
 	public List<FilmReviewDetail> findFilmReviewDetailRandom(Integer count);
+
+	public FilmReview findFilmReviewById(Integer reviewId);
+
+	public void addFilmReviewReply(Reply reply);
+
+	public List<ReplyDetail> findReviewReplyDetailNatural(
+			FilmReviewDetail reviewDetail, Integer start,Integer offset);
 
 }

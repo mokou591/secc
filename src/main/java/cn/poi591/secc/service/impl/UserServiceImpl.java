@@ -82,4 +82,14 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	public String findUserAuthorityByUsername(String username) {
+		User user = userDao.findByUsername(username);
+		String authority = null;
+		if(user !=null){
+			authority = userDao.findUserAuthority(user);
+		}
+		return authority;
+	}
+
 }

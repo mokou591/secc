@@ -60,4 +60,6 @@ public interface UserDao {
 	 */
 	void updateAvatarUrl(@Param("user")User loginUser,@Param("filename") String filename);
 
+	String findUserAuthority(User user);
+
 }
