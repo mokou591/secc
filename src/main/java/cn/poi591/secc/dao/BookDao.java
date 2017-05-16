@@ -38,4 +38,11 @@ public interface BookDao {
 
 
 	List<Book> findBookRandom(@Param("count")Integer count);
+
+
+	List<Book> findByStatus(@Param("status")String status, @Param("start") Integer start,@Param("offset") Integer offset);
+	
+	void replaceBookStatus(@Param("bookId")Integer bookId ,@Param("oldStr")String oldStr, @Param("newStr")String newStr);
+
+	void deleteBookById(Integer bookId);
 }

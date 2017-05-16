@@ -83,7 +83,7 @@
 							<div class="page-header">
 								<h4>
 									音乐
-									<small class="pull-right"><a href="#">更多 》</a></small>
+									
 								</h4>
 							</div>
 							<div class="row clearfix">
@@ -102,7 +102,7 @@
 							<div class="page-header">
 								<h4>
 									聚会
-									<small class="pull-right"><a href="#">更多 》</a></small>
+									
 								</h4>
 							</div>
 							<div class="row clearfix">
@@ -122,7 +122,7 @@
 							<div class="page-header">
 								<h4>
 									讲座
-									<small class="pull-right"><a href="#">更多 》</a></small>
+									
 								</h4>
 							</div>
 							<div class="row clearfix">
@@ -142,7 +142,7 @@
 							<div class="page-header">
 								<h4>
 									展览
-									<small class="pull-right"><a href="#">更多 》</a></small>
+									
 								</h4>
 							</div>
 							<div class="row clearfix">

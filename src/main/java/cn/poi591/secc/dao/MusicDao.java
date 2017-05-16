@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.poi591.secc.entity.Book;
 import cn.poi591.secc.entity.Music;
 
 public interface MusicDao {
@@ -38,4 +39,12 @@ public interface MusicDao {
 
 
 	List<Music> findMusicRandom(@Param("count")Integer count);
+
+
+	List<Music> findByStatus(@Param("status")String status, @Param("start") Integer start,@Param("offset") Integer offset);
+
+	void replaceMusicStatus(@Param("musicId")Integer musicId ,@Param("oldStr")String oldStr, @Param("newStr")String newStr);
+
+
+	void deleteMusicById(Integer musicId);
 }

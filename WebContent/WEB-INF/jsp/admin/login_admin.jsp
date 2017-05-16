@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="col-md-4 col-md-offset-3">
-			<form id="user_login_form" role="form" action="${ctx}/user/advanced/login_submit" method="post">
+			<form id="user_login_form" role="form" action="${ctx}/admin/login_submit" method="post">
 				<div class="form-group">
 					<label for="username">用户名</label>
 					<input type="text" class="form-control" id="username" name="username" autofocus="autofocus" placeholder="请输入用户名" required="required"  value=${username }>

@@ -33,4 +33,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY RAND()
 		LIMIT #{count};
 	</select>
+	
+	<!-- 根据状态查找 -->
+	<select id="findByStatus" resultType="cn.poi591.secc.entity.Film">
+		SELECT `id`,`original_name`,`chs_name`,`status` FROM `t_film`
+		WHERE `status` LIKE CONCAT('%',#{status},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 根据状态查找 -->
+	<update id="replaceFilmStatus">
+		UPDATE `t_film`
+		SET `status`=REPLACE(`status`, #{oldStr}, #{newStr})
+		WHERE `id`=#{filmId};
+	</update>
+	
+	<!-- 删除电影 -->
+	<delete id="deleteFilmById" parameterType="java.lang.Integer">
+		DELETE FROM `t_film`
+		WHERE `id`=#{filmId};
+	</delete>
 </mapper>

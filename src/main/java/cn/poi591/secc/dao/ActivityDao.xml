@@ -61,4 +61,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM t_activity_note
 		WHERE activity_id=#{id};
 	</select>
+	
+	
+	<!-- 根据状态查找 -->
+	<select id="findByStatus" resultType="cn.poi591.secc.entity.Activity">
+		SELECT `id`,`title`,`status` FROM `t_activity`
+		WHERE `status` LIKE CONCAT('%',#{status},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 根据状态查找 -->
+	<update id="replaceActivityStatus">
+		UPDATE `t_activity`
+		SET `status`=REPLACE(`status`, #{oldStr}, #{newStr})
+		WHERE `id`=#{activityId};
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteActivityById" parameterType="java.lang.Integer">
+		DELETE FROM `t_activity`
+		WHERE `id`=#{activityId};
+	</delete>
 </mapper>

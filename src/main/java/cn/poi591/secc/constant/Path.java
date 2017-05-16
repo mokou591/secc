@@ -15,4 +15,6 @@ public interface Path {
 	public static final String JSP_MUSIC = "/music";
 	public static final String JSP_MUSIC_REVIEW = "/music/review";
 
+	public static final String JSP_ADMIN = "/admin";
+
 }

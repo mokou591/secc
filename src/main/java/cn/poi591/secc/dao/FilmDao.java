@@ -38,4 +38,12 @@ public interface FilmDao {
 
 
 	List<Film> findFilmRandom(@Param("count")Integer count);
+
+	List<Film> findByStatus(@Param("status")String status, @Param("start") Integer start,@Param("offset") Integer offset);
+
+
+	void replaceFilmStatus(@Param("filmId")Integer filmId ,@Param("oldStr")String oldStr, @Param("newStr")String newStr);
+
+
+	void deleteFilmById(Integer filmId);
 }

@@ -33,4 +33,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY RAND()
 		LIMIT #{count};
 	</select>
+	
+	<!-- 根据状态查找 -->
+	<select id="findByStatus" resultType="cn.poi591.secc.entity.Music">
+		SELECT `id`,`original_name`,`chs_name`,`status` FROM `t_music`
+		WHERE `status` LIKE CONCAT('%',#{status},'%')
+		LIMIT #{start},#{offset};
+	</select>
+	
+	<!-- 根据状态查找 -->
+	<update id="replaceMusicStatus">
+		UPDATE `t_music`
+		SET `status`=REPLACE(`status`, #{oldStr}, #{newStr})
+		WHERE `id`=#{musicId};
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteMusicById" parameterType="java.lang.Integer">
+		DELETE FROM `t_music`
+		WHERE `id`=#{musicId};
+	</delete>
 </mapper>

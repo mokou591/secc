@@ -83,36 +83,6 @@ public class UserController {
 	}
 	
 	/**
-	 * 跳转到进阶的登陆页面，供工作、管理人员用
-	 */
-	@RequestMapping("/user/advanced/login/")
-	public String loginAdvanced() {
-		return Path.JSP_USER + "/login_advanced";
-	}
-	
-	/**
-	 * 登陆页面，会在session中加入用户权限，供管理人员登录
-	 */
-	@RequestMapping("/user/advanced/login_submit")
-	public String advancedLoginUser(HttpServletRequest request) {
-		// 获取参数
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		// 检查用户是否可登录
-		User user = userService.login(username, password);
-		// 判断是否加入权限
-		if (user == null) {
-			//回到进阶登录页
-			return Path.JSP_USER + "/login_advanced";
-		}else{
-			//能成功登录，先加入权限
-			String authority = userService.findUserAuthorityByUsername(username);
-			request.getSession().setAttribute("authority", authority);
-		}
-		return "forward:/user/login_submit";
-	}
-
-	/**
 	 * 登录用户
 	 */
 	@RequestMapping("/user/login_submit")

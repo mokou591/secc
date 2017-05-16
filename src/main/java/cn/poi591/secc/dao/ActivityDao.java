@@ -64,4 +64,12 @@ public interface ActivityDao {
 	 * @return
 	 */
 	Integer getNoteCount(Activity activity);
+
+
+	List<Activity> findByStatus(@Param("status")String status, @Param("start") Integer start,@Param("offset") Integer offset);
+
+	void replaceActivityStatus(@Param("activityId")Integer activityId ,@Param("oldStr")String oldStr, @Param("newStr")String newStr);
+
+
+	void deleteActivityById(Integer activityId);
 }
