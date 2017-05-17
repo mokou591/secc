@@ -149,6 +149,23 @@
 							<h4>您的评价：${loginUserScore }</h4>
 						</c:if>
 					</div>
+					
+					<!-- 管理员操作 -->
+					<c:if test="${not empty userAuthority }">
+						<div class="page-header">
+							<h3>
+								管理员操作
+							</h3>
+						</div>
+						<c:choose>
+							<c:when test="${idHotnew == false}">
+								<a class="btn btn-primary" href="${ctx}/admin/music/${mainMusic.id}/set/hotnew">设置为新品/热门</a>
+							</c:when>
+							<c:when test="${idHotnew == true}">
+								<a class="btn btn-danger" href="${ctx}/admin/music/${mainMusic.id}/delete/hotnew">取消设置为新品/热门</a>
+							</c:when>
+						</c:choose>
+					</c:if>
 				</div>
 			</div>
 		</div>

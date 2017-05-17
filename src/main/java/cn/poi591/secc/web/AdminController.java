@@ -28,14 +28,59 @@ public class AdminController {
 	private UserService userService;
 
 	/**
+	 * 设置为精华，或取消设置
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/{column}/{reviewId}/setEssence/{whether}")
+	public String setEssence(@PathVariable String column,
+			@PathVariable Integer reviewId, @PathVariable String whether) {
+		switch (whether) {
+		case "is":
+			adminService.addEssence(column, reviewId);
+			break;
+		case "not":
+			adminService.deleteEssence(column, reviewId);
+			break;
+		default:
+		}
+		return "redirect:/" + column + "/review/" + reviewId;
+	}
+
+	/**
+	 * 设置为新品和热门
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/{column}/{id}/delete/{description}")
+	public String delDescription(@PathVariable String column,
+			@PathVariable Integer id, @PathVariable String description) {
+		adminService.deleteColumnDescription(column, id, description);
+		return "redirect:/" + column + "/" + id;
+	}
+
+	/**
+	 * 设置为新品和热门
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/{column}/{id}/set/{description}")
+	public String setDescription(HttpSession session,
+			@PathVariable String column, @PathVariable Integer id,
+			@PathVariable String description) {
+		adminService.addColumnDescription(column, id, description);
+		return "redirect:/" + column + "/" + id;
+	}
+
+	/**
 	 * 操作户外活动
 	 * 
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping("/activity/{activityId}/{operation}")
-	public String passActivity(HttpSession session, @PathVariable Integer activityId,
-			@PathVariable String operation) {
+	public String passActivity(HttpSession session,
+			@PathVariable Integer activityId, @PathVariable String operation) {
 		// 权限检查
 		if (!adminService.checkUserAuthorityExist(session)) {
 			return "/index";
@@ -53,7 +98,7 @@ public class AdminController {
 		// 跳转展示
 		return "forward:/admin/activity";
 	}
-	
+
 	/**
 	 * 操作音乐
 	 * 
@@ -80,7 +125,7 @@ public class AdminController {
 		// 跳转展示
 		return "forward:/admin/music";
 	}
-	
+
 	/**
 	 * 操作书本
 	 * 
@@ -107,7 +152,7 @@ public class AdminController {
 		// 跳转展示
 		return "forward:/admin/book";
 	}
-	
+
 	/**
 	 * 操作电影
 	 * 

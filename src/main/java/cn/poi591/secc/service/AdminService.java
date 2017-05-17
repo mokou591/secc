@@ -31,4 +31,16 @@ public interface AdminService {
 
 	List findNonCheckedActivity(Integer start,Integer offset);
 
+
+	void addColumnDescription(String column, Integer id, String description);
+
+
+	void deleteColumnDescription(String column, Integer id, String description);
+
+
+	void addEssence(String column, Integer id);
+
+
+	void deleteEssence(String column, Integer id);
+
 }

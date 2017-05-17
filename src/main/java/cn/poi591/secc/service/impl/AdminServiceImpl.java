@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.dao.ActivityDao;
+import cn.poi591.secc.dao.AdminDao;
 import cn.poi591.secc.dao.BookDao;
 import cn.poi591.secc.dao.FilmDao;
 import cn.poi591.secc.dao.MusicDao;
@@ -22,6 +23,9 @@ import cn.poi591.secc.service.AdminService;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	@Autowired
+	private AdminDao adminDao;
+	
 	@Autowired
 	private FilmDao filmDao;
 	
@@ -103,6 +107,31 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Music> findNonCheckedMusic(Integer start, Integer offset) {
 		return musicDao.findByStatus("未审核", start, offset);
+	}
+	
+	/**
+	 * 给一个栏目物品设置描述，如热门和新品
+	 */
+	@Override
+	public void addColumnDescription(String column, Integer id,
+			String description) {
+		adminDao.addColumnDescription(column,id,description);
+	}
+
+	@Override
+	public void deleteColumnDescription(String column, Integer id,
+			String description) {
+		adminDao.deleteColumnDescription(column,id,description);
+	}
+
+	@Override
+	public void addEssence(String column, Integer id) {
+		adminDao.addEssence(column,id);
+	}
+
+	@Override
+	public void deleteEssence(String column, Integer id) {
+		adminDao.deleteEssence(column,id);
 	}
 
 }

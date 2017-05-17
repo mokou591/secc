@@ -63,4 +63,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id property="id" column="id"/>
 		<association property="noteCount" column="id" select="cn.poi591.secc.dao.ActivityDao.getNoteCount" />
 	</resultMap>
+	
+	<!-- 查询栏目物品的状态描述 -->
+	<select id="findDescription" resultType="java.lang.String">
+		SELECT `description` FROM t_column_description 
+		WHERE `column`=#{column}
+		AND `id`=#{id};
+	</select>
+	
+	<!-- 查询栏目的帖子是不是精华 -->
+	<select id="checkIsEssence" resultType="java.lang.Boolean">
+		SELECT EXISTS(
+		SELECT * FROM t_essence
+		WHERE `column`=#{column}
+		AND `id`=#{id}
+		);
+	</select>
+	
+	<!-- 根据栏目描述查询电影 -->
+	<select id="findFilmByColumnDescription" resultType="cn.poi591.secc.entity.Film">
+		SELECT t_film.* FROM t_film,t_column_description
+		WHERE t_column_description.column='film'
+		AND t_column_description.id=t_film.id
+		AND t_column_description.description=#{colDesc}
+		LIMIT #{topCount}
+	</select>
+
+	<!-- 根据栏目描述查询音乐-->
+	<select id="findMusicByColumnDescription" resultType="cn.poi591.secc.entity.Music">
+		SELECT t_music.* FROM t_music,t_column_description
+		WHERE t_column_description.column='music'
+		AND t_column_description.id=t_music.id
+		AND t_column_description.description=#{colDesc}
+		LIMIT #{topCount}
+	</select>
+	
+	<!-- 根据栏目描述查询书本 -->
+	<select id="findBookByColumnDescription" resultType="cn.poi591.secc.entity.Book">
+		SELECT t_book.* FROM t_book,t_column_description
+		WHERE t_column_description.column='book'
+		AND t_column_description.id=t_book.id
+		AND t_column_description.description=#{colDesc}
+		LIMIT #{topCount}
+	</select>
 </mapper>

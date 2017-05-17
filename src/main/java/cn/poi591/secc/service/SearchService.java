@@ -13,6 +13,9 @@ import cn.poi591.secc.dto.BookDetail;
 import cn.poi591.secc.dto.FilmDetail;
 import cn.poi591.secc.dto.MusicDetail;
 import cn.poi591.secc.dto.SearchResult;
+import cn.poi591.secc.entity.Book;
+import cn.poi591.secc.entity.Film;
+import cn.poi591.secc.entity.Music;
 
 @Service
 public class SearchService {
@@ -90,5 +93,25 @@ public class SearchService {
 			top = resultList.size();
 		}
 		return resultList.subList(0, top);
+	}
+
+	public String findDescription(String column, Integer id) {
+		return searchDao.findDescription(column,id);
+	}
+
+	public Boolean checkIsEssence(String column, Integer id) {
+		return searchDao.checkIsEssence(column,id);
+	}
+
+	public List<Book> findBookByColumnDescription(Integer topCount,String colDesc) {
+		return searchDao.findBookByColumnDescription(topCount,colDesc);
+	}
+
+	public List<Music> findMusicByColumnDescription(Integer topCount,String colDesc) {
+		return searchDao.findMusicByColumnDescription(topCount,colDesc);
+	}
+
+	public List<Film> findFilmByColumnDescription(Integer topCount,String colDesc) {
+		return searchDao.findFilmByColumnDescription(topCount,colDesc);
 	}
 }

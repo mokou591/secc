@@ -23,6 +23,7 @@ import cn.poi591.secc.entity.BookReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.BookService;
+import cn.poi591.secc.service.SearchService;
 
 @Controller
 @RequestMapping("/book")
@@ -30,8 +31,12 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private SearchService searchService;
+	
 	/**
 	 * 根据类型查询
+	 * 
 	 * @param genre
 	 * @return
 	 */
@@ -145,10 +150,13 @@ public class BookController {
 		// 查询回复列表
 		List<ReplyDetail> replyDetailList = bookService
 				.findReviewReplyDetailNatural(reviewDetail, 0, 30);
+		//查询是不是精华
+		Boolean isEssence = searchService.checkIsEssence("book",reviewDetail.getId());
 		// 跳转页面
 		ModelAndView mv = new ModelAndView(Path.JSP_BOOK + "/book_review_show");
 		mv.addObject("review", reviewDetail);
 		mv.addObject("replyDetailList", replyDetailList);
+		mv.addObject("isEssence", isEssence);
 		return mv;
 	}
 
@@ -252,6 +260,12 @@ public class BookController {
 				loginUserScore = bookReview.getScore();
 			}
 		}
+		// 是否为新品热门
+		String description = searchService.findDescription("book", id);
+		Boolean idHotnew = false;
+		if (description != null) {
+			idHotnew = description.equals("hotnew");
+		}
 		/**
 		 * 
 		 */
@@ -262,6 +276,7 @@ public class BookController {
 		mv.addObject("reviewList", reviewList);
 		mv.addObject("reviewListLength", reviewListLength);
 		mv.addObject("loginUserScore", loginUserScore);
+		mv.addObject("idHotnew", idHotnew);
 		return mv;
 	}
 

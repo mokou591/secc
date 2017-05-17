@@ -23,6 +23,7 @@ import cn.poi591.secc.entity.FilmReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.FilmService;
+import cn.poi591.secc.service.SearchService;
 
 @Controller
 @RequestMapping("/film")
@@ -30,18 +31,22 @@ public class FilmController {
 	@Autowired
 	private FilmService filmService;
 
+	@Autowired
+	private SearchService searchService;
+
 	@RequestMapping("/genre/{genre}")
 	@ResponseBody
 	public ModelAndView findByGenre(@PathVariable String genre) {
-		//参数检查
+		// 参数检查
 		List<Film> filmList;
-		if(genre.equals("随机")){
+		if (genre.equals("随机")) {
 			filmList = filmService.findFilmRandom(8);
-		}else{
-			filmList = filmService.findFilmListByGenre(genre,0,8);
+		} else {
+			filmList = filmService.findFilmListByGenre(genre, 0, 8);
 		}
 		// 存入参数，页面跳转
-		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/ajax/find_by_genre");
+		ModelAndView mv = new ModelAndView(Path.JSP_FILM
+				+ "/ajax/find_by_genre");
 		mv.addObject("filmList", filmList);
 		return mv;
 	}
@@ -56,13 +61,15 @@ public class FilmController {
 		// 正在热映
 		List<Film> hotFilmList = filmService.findFilmRandom(4);
 		// 最新影评
-		List<FilmReviewDetail> hotReviewDetailList = filmService.findFilmReviewDetailRandom(5);
+		List<FilmReviewDetail> hotReviewDetailList = filmService
+				.findFilmReviewDetailRandom(5);
 		// 存入参数，页面跳转
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/index_film");
 		mv.addObject("hotFilmList", hotFilmList);
 		mv.addObject("hotReviewDetailList", hotReviewDetailList);
 		return mv;
 	}
+
 	/**
 	 * 跳转到电影的所有影评页面
 	 * 
@@ -105,22 +112,23 @@ public class FilmController {
 		mv.setViewName(Path.JSP_FILM + "/film_review_latest");
 		return mv;
 	}
-	
+
 	/**
 	 * 处理影评的回复。
+	 * 
 	 * @param noteId
 	 * @return
 	 */
 	@RequestMapping("/review/{reviewId}/reply_submit")
-	public String filmReviewReply(@PathVariable Integer reviewId,Reply reply) {
-		//参数检查
+	public String filmReviewReply(@PathVariable Integer reviewId, Reply reply) {
+		// 参数检查
 		FilmReview reivew = filmService.findFilmReviewById(reviewId);
 		// 保存回复
 		filmService.addFilmReviewReply(reply);
 		// 转发到单篇讨论的页面
-		return "forward:"+Path.JSP_FILM_REVIEW +"/"+reivew.getId();
+		return "forward:" + Path.JSP_FILM_REVIEW + "/" + reivew.getId();
 	}
-	
+
 	/**
 	 * 跳转至展示单篇影评。
 	 * 
@@ -134,14 +142,19 @@ public class FilmController {
 		FilmReviewDetail reviewDetail = filmService
 				.findFilmReviewDetailById(reviewId);
 		// 查询回复列表
-		List<ReplyDetail> replyDetailList =  filmService.findReviewReplyDetailNatural(reviewDetail,0,30);
+		List<ReplyDetail> replyDetailList = filmService
+				.findReviewReplyDetailNatural(reviewDetail, 0, 30);
+		// 查询是不是精华
+		Boolean isEssence = searchService.checkIsEssence("film",
+				reviewDetail.getId());
 		// 跳转页面
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM + "/film_review_show");
 		mv.addObject("review", reviewDetail);
 		mv.addObject("replyDetailList", replyDetailList);
+		mv.addObject("isEssence", isEssence);
 		return mv;
 	}
-	
+
 	/**
 	 * 处理ajax提交的对影评点赞或踩的评价
 	 * 
@@ -170,8 +183,6 @@ public class FilmController {
 		filmService.addFilmReviewOOXX(filmReview, loginUser, type);
 		return "success";
 	}
-
-	
 
 	/**
 	 * 提交新的影评
@@ -238,10 +249,17 @@ public class FilmController {
 		Integer loginUserScore = null;
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {// 有登录用户
-			FilmReview filmReview = filmService.getFilmReview(mainFilm,loginUser);
+			FilmReview filmReview = filmService.getFilmReview(mainFilm,
+					loginUser);
 			if (filmReview != null) {// 用户有评分
 				loginUserScore = filmReview.getScore();
 			}
+		}
+		// 是否为新品热门
+		String description = searchService.findDescription("film", id);
+		Boolean idHotnew = false;
+		if (description != null) {
+			idHotnew = description.equals("hotnew");
 		}
 		/**
 		 * 
@@ -253,6 +271,7 @@ public class FilmController {
 		mv.addObject("reviewList", reviewList);
 		mv.addObject("reviewListLength", reviewListLength);
 		mv.addObject("loginUserScore", loginUserScore);
+		mv.addObject("idHotnew", idHotnew);
 		return mv;
 	}
 
@@ -267,7 +286,7 @@ public class FilmController {
 
 		// 存入数据库
 		filmService.addFilm(film);
-		
+
 		ModelAndView mv = new ModelAndView(Path.JSP_FILM
 				+ "/success/film_submit");
 		mv.addObject("mainFilm", film);

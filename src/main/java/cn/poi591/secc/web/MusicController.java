@@ -23,6 +23,7 @@ import cn.poi591.secc.entity.MusicReview;
 import cn.poi591.secc.entity.Reply;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.MusicService;
+import cn.poi591.secc.service.SearchService;
 
 @Controller
 @RequestMapping("/music")
@@ -30,8 +31,12 @@ public class MusicController {
 	@Autowired
 	private MusicService musicService;
 
+	@Autowired
+	private SearchService searchService;
+
 	/**
 	 * 根据类型查询
+	 * 
 	 * @param genre
 	 * @return
 	 */
@@ -87,7 +92,8 @@ public class MusicController {
 		Integer musicReviewCount = musicService.getMusicReviewCount(mainMusic);
 		// 分页所需参数
 		final Integer PAGE_ITEM_COUNT = Review.PAGE_ITEM_COUNT;
-		int maxPage = (int) Math.ceil(musicReviewCount * 1.0f / PAGE_ITEM_COUNT);
+		int maxPage = (int) Math
+				.ceil(musicReviewCount * 1.0f / PAGE_ITEM_COUNT);
 		// 判断页码是否正确
 		if (maxPage != 0 && (page < 1 || page > maxPage)) {
 			return mv;
@@ -145,10 +151,15 @@ public class MusicController {
 		// 查询回复列表
 		List<ReplyDetail> replyDetailList = musicService
 				.findReviewReplyDetailNatural(reviewDetail, 0, 30);
+		// 查询是不是精华
+		Boolean isEssence = searchService.checkIsEssence("music",
+				reviewDetail.getId());
 		// 跳转页面
-		ModelAndView mv = new ModelAndView(Path.JSP_MUSIC + "/music_review_show");
+		ModelAndView mv = new ModelAndView(Path.JSP_MUSIC
+				+ "/music_review_show");
 		mv.addObject("review", reviewDetail);
 		mv.addObject("replyDetailList", replyDetailList);
+		mv.addObject("isEssence", isEssence);
 		return mv;
 	}
 
@@ -249,6 +260,12 @@ public class MusicController {
 				loginUserScore = musicReview.getScore();
 			}
 		}
+		// 是否为新品热门
+		String description = searchService.findDescription("music", id);
+		Boolean idHotnew = false;
+		if (description != null) {
+			idHotnew = description.equals("hotnew");
+		}
 		/**
 		 * 
 		 */
@@ -259,6 +276,7 @@ public class MusicController {
 		mv.addObject("reviewList", reviewList);
 		mv.addObject("reviewListLength", reviewListLength);
 		mv.addObject("loginUserScore", loginUserScore);
+		mv.addObject("idHotnew", idHotnew);
 		return mv;
 	}
 

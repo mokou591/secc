@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.poi591.secc.dto.SearchResult;
+import cn.poi591.secc.entity.Book;
+import cn.poi591.secc.entity.Film;
+import cn.poi591.secc.entity.Music;
 import cn.poi591.secc.service.SearchService;
 import cn.poi591.secc.util.MyUtil;
 
@@ -49,7 +52,18 @@ public class IndexController {
 	 * 主页跳转
 	 */
 	@RequestMapping(value = { "/", "/index" })
-	public String signUp() {
-		return "index";
+	public ModelAndView showIndex() {
+		// 查询新品速递内容
+		Integer topCount = 8;
+		String colDesc = "hotnew";
+		List<Book> hotBookList = searchService.findBookByColumnDescription(topCount,colDesc);
+		List<Music> hotMusicList = searchService.findMusicByColumnDescription(topCount,colDesc);
+		List<Film> hotFilmList = searchService.findFilmByColumnDescription(topCount,colDesc);
+		// 向页面储存
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("hotBookList",hotBookList);
+		mv.addObject("hotMusicList",hotMusicList);
+		mv.addObject("hotFilmList",hotFilmList);
+		return mv;
 	}
 }

@@ -20,6 +20,9 @@
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h2>
+					<c:if test="${isEssence}">
+						<button class="btn btn-danger">精华</button>
+					</c:if>
 					${review.title}
 				</h2>
 			</div>
@@ -125,6 +128,24 @@
 					<a href="${ctx }/book/${review.book.id}">
 						<img id="poster" src="${review.book.coverUrl}" /> 
 					</a>
+					
+					
+					<!-- 管理员操作 -->
+					<c:if test="${not empty userAuthority }">
+						<div class="page-header">
+							<h3>
+								管理员操作
+							</h3>
+						</div>
+						<c:choose>
+							<c:when test="${isEssence == false}">
+								<a class="btn btn-primary" href="${ctx}/admin/book/${review.id}/setEssence/is">设置为精华</a>
+							</c:when>
+							<c:when test="${isEssence == true}">
+								<a class="btn btn-danger" href="${ctx}/admin/book/${review.id}/setEssence/not">取消设置为精华</a>
+							</c:when>
+						</c:choose>
+					</c:if>
 				</div>
 			</div>
 		</div>

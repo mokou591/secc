@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.poi591.secc.dao.AdminDao">
+
+	<!-- 插入一个新的栏目物品描述 / 删除 -->
+	<insert id="addColumnDescription">
+		INSERT INTO t_column_description(`column`,`id`,`description`)
+		VALUES(#{column},#{id},#{description});
+	</insert>
+	<delete id="deleteColumnDescription">
+		DELETE FROM t_column_description
+		WHERE `column`=#{column}
+		AND `id`=#{id}
+		AND `description`=#{description};
+	</delete>
+	
+	<!-- 设置为精品帖  / 删除-->
+	<insert id="addEssence">
+		INSERT INTO t_essence(`column`,`id`)
+		VALUES(#{column},#{id});
+	</insert>
+	<delete id="deleteEssence">
+		DELETE FROM t_essence
+		WHERE `column`=#{column}
+		AND `id`=#{id};
+	</delete>
+</mapper>
