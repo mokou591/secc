@@ -83,4 +83,7 @@ public interface ActivityNoteDao {
 	 */
 	List<ReplyDetail> findNoteReplyDetailNatural(@Param("note") ActivityNote note,
 			@Param("start") Integer start,@Param("offset")  Integer offset);
+
+
+	List<ActivityNoteDetail> findActivityNoteDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
 }

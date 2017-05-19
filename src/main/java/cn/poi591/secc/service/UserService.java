@@ -1,7 +1,12 @@
 package cn.poi591.secc.service;
 
 import java.io.IOException;
+import java.util.List;
 
+import cn.poi591.secc.dto.ActivityNoteDetail;
+import cn.poi591.secc.dto.BookReviewDetail;
+import cn.poi591.secc.dto.FilmReviewDetail;
+import cn.poi591.secc.dto.MusicReviewDetail;
 import cn.poi591.secc.entity.User;
 
 public interface UserService {
@@ -29,5 +34,13 @@ public interface UserService {
 
 
 	public String findUserAuthority(User user);
+
+	public List<FilmReviewDetail> findFilmReviewDetailByUser(User user, Integer start, Integer offset);
+
+	public List<MusicReviewDetail> findMusicReviewDetailByUser(User user, Integer start, Integer offset);
+
+	public List<BookReviewDetail> findBookReviewDetailByUser(User user, Integer start, Integer offset);
+
+	public List<ActivityNoteDetail> findActivityNoteDetailByUser(User user, Integer start, Integer offset);
 
 }

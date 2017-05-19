@@ -224,7 +224,7 @@ public class AdminController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/")
+	@RequestMapping(value={"","/","index"})
 	public ModelAndView indexPage(HttpSession session) {
 		// 权限检查
 		ModelAndView mv = new ModelAndView("/index");
@@ -256,7 +256,7 @@ public class AdminController {
 			session.setAttribute(Page.USER_AUTHORITY, authority);
 		}
 		// 跳转到管理人员用的主页
-		return "forward:/admin/";
+		return "redirect:/admin";
 	}
 
 	/**

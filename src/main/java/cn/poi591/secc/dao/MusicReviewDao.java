@@ -138,6 +138,8 @@ public interface MusicReviewDao {
 
 	void addMusicReviewReply(Reply reply);
 
+	List<MusicReviewDetail> findMusicReviewDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
+
 	
 
 }

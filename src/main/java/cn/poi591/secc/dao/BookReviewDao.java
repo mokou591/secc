@@ -138,6 +138,8 @@ public interface BookReviewDao {
 
 	void addBookReviewReply(Reply reply);
 
+	List<BookReviewDetail> findBookReviewDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
+
 	
 
 }

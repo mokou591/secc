@@ -1,7 +1,10 @@
 package cn.poi591.secc.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import cn.poi591.secc.dto.FilmDetail;
 import cn.poi591.secc.entity.User;
 
 public interface UserDao {
@@ -61,5 +64,6 @@ public interface UserDao {
 	void updateAvatarUrl(@Param("user")User loginUser,@Param("filename") String filename);
 
 	String findUserAuthority(User user);
+
 
 }

@@ -90,6 +90,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
+	<!-- 获取用户的书评详细 -->
+	<select id="findBookReviewDetailByUser" resultMap="BookReviewDetailMap">
+		SELECT *
+		FROM t_book_review
+		WHERE user_id=#{user.id} AND
+		LENGTH(`title`)>0
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
 	<!-- 根据书id获取用户投票数 -->
 	<select id="getVoteByBookReviewId" resultType="cn.poi591.secc.dto.Vote">
 		SELECT 

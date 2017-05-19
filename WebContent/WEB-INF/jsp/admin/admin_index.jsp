@@ -25,10 +25,10 @@
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
-					<a class="btn btn-link" href="${ctx}/admin/film">管理电影栏目</a>
-					<a class="btn btn-link" href="${ctx}/admin/music">管理音乐栏目</a>
-					<a class="btn btn-link" href="${ctx}/admin/book">管理读书栏目</a>
-					<a class="btn btn-link" href="${ctx}/admin/activity">管理户外活动栏目</a>
+					<a class="btn btn-danger" href="${ctx}/admin/film">管理电影栏目</a>
+					<a class="btn btn-danger" href="${ctx}/admin/music">管理音乐栏目</a>
+					<a class="btn btn-danger" href="${ctx}/admin/book">管理读书栏目</a>
+					<a class="btn btn-danger" href="${ctx}/admin/activity">管理户外活动栏目</a>
 				</div>
 				<div class="col-md-4 column">
 				</div>

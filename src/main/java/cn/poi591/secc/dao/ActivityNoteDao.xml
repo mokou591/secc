@@ -45,6 +45,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{count};
 	</select>
 	
+	<!-- 获取用户的活动随笔详细 -->
+	<select id="findActivityNoteDetailByUser" resultMap="ActivityNoteDetailMap">
+		SELECT *
+		FROM t_activity_note
+		WHERE user_id=#{user.id} AND
+		LENGTH(`title`)>0
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
 	<!-- 获取当前活动的最新活动讨论，需要设置起始位置和项数 -->
 	<select id="getActivityNoteDetailNatural" resultMap="ActivityNoteDetailMap">
 		SELECT t_activity_note.*,

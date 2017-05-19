@@ -3,6 +3,7 @@ package cn.poi591.secc.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.constant.Path;
+import cn.poi591.secc.dto.ActivityNoteDetail;
+import cn.poi591.secc.dto.BookReviewDetail;
+import cn.poi591.secc.dto.FilmReviewDetail;
+import cn.poi591.secc.dto.MusicReviewDetail;
 import cn.poi591.secc.entity.User;
 import cn.poi591.secc.service.UserService;
 
@@ -81,7 +86,7 @@ public class UserController {
 		// 页面跳转
 		return modelAndView;
 	}
-	
+
 	/**
 	 * 登录用户
 	 */
@@ -161,21 +166,29 @@ public class UserController {
 		User zoneUser = userService.findById(zoneUserId);
 
 		// 声明页面
-		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView mv = new ModelAndView();
 
 		// 判断用户是否存在
 		if (zoneUser == null) {// 该用户不存在
-			modelAndView.setViewName("redirect:/index");
-		} else {// 该用户存在
-			// 获取登录用户
-			User loginUser = (User) request.getSession().getAttribute(
-					"loginUser");
-			// TODO 添加用户个人信息
-			modelAndView.addObject("zoneUser", zoneUser);
-			// 跳转到的jsp页面
-			modelAndView.setViewName(Path.JSP_USER + "/people");
+			mv.setViewName("redirect:/index");
 		}
-		return modelAndView;
+		// 该用户存在,获取登录用户
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		// 添加用户
+		mv.addObject("zoneUser", zoneUser);
+		// 添加用户栏目动态
+		Integer count = 10;
+		List<FilmReviewDetail> filmReviewList = userService.findFilmReviewDetailByUser(zoneUser,0,count);
+		List<MusicReviewDetail> musicReviewList = userService.findMusicReviewDetailByUser(zoneUser,0,count);
+		List<BookReviewDetail> bookReviewList = userService.findBookReviewDetailByUser(zoneUser,0,count);
+		List<ActivityNoteDetail> activityNoteList = userService.findActivityNoteDetailByUser(zoneUser,0,count);
+		mv.addObject("filmReviewList", filmReviewList);
+		mv.addObject("musicReviewList", musicReviewList);
+		mv.addObject("bookReviewList", bookReviewList);
+		mv.addObject("activityNoteList", activityNoteList);
+		// 跳转到的jsp页面
+		mv.setViewName(Path.JSP_USER + "/people");
+		return mv;
 	}
 
 	/**

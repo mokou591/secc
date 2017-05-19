@@ -75,6 +75,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
+	<!-- 获取用户的影评详细 -->
+	<select id="findFilmReviewDetailByUser" resultMap="FilmReviewDetailMap">
+		SELECT *
+		FROM t_film_review
+		WHERE user_id=#{user.id} AND
+		LENGTH(`title`)>0
+		ORDER BY create_time DESC
+		LIMIT #{start},#{offset};
+	</select>
+	
 	<!-- 获取当前电影的最好影评，需要设置起始位置和项数 -->
 	<select id="getFilmReviewDetailBest" resultMap="FilmReviewDetailMap">
 		SELECT t_film_review.*,
