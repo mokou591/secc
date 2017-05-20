@@ -140,4 +140,6 @@ public interface FilmReviewDao {
 
 	List<FilmReviewDetail> findFilmReviewDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
 
+	List<FilmReviewDetail> findFilmReivewDetailEssence(@Param("top")Integer top);
+
 }

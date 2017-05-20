@@ -28,6 +28,32 @@ public class AdminController {
 	private UserService userService;
 
 	/**
+	 * 展示精品帖
+	 */
+	@RequestMapping("/{type}/review/essence")
+	public ModelAndView showReviewEssence(@PathVariable String type) {
+		//查询精品评论
+		Integer top = 1000;
+		List reviewList=new ArrayList<>();
+		switch (type) {
+		case "film":
+			reviewList = adminService.findFilmReivewDetailEssence(top);
+			break;
+		case "music":
+			reviewList = adminService.findMusicReivewDetailEssence(top);
+			break;
+		case "book":
+			reviewList = adminService.findBookReivewDetailEssence(top);
+			break;
+		default:
+		}
+		// 页面跳转
+		ModelAndView mv = new ModelAndView(Path.JSP_ADMIN+"/"+type+"_review_essence");
+		mv.addObject("reviewList",reviewList);
+		return mv;
+	}
+	
+	/**
 	 * 设置为精华，或取消设置
 	 * 
 	 * @return

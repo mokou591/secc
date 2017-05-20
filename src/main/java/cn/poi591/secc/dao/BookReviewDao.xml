@@ -90,6 +90,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
+	<!-- 获取精品评论 -->
+	<select id="findBookReivewDetailEssence" resultMap="BookReviewDetailMap">
+		SELECT t_book_review.* FROM 
+		t_book_review,t_essence
+		WHERE t_essence.column='book'
+		AND t_book_review.id=t_essence.id
+		LIMIT #{top};
+	</select>
+	
 	<!-- 获取用户的书评详细 -->
 	<select id="findBookReviewDetailByUser" resultMap="BookReviewDetailMap">
 		SELECT *

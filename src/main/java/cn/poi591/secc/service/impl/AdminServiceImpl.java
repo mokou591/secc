@@ -11,8 +11,14 @@ import cn.poi591.secc.constant.Page;
 import cn.poi591.secc.dao.ActivityDao;
 import cn.poi591.secc.dao.AdminDao;
 import cn.poi591.secc.dao.BookDao;
+import cn.poi591.secc.dao.BookReviewDao;
 import cn.poi591.secc.dao.FilmDao;
+import cn.poi591.secc.dao.FilmReviewDao;
 import cn.poi591.secc.dao.MusicDao;
+import cn.poi591.secc.dao.MusicReviewDao;
+import cn.poi591.secc.dto.BookReviewDetail;
+import cn.poi591.secc.dto.FilmReviewDetail;
+import cn.poi591.secc.dto.MusicReviewDetail;
 import cn.poi591.secc.entity.Activity;
 import cn.poi591.secc.entity.Book;
 import cn.poi591.secc.entity.Film;
@@ -37,6 +43,15 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private ActivityDao activityDao;
+	
+	@Autowired
+	private FilmReviewDao filmReviewDao;
+	
+	@Autowired
+	private MusicReviewDao musicReviewDao;
+	
+	@Autowired
+	private BookReviewDao bookReviewDao;
 
 	@Override
 	public void checkActivityById(Integer activityId) {
@@ -133,5 +148,21 @@ public class AdminServiceImpl implements AdminService {
 	public void deleteEssence(String column, Integer id) {
 		adminDao.deleteEssence(column,id);
 	}
+
+	@Override
+	public List<FilmReviewDetail> findFilmReivewDetailEssence(Integer top) {
+		return filmReviewDao.findFilmReivewDetailEssence(top);
+	}
+
+	@Override
+	public List<MusicReviewDetail> findMusicReivewDetailEssence(Integer top) {
+		return musicReviewDao.findMusicReivewDetailEssence(top);
+	}
+
+	@Override
+	public List<BookReviewDetail> findBookReivewDetailEssence(Integer top) {
+		return bookReviewDao.findBookReivewDetailEssence(top);
+	}
+
 
 }

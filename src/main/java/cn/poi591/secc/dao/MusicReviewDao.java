@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.poi591.secc.dto.FilmReviewDetail;
 import cn.poi591.secc.dto.MusicReviewDetail;
 import cn.poi591.secc.dto.MusicScore;
 import cn.poi591.secc.dto.ReplyDetail;
@@ -139,6 +140,8 @@ public interface MusicReviewDao {
 	void addMusicReviewReply(Reply reply);
 
 	List<MusicReviewDetail> findMusicReviewDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
+
+	List<MusicReviewDetail> findMusicReivewDetailEssence(@Param("top")Integer top);
 
 	
 

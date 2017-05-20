@@ -21,14 +21,27 @@
 					管理
 					<small>管理员：${loginUser.nickname} (账号：${loginUser.username})</small>
 				</h1>
-				
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
+					<div class="page-header">
+						<h3>
+							条目审核
+						</h3>
+					</div>
 					<a class="btn btn-danger" href="${ctx}/admin/film">管理电影栏目</a>
 					<a class="btn btn-danger" href="${ctx}/admin/music">管理音乐栏目</a>
 					<a class="btn btn-danger" href="${ctx}/admin/book">管理读书栏目</a>
 					<a class="btn btn-danger" href="${ctx}/admin/activity">管理户外活动栏目</a>
+					
+					<div class="page-header">
+						<h3>
+							索引 <small> 精品帖一览</small>
+						</h3>
+					</div>
+					<a class="btn btn-danger" href="${ctx}/admin/film/review/essence">影评</a>
+					<a class="btn btn-danger" href="${ctx}/admin/music/review/essence">乐评</a>
+					<a class="btn btn-danger" href="${ctx}/admin/book/review/essence">书评</a>
 				</div>
 				<div class="col-md-4 column">
 				</div>

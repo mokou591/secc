@@ -75,6 +75,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
+	<!-- 获取精品评论 -->
+	<select id="findFilmReivewDetailEssence" resultMap="FilmReviewDetailMap">
+		SELECT t_film_review.* FROM 
+		t_film_review,t_essence
+		WHERE t_essence.column='film'
+		AND t_film_review.id=t_essence.id
+		LIMIT #{top};
+	</select>
+	
 	<!-- 获取用户的影评详细 -->
 	<select id="findFilmReviewDetailByUser" resultMap="FilmReviewDetailMap">
 		SELECT *

@@ -46,6 +46,10 @@
 							<li><a href="${ctx}/user/signup"><span class="glyphicon glyphicon-log-in"></span> 注册</a></li>
 						</c:when>
 						<c:otherwise>
+							<c:if test="${not empty userAuthority}">
+								<li><a href="${ctx}/admin">管理</a></li>
+							</c:if>
+							
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎，${loginUser.nickname}<strong class="caret"></strong></a>
 								<ul class="dropdown-menu">

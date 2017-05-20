@@ -108,6 +108,11 @@ public class UserController {
 			session.invalidate();
 		} else {// 登录成功
 			session.setAttribute("loginUser", user);
+			//判断是否有更多权限，如果有则加入更多
+			String authority = userService.findUserAuthority(user);
+			if(authority!=null){
+				session.setAttribute(Page.USER_AUTHORITY, authority);
+			}
 			// 判断是否有登录前页面
 			String prevPage = (String) session.getAttribute(Page.LOGIN_PREV);
 			if (prevPage == null) {

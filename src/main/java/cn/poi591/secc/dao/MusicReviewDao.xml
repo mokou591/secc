@@ -90,6 +90,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start},#{offset};
 	</select>
 	
+	<!-- 获取精品评论 -->
+	<select id="findMusicReivewDetailEssence" resultMap="MusicReviewDetailMap">
+		SELECT t_music_review.* FROM 
+		t_music_review,t_essence
+		WHERE t_essence.column='music'
+		AND t_music_review.id=t_essence.id
+		LIMIT #{top};
+	</select>	
+	
 	<!-- 获取用户的音乐评论详细 -->
 	<select id="findMusicReviewDetailByUser" resultMap="MusicReviewDetailMap">
 		SELECT *

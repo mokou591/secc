@@ -140,6 +140,9 @@ public interface BookReviewDao {
 
 	List<BookReviewDetail> findBookReviewDetailByUser(@Param("user")User user, @Param("start") Integer start,@Param("offset") Integer offset);
 
+	List<BookReviewDetail> findBookReivewDetailEssence(@Param("top")Integer top);
+
+
 	
 
 }
